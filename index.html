@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Full Mock Trial: Analysing Information — Ei ASSET Science</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1F2D3D; --ink-soft:#4B5B62;
+  --paper:#F2F6F0; --paper-alt:#E6EFE3; --card:#FFFFFF; --line:#D6E0D3;
+  --teal:#1F6F6B; --teal-dark:#154B48;
+  --mustard:#E3A527; --mustard-dark:#B8830F;
+  --coral:#E15B4F; --green:#2F9E5B; --green-bg:#E4F5EA; --coral-bg:#FBE7E5;
+  --radius:14px; --shadow:0 2px 0 var(--line), 0 10px 24px -14px rgba(31,45,61,.35);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px 100px;}
+.hero{background:linear-gradient(180deg,var(--teal-dark),var(--teal));color:#EFF7F2;padding:44px 20px 56px;border-bottom:6px solid var(--mustard);}
+.hero-inner{max-width:900px;margin:0 auto;}
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);padding:6px 12px;border-radius:999px;text-transform:uppercase;}
+.tag .dot{width:7px;height:7px;border-radius:50%;background:var(--mustard);display:inline-block;}
+.hero h1{font-size:clamp(26px,4.6vw,38px);line-height:1.1;margin:16px 0 10px;color:#fff;}
+.hero p{max-width:62ch;color:#DCEBE3;font-size:15.5px;margin:0;}
+.bandline{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+.band{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;}
+
+.progress-bar{position:sticky;top:0;z-index:30;background:var(--paper);padding:10px 20px;border-bottom:1px solid var(--line);}
+.progress-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:12px;}
+.progress-track{flex:1;height:8px;background:var(--paper-alt);border-radius:99px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--mustard);width:0%;transition:width .25s;}
+.progress-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);white-space:nowrap;}
+
+.band-header{margin:40px 0 16px;padding-bottom:8px;border-bottom:2px solid var(--line);}
+.band-header .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+.band-header h2{font-size:20px;margin-top:4px;}
+
+.q{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin:16px 0;box-shadow:var(--shadow);overflow:hidden;}
+.q-head{display:flex;justify-content:space-between;padding:12px 18px;background:var(--paper-alt);border-bottom:1px solid var(--line);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--teal-dark);font-weight:600;}
+.q-body{padding:18px;}
+.q-body p.stem{font-size:14.8px;font-weight:600;margin:0 0 14px;}
+table.data{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px;}
+table.data th,table.data td{border:1px solid var(--line);padding:7px 9px;text-align:left;}
+table.data th{background:var(--paper-alt);font-family:'IBM Plex Mono',monospace;font-size:10.8px;text-transform:uppercase;}
+table.data td.num{font-family:'IBM Plex Mono',monospace;}
+.evidence{margin-bottom:14px;}
+.map-svg,.shadow-svg{width:100%;max-width:380px;height:auto;display:block;background:var(--paper-alt);border-radius:10px;}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:11px;max-width:380px;}
+.calendar .dow{font-family:'IBM Plex Mono',monospace;font-weight:600;text-align:center;color:var(--teal-dark);}
+.calendar .d{background:var(--paper-alt);border-radius:5px;text-align:center;padding:6px 0;color:var(--ink-soft);}
+.calendar .d.mark{background:var(--mustard);color:#3a2a00;font-weight:700;}
+.calendar .d.empty{background:transparent;}
+.symbolrow{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-bottom:8px;}
+.symwrap{text-align:center;font-size:12px;color:var(--ink-soft);}
+.sym{width:40px;height:40px;border-radius:8px;margin:0 auto 5px;border:2px solid var(--ink);}
+.example-box{background:var(--paper-alt);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;padding:12px 14px;margin:0 0 14px;font-size:13.3px;}
+
+.options{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+@media(max-width:540px){.options{grid-template-columns:1fr;}}
+.opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:10px 13px;font-size:13.5px;cursor:pointer;color:var(--ink);display:flex;gap:9px;align-items:flex-start;}
+.opt .letter{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:11.5px;width:20px;height:20px;flex:none;border-radius:50%;border:1.5px solid var(--ink-soft);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);}
+.opt.selected{border-color:var(--teal);background:#EAF4F2;}
+.opt.selected .letter{background:var(--teal);border-color:var(--teal);color:#fff;}
+.q.locked .opt{cursor:default;}
+.q.locked .opt.correct{border-color:var(--green);background:var(--green-bg);}
+.q.locked .opt.correct .letter{background:var(--green);border-color:var(--green);color:#fff;}
+.q.locked .opt.wrong{border-color:var(--coral);background:var(--coral-bg);}
+.q.locked .opt.wrong .letter{background:var(--coral);border-color:var(--coral);color:#fff;}
+
+.explain{display:none;margin-top:14px;padding:14px 16px;border-radius:9px;background:var(--paper-alt);border:1px dashed var(--teal);font-size:13px;}
+.q.locked .explain{display:block;}
+.explain b{color:var(--teal-dark);}
+.explain .row{margin-bottom:6px;}
+
+.submitbar{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:14px 20px;text-align:center;z-index:30;}
+.submitbtn{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;background:var(--mustard);color:#3a2a00;border:none;padding:13px 30px;border-radius:99px;cursor:pointer;box-shadow:0 6px 14px -4px rgba(184,131,15,.5);}
+.submitbtn:disabled{opacity:.5;cursor:not-allowed;}
+.submitbtn:hover:not(:disabled){background:var(--mustard-dark);color:#fff;}
+.hint{font-size:12px;color:var(--ink-soft);margin-top:6px;font-family:'IBM Plex Mono',monospace;}
+
+.results{display:none;background:linear-gradient(180deg,var(--teal-dark),var(--teal));color:#fff;border-radius:18px;padding:30px 24px;margin:30px 0;text-align:center;}
+.results.show{display:block;}
+.results .score{font-family:'Space Grotesk',sans-serif;font-size:44px;font-weight:700;color:var(--mustard);}
+.results p{color:#DCEBE3;max-width:52ch;margin:8px auto 0;font-size:14px;}
+footer{text-align:center;padding:30px 20px 10px;color:var(--ink-soft);font-size:12.5px;}
+</style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-inner">
+    <span class="progress-label mono">ANSWERED</span>
+    <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+    <span class="progress-label mono" id="pcount">0 / 30</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="tag"><span class="dot"></span>Ei ASSET · Science · Skill 1 · Module 2</span>
+    <h1>Full Mock Trial<br>Analysis of Information</h1>
+    <p>30 questions, same skill, rising difficulty. Answer every question first — the answer key only unlocks once you submit the whole test, just like the real exam.</p>
+    <div class="bandline">
+      <span class="band">Q1–8 Easy–Moderate</span>
+      <span class="band">Q9–18 Moderate</span>
+      <span class="band">Q19–25 Difficult</span>
+      <span class="band">Q26–30 ASSET Challenge</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div id="test-container"></div>
+
+</div>
+
+<div class="submitbar">
+  <button class="submitbtn" id="submitBtn" disabled>Submit Test &amp; See Answer Key</button>
+  <div class="hint" id="submitHint">Answer all 30 questions to unlock</div>
+</div>
+
+<div class="wrap">
+  <div class="results" id="results">
+    <div class="score" id="scoreText">0 / 30</div>
+    <h3 style="color:#fff;">Case files unlocked below</h3>
+    <p>Every question now shows the correct answer in green and your answer in red if it was wrong, with the full reasoning. Go through each one — especially the ones you got wrong — before moving on.</p>
+  </div>
+</div>
+
+<footer>Module 2 of your ASSET Science prep · Skill: Analysis of Information to Identify Trends or Properties</footer>
+
+<script>
+const QUESTIONS = [
+// ---------- EASY-MODERATE (1-8) ----------
+{
+  band:"Easy–Moderate", answer:"C",
+  stem:"Four saplings were measured after one month. Which sapling grew the TALLEST?",
+  evidence:`<table class="data"><tr><th>Sapling</th><th>Height (cm)</th></tr>
+    <tr><td>P</td><td class="num">18</td></tr><tr><td>Q</td><td class="num">24</td></tr>
+    <tr><td>R</td><td class="num">31</td></tr><tr><td>S</td><td class="num">29</td></tr></table>`,
+  options:{A:"P",B:"Q",C:"R",D:"S"},
+  why:"Simply compare all four numbers in the table — 31 is the largest.",
+  wrong:"P, Q and S are all smaller than R's 31 cm."
+},
+{
+  band:"Easy–Moderate", answer:"B",
+  stem:"All of these EXCEPT ONE conduct electricity well. Which is the ODD ONE out?",
+  evidence:``,
+  options:{A:"Copper wire",B:"Rubber band",C:"Iron nail",D:"Aluminium foil"},
+  why:"Rubber is an insulator — it blocks the flow of electric current.",
+  wrong:"Copper, iron and aluminium are all metals, and metals conduct electricity well."
+},
+{
+  band:"Easy–Moderate", answer:"D",
+  stem:"Living and non-living things are sorted below by whether they can move on their own and whether they need food.",
+  evidence:`<table class="data"><tr><th>Moves on its own &amp; needs food</th><th>Needs food, cannot move on its own</th><th>Neither moves nor needs food</th></tr>
+  <tr><td>Dog, Fish</td><td>Tree, Grass</td><td>Stone, Chair</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">A mushroom cannot move from place to place but needs nutrients to grow. Which column fits it?</p>`,
+  options:{A:"Column 1",B:"A new column is needed",C:"None — mushrooms aren't living",D:"Column 2"},
+  why:"Mushrooms need food/nutrients but don't move on their own — exactly matching the Tree/Grass column's rule.",
+  wrong:"A doesn't fit since mushrooms can't move. C is factually wrong. B ignores that a matching column already exists."
+},
+{
+  band:"Easy–Moderate", answer:"A",
+  stem:"See the symbols spotted on packaged goods:",
+  evidence:`<div class="symbolrow">
+    <div class="symwrap"><svg class="sym" viewBox="0 0 40 40"><rect x="4" y="4" width="32" height="32" rx="6" fill="#E3A527" stroke="#1F2D3D" stroke-width="2"/></svg>Symbol X</div>
+  </div>
+  <div class="example-box"><b>Symbol X</b> appears on: a bag of ice, a chilled juice carton, a box of frozen peas<br>
+  <b>Symbol X does NOT appear on:</b> a packet of biscuits, a bar of soap, a bag of rice</div>`,
+  options:{A:"Keep refrigerated",B:"Contains sugar",C:"Fragile, handle with care",D:"Recyclable packaging"},
+  why:"Every item with Symbol X needs to stay cold; every item without it doesn't.",
+  wrong:"Biscuits, soap and rice don't need chilling, but nothing in the examples supports sugar content, fragility or recyclability as the shared rule."
+},
+{
+  band:"Easy–Moderate", answer:"C",
+  stem:"The map shows four spots in a park.",
+  evidence:`<svg class="map-svg" viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+    <rect width="380" height="220" fill="#E6EFE3" rx="10"/>
+    <line x1="190" y1="18" x2="190" y2="202" stroke="#B9C9B6"/><line x1="20" y1="110" x2="360" y2="110" stroke="#B9C9B6"/>
+    <text x="190" y="14" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">N</text>
+    <text x="190" y="216" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">S</text>
+    <text x="10" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">W</text>
+    <text x="366" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">E</text>
+    <circle cx="90" cy="60" r="6" fill="#1F6F6B"/><text x="98" y="56" font-size="11">Fountain</text>
+    <circle cx="280" cy="160" r="6" fill="#E15B4F"/><text x="220" y="176" font-size="11">Play Area</text>
+  </svg>`,
+  options:{A:"Northwards only",B:"Westwards only",C:"South-east",D:"North-west"},
+  why:"Play Area is below and to the right of Fountain — that direction is south-east.",
+  wrong:"North, west and north-west all point the wrong way relative to the Fountain."
+},
+{
+  band:"Easy–Moderate", answer:"D",
+  stem:"A shop marks its full-cream milk delivery every 2nd day starting on the 2nd of the month.",
+  evidence:`<div class="calendar">
+  <div class="dow">S</div><div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">Th</div><div class="dow">F</div><div class="dow">Sa</div>
+  <div class="d empty"></div><div class="d mark">2</div><div class="d">3</div><div class="d mark">4</div><div class="d">5</div><div class="d mark">6</div><div class="d">7</div>
+  <div class="d mark">8</div><div class="d">9</div><div class="d mark">10</div><div class="d">11</div><div class="d mark">12</div><div class="d">13</div><div class="d mark">14</div>
+  </div><p class="stem" style="margin-top:10px;font-weight:600;">Which of these is a delivery day?</p>`,
+  options:{A:"3rd",B:"5th",C:"7th",D:"16th"},
+  why:"Deliveries land on every even date (2,4,6...14...) — 16th continues that exact pattern.",
+  wrong:"3rd, 5th and 7th are all odd dates, which never appear as delivery days in the pattern shown."
+},
+{
+  band:"Easy–Moderate", answer:"B",
+  stem:"Neha kept a tray of water in the sun. She noted the water level over four days.",
+  evidence:`<table class="data"><tr><th>Day</th><th>Water level (mm)</th></tr>
+  <tr><td class="num">1</td><td class="num">40</td></tr><tr><td class="num">2</td><td class="num">32</td></tr>
+  <tr><td class="num">3</td><td class="num">24</td></tr><tr><td class="num">4</td><td class="num">16</td></tr></table>`,
+  options:{A:"The water level is increasing",B:"The water level is decreasing at a steady rate",C:"The water level stays the same",D:"The water level rises and falls randomly"},
+  why:"Each day the level drops by exactly 8 mm — a steady, consistent decrease.",
+  wrong:"The numbers clearly fall (not rise or stay equal), and the drop amount (8 mm) never changes, so it isn't random."
+},
+{
+  band:"Easy–Moderate", answer:"A",
+  stem:"Sadiq is choosing a material for a school bag's strap.",
+  evidence:`<table class="data"><tr><th>Material</th><th>Strong?</th><th>Flexible?</th><th>Breaks easily?</th></tr>
+  <tr><td>1</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+  <tr><td>2</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>3</td><td>Yes</td><td>No</td><td>No</td></tr></table>`,
+  options:{A:"Material 1",B:"Material 2",C:"Material 3",D:"Any of the three"},
+  why:"A strap needs to be both strong (won't snap) and flexible (bends with movement) — only Material 1 has both.",
+  wrong:"Material 2 breaks easily. Material 3 isn't flexible, which makes a stiff, uncomfortable strap. D ignores that only one option fits both needs."
+},
+// ---------- MODERATE (9-18) ----------
+{
+  band:"Moderate", answer:"C",
+  stem:"Four ponds were tested for how many hours of sunlight they get and how many water plants grow in them.",
+  evidence:`<table class="data"><tr><th>Pond</th><th>Sunlight (hrs/day)</th><th>Water plants counted</th></tr>
+  <tr><td>1</td><td class="num">2</td><td class="num">4</td></tr><tr><td>2</td><td class="num">4</td><td class="num">9</td></tr>
+  <tr><td>3</td><td class="num">6</td><td class="num">15</td></tr><tr><td>4</td><td class="num">8</td><td class="num">20</td></tr></table>`,
+  options:{A:"As sunlight decreases, plant count increases",B:"Sunlight has no effect on plant count",C:"As sunlight increases, plant count also increases",D:"Plant count is always double the sunlight hours"},
+  why:"Every time sunlight hours go up across the table, plant count goes up too — a genuine increasing relationship.",
+  wrong:"A reverses the real direction. B contradicts the clear pattern. D breaks down at Pond 1 (2 hrs would need to give 4 — check Pond 3: 6 hrs gives 15, not 12) so it isn't an exact rule."
+},
+{
+  band:"Moderate", answer:"D",
+  stem:"Plants are grouped by their root type below.",
+  evidence:`<table class="data"><tr><th>Taproot</th><th>Fibrous root</th></tr>
+  <tr><td>Mustard, Carrot</td><td>Wheat, Grass</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">Maize has thin, thread-like roots spreading from the base of the stem. Which group does it join?</p>`,
+  options:{A:"A new group must be made",B:"Taproot, next to Carrot",C:"Neither group",D:"Fibrous root, next to Wheat"},
+  why:"Thread-like, spreading roots is exactly the description of a fibrous root system — matching Wheat and Grass.",
+  wrong:"A taproot is a single thick main root, which doesn't match maize's description. C and A ignore that a clearly matching group exists."
+},
+{
+  band:"Moderate", answer:"A",
+  stem:"A doctor's chart says a patient must do breathing exercises 'thrice a day for 3 days.' Ticks below show one tick per session, one row per day.",
+  evidence:``,
+  options:{A:"✓✓✓ / ✓✓✓ / ✓✓✓",B:"✓✓ / ✓✓ / ✓✓",C:"✓✓✓ / ✓✓✓",D:"✓ / ✓ / ✓"},
+  why:"'Thrice a day' = 3 ticks per row, and '3 days' = 3 rows. Only option A matches both numbers.",
+  wrong:"B shows twice a day. C shows only 2 days. D shows once a day — each changes one of the two given numbers."
+},
+{
+  band:"Moderate", answer:"B",
+  stem:"Rotation and revolution times for four made-up planets in another solar system:",
+  evidence:`<table class="data"><tr><th>Planet</th><th>Rotation (hrs)</th><th>Revolution (days)</th></tr>
+  <tr><td>Zeta</td><td class="num">10</td><td class="num">200</td></tr><tr><td>Kappa</td><td class="num">22</td><td class="num">400</td></tr>
+  <tr><td>Nova</td><td class="num">10</td><td class="num">600</td></tr><tr><td>Orin</td><td class="num">30</td><td class="num">150</td></tr></table>`,
+  options:{A:"All planets with the same rotation time have the same revolution time",B:"Zeta and Nova rotate in the same amount of time",C:"Orin is closest to its star",D:"Kappa is the largest planet"},
+  why:"Zeta and Nova both show a 10-hour rotation — directly readable from the table.",
+  wrong:"A is disproved by Zeta/Nova having equal rotation but very different revolution (200 vs 600). C and D bring in distance and size, which this table never mentions."
+},
+{
+  band:"Moderate", answer:"C",
+  stem:"The map shows a school, a library and a hospital.",
+  evidence:`<svg class="map-svg" viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="380" height="220" fill="#E6EFE3" rx="10"/>
+  <line x1="190" y1="18" x2="190" y2="202" stroke="#B9C9B6"/><line x1="20" y1="110" x2="360" y2="110" stroke="#B9C9B6"/>
+  <text x="190" y="14" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">N</text>
+  <text x="190" y="216" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">S</text>
+  <text x="10" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">W</text>
+  <text x="366" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">E</text>
+  <circle cx="120" cy="170" r="6" fill="#1F6F6B"/><text x="60" y="186" font-size="11">School</text>
+  <circle cx="120" cy="60" r="6" fill="#E3A527"/><text x="60" y="56" font-size="11">Library</text>
+  <circle cx="300" cy="60" r="6" fill="#E15B4F"/><text x="240" y="56" font-size="11">Hospital</text>
+  </svg>`,
+  options:{A:"School to Library: south, then east",B:"Library to School: north",C:"School to Hospital: north, then east",D:"Hospital to Library: east"},
+  why:"School (bottom-left) to Hospital (top-right) requires moving up (north) and right (east).",
+  wrong:"A reverses the direction from School to Library (should be north, not south). B reverses School-to-Library direction too. D reverses east/west."
+},
+{
+  band:"Moderate", answer:"D",
+  stem:"All of these EXCEPT ONE hatch from eggs laid outside the mother's body.",
+  evidence:``,
+  options:{A:"Hen",B:"Frog",C:"Butterfly",D:"Human"},
+  why:"Humans develop inside the mother's body and are born live, not hatched from an external egg.",
+  wrong:"Hens, frogs and butterflies all lay eggs outside the body, which then hatch."
+},
+{
+  band:"Moderate", answer:"B",
+  stem:"Two identical bean seeds were grown for 10 days. Seed A got water daily; Seed B got water only every third day. Both got the same sunlight.",
+  evidence:`<table class="data"><tr><th>Seed</th><th>Height after 10 days (cm)</th></tr>
+  <tr><td>A</td><td class="num">12</td></tr><tr><td>B</td><td class="num">4</td></tr></table>`,
+  options:{A:"Seed B received less sunlight than Seed A",B:"Seed A grew taller than Seed B over these 10 days",C:"Seed B will never grow taller than Seed A",D:"Watering has no effect on plant growth"},
+  why:"This simply restates the measured numbers (12 cm vs 4 cm) without adding anything unproven.",
+  wrong:"A contradicts the passage (sunlight was equal). C predicts far beyond the 10-day window measured. D directly contradicts the data, where watering frequency was the one thing that differed."
+},
+{
+  band:"Moderate", answer:"C",
+  stem:"A pond's full-moon reflection was recorded as unusually bright on the 5th and 20th of a month.",
+  evidence:`<div class="calendar">
+  <div class="dow">S</div><div class="dow">M</div><div class="dow">T</div><div class="dow">W</div><div class="dow">Th</div><div class="dow">F</div><div class="dow">Sa</div>
+  <div class="d">1</div><div class="d">2</div><div class="d">3</div><div class="d">4</div><div class="d mark">5</div><div class="d">6</div><div class="d">7</div>
+  <div class="d">8</div><div class="d">9</div><div class="d">10</div><div class="d">11</div><div class="d">12</div><div class="d">13</div><div class="d">14</div>
+  <div class="d">15</div><div class="d">16</div><div class="d">17</div><div class="d">18</div><div class="d">19</div><div class="d mark">20</div><div class="d">21</div>
+  </div><p class="stem" style="margin-top:10px;font-weight:600;">If this exact 15-day gap continues, which date is next?</p>`,
+  options:{A:"25th (same month)",B:"30th (same month)",C:"5th (next month, roughly 15 days after the 20th)",D:"1st (next month)"},
+  why:"20 + 15 days lands on the 5th of the next month (assuming a 30-day month) — keeping the interval exactly 15 days.",
+  wrong:"A and B don't add up to a full 15-day gap from the 20th. D guesses a round date instead of counting the actual interval."
+},
+{
+  band:"Moderate", answer:"A",
+  stem:"Table below shows how far light travels through three liquids before it can no longer be seen clearly.",
+  evidence:`<table class="data"><tr><th>Liquid</th><th>Appears</th><th>Light passes through fully?</th></tr>
+  <tr><td>1</td><td>Clear</td><td>Yes</td></tr><tr><td>2</td><td>Milky</td><td>No, scattered</td></tr>
+  <tr><td>3</td><td>Muddy</td><td>No, blocked</td></tr></table>`,
+  options:{A:"Liquid 1 is transparent; Liquids 2 and 3 are not",B:"All three liquids are transparent",C:"Liquid 3 is the most transparent",D:"Transparency cannot be judged from this table"},
+  why:"Only Liquid 1 lets light pass through fully and clearly — that's the definition of transparent given right in the table.",
+  wrong:"B and C contradict the table directly. D is wrong since the table gives exactly the evidence needed."
+},
+{
+  band:"Moderate", answer:"B",
+  stem:"See the symbols found on clothing tags:",
+  evidence:`<div class="symbolrow">
+  <div class="symwrap"><svg class="sym" viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" fill="none" stroke="#1F2D3D" stroke-width="2.5"/><line x1="10" y1="10" x2="30" y2="30" stroke="#E15B4F" stroke-width="2.5"/></svg>Tag Symbol</div>
+  </div>
+  <div class="example-box"><b>Tag Symbol</b> appears on: a silk saree, a woollen sweater, a delicate lace dress<br>
+  <b>Tag Symbol does NOT appear on:</b> a cotton T-shirt, denim jeans, a gym towel</div>`,
+  options:{A:"Made in India",B:"Do not machine-wash",C:"100% cotton",D:"On sale"},
+  why:"The delicate fabrics (silk, wool, lace) that need hand-washing carry the symbol; sturdy everyday fabrics (cotton, denim) don't.",
+  wrong:"Nothing in the examples supports origin, fabric type, or sale price as the shared property — only wash-care fits all examples."
+},
+// ---------- DIFFICULT (19-25) ----------
+{
+  band:"Difficult", answer:"C",
+  stem:"A hiking group starts at Basecamp and follows this written log alongside the map: 'We walked from Basecamp to the Waterfall, then continued in the same direction again to reach the Peak.'",
+  evidence:`<svg class="map-svg" viewBox="0 0 380 220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="380" height="220" fill="#E6EFE3" rx="10"/>
+  <line x1="190" y1="18" x2="190" y2="202" stroke="#B9C9B6"/><line x1="20" y1="110" x2="360" y2="110" stroke="#B9C9B6"/>
+  <text x="190" y="14" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">N</text>
+  <text x="10" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">W</text>
+  <text x="366" y="114" font-family="IBM Plex Mono" font-size="10" fill="#1F6F6B">E</text>
+  <circle cx="80" cy="170" r="6" fill="#1F6F6B"/><text x="20" y="186" font-size="11">Basecamp</text>
+  <circle cx="180" cy="110" r="6" fill="#E3A527"/><text x="188" y="106" font-size="11">Waterfall</text>
+  <circle cx="280" cy="50" r="6" fill="#E15B4F"/><text x="222" y="42" font-size="11">Peak ?</text>
+  <circle cx="80" cy="50" r="4" fill="#B9C9B6"/><text x="20" y="44" font-size="10" fill="#4B5B62">(not the Peak)</text>
+  </svg>`,
+  options:{A:"The Peak is south-west of the Waterfall",B:"The Peak is directly north of Basecamp",C:"The Peak is north-east of the Waterfall",D:"The Peak's exact position cannot be shown on any map"},
+  why:"Basecamp to Waterfall moves north-east (up and right); continuing in the SAME direction from the Waterfall keeps going north-east to the Peak.",
+  wrong:"A reverses the direction. B ignores the eastward part of the movement entirely. D is disproved — the map shows exactly where the log describes."
+},
+{
+  band:"Difficult", answer:"D",
+  stem:"Four statements are being checked against this data on metal blocks.",
+  evidence:`<table class="data"><tr><th>Block</th><th>Metal</th><th>Sinks in water?</th><th>Attracted to magnet?</th></tr>
+  <tr><td>1</td><td>Iron</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>2</td><td>Aluminium</td><td>Yes</td><td>No</td></tr>
+  <tr><td>3</td><td>Copper</td><td>Yes</td><td>No</td></tr>
+  <tr><td>4</td><td>Cork (non-metal)</td><td>No</td><td>No</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">Which statement is BEST supported by this table?</p>`,
+  options:{A:"All metals are attracted to magnets",B:"All metals sink in water",C:"Anything that sinks is a metal",D:"Not every metal is magnetic"},
+  why:"Aluminium and Copper are metals that sink, yet neither is magnet-attracted — proving magnetism isn't a rule for all metals.",
+  wrong:"A is directly disproved by Aluminium/Copper. B happens to fit this table but the table can't prove 'all' metals everywhere. C is disproved by nothing — actually cork disproves the reverse, and B is an overreach beyond this small sample, which is why D (a modest, fully-proven claim) is the safest choice."
+},
+{
+  band:"Difficult", answer:"B",
+  stem:"A vegetable seller notices this pattern in his stall's daily sales over one week (Mon–Sun):",
+  evidence:`<table class="data"><tr><th>Day</th><th>Kg sold</th></tr>
+  <tr><td>Mon</td><td class="num">20</td></tr><tr><td>Tue</td><td class="num">18</td></tr><tr><td>Wed</td><td class="num">22</td></tr>
+  <tr><td>Thu</td><td class="num">19</td></tr><tr><td>Fri</td><td class="num">35</td></tr><tr><td>Sat</td><td class="num">21</td></tr><tr><td>Sun</td><td class="num">20</td></tr></table>`,
+  options:{A:"Sales increase steadily through the week",B:"Friday is an outlier compared to the rest of the week",C:"Sales are highest on Sunday",D:"There is no pattern at all in the data"},
+  why:"Every other day sits close to 18–22 kg, but Friday jumps to 35 kg — a value that clearly stands apart from the rest, which is what 'outlier' means.",
+  wrong:"A is false — the numbers don't rise steadily. C is false, Sunday is 20 kg, not the highest. D ignores the clear steady range in every day except Friday."
+},
+{
+  band:"Difficult", answer:"A",
+  stem:"Two poles of the SAME height are compared. Pole 1's shadow is 2 m long at 9:00 AM. Pole 2 (identical height, same location) has a shadow 2 m long at a different, unknown time.",
+  evidence:``,
+  options:{A:"Pole 2's shadow was likely measured around 3:00 PM (roughly matching morning length in the afternoon)",B:"Pole 2's shadow was definitely measured at 9:00 AM too",C:"Pole 2's shadow was measured at 12:00 PM (noon)",D:"There is no way shadow length ever repeats in a day"},
+  why:"Shadow length shrinks toward noon then grows again — so a length seen in the morning tends to reappear at a matching afternoon time, roughly symmetric around midday.",
+  wrong:"B assumes the exact same time without evidence. C is wrong — shadows are usually shortest (not equal to a morning length) around noon. D contradicts the very idea of the symmetric pattern."
+},
+{
+  band:"Difficult", answer:"C",
+  stem:"A science class grouped seeds by two properties: whether they float in water, and whether they have a hard outer shell.",
+  evidence:`<table class="data"><tr><th>Floats &amp; hard shell</th><th>Floats, soft shell</th><th>Sinks, hard shell</th><th>Sinks, soft shell</th></tr>
+  <tr><td>Coconut</td><td>Cotton seed</td><td>Almond</td><td>Tomato seed</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">A groundnut has a hard shell and sinks in water. Which group does it join?</p>`,
+  options:{A:"Same group as Coconut",B:"Same group as Cotton seed",C:"Same group as Almond",D:"A brand-new group is needed"},
+  why:"'Hard shell + sinks' exactly matches the rule used for Almond's group — no new category needed.",
+  wrong:"Coconut's group needs floating, which groundnut doesn't do. Cotton seed's group needs a soft shell. D is unnecessary since a matching group already exists."
+},
+{
+  band:"Difficult", answer:"D",
+  stem:"Four students each tested how fast an ice cube melts under different conditions, recording only ONE variable each.",
+  evidence:`<table class="data"><tr><th>Student</th><th>Condition tested</th><th>Melt time (min)</th></tr>
+  <tr><td>Aman</td><td>In sunlight</td><td class="num">8</td></tr>
+  <tr><td>Bella</td><td>In shade</td><td class="num">15</td></tr>
+  <tr><td>Chetan</td><td>Wrapped in cloth, in sunlight</td><td class="num">14</td></tr>
+  <tr><td>Divya</td><td>In a fridge</td><td class="num">40</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">Which conclusion is fully supported by this table?</p>`,
+  options:{A:"Cloth has no effect on melting at all",B:"Sunlight always melts ice faster than any other condition",C:"Fridges are colder than shade, proven by these numbers",D:"Wrapping in cloth slowed melting compared to sunlight alone (14 vs 8 min)"},
+  why:"That's a direct, narrow comparison of two rows in the table — nothing added.",
+  wrong:"A overstates — cloth did change the time (8→14), just not as much as the fridge. B overgeneralizes 'always' from just one comparison. C assumes 'colder' explains the result, which the table never states as a cause."
+},
+{
+  band:"Difficult", answer:"B",
+  stem:"See symbols on a hiking trail map:",
+  evidence:`<div class="symbolrow">
+  <div class="symwrap"><svg class="sym" viewBox="0 0 40 40"><polygon points="20,5 35,35 5,35" fill="#E3A527" stroke="#1F2D3D" stroke-width="2"/></svg>Trail Symbol</div>
+  </div>
+  <div class="example-box"><b>Symbol</b> appears near: a steep rocky slope, a narrow cliffside path, a loose-gravel descent<br>
+  <b>Symbol does NOT appear near:</b> a flat meadow path, a paved walkway, a wooden bridge</div>`,
+  options:{A:"Scenic viewpoint ahead",B:"Caution — uneven or risky footing",C:"Drinking water available",D:"No entry beyond this point"},
+  why:"Every marked spot involves difficult, unstable footing; every unmarked spot is flat and stable underfoot.",
+  wrong:"A, C and D aren't supported by any example given — footing safety is the one property that separates the two lists."
+},
+// ---------- ASSET CHALLENGE (26-30) ----------
+{
+  band:"ASSET Challenge", answer:"C",
+  stem:"A germination experiment tested bean seeds under 4 combinations of light and water. 'Germinated' means the seed sprouted within 7 days.",
+  evidence:`<table class="data"><tr><th>Tray</th><th>Light?</th><th>Water?</th><th>Germinated?</th></tr>
+  <tr><td>1</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>2</td><td>Yes</td><td>No</td><td>No</td></tr>
+  <tr><td>3</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+  <tr><td>4</td><td>No</td><td>No</td><td>No</td></tr></table>`,
+  options:{A:"Light is required for germination",B:"Both light and water are required together",C:"Water appears necessary for germination in this experiment, but light does not",D:"Neither light nor water affects germination"},
+  why:"Trays 1 and 3 both germinated despite differing in light — so light isn't the deciding factor. But Trays 2 and 4 (no water) both failed while Trays 1 and 3 (with water) both succeeded, pointing to water as the key factor.",
+  wrong:"A is disproved by Tray 3 (no light, still germinated). B is disproved by Tray 3 too (missing light, still worked). D contradicts the clear water/no-water split in the results."
+},
+{
+  band:"ASSET Challenge", answer:"D",
+  stem:"Reconsider the planet table from Question 12 in this test.",
+  evidence:`<table class="data"><tr><th>Planet</th><th>Rotation (hrs)</th><th>Revolution (days)</th></tr>
+  <tr><td>Zeta</td><td class="num">10</td><td class="num">200</td></tr><tr><td>Kappa</td><td class="num">22</td><td class="num">400</td></tr>
+  <tr><td>Nova</td><td class="num">10</td><td class="num">600</td></tr><tr><td>Orin</td><td class="num">30</td><td class="num">150</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">Which statement CANNOT be concluded from this table, even though it might sound reasonable?</p>`,
+  options:{A:"Zeta and Nova do not have the same revolution time",B:"Orin has the shortest revolution time listed",C:"Kappa's rotation is longer than Zeta's",D:"Planets with longer rotation times are bigger in size"},
+  why:"Size was never measured anywhere in this table — rotation and revolution tell us nothing about a planet's physical size.",
+  wrong:"A, B and C are all statements you can check and confirm directly from the numbers already in the table."
+},
+{
+  band:"ASSET Challenge", answer:"A",
+  stem:"A weather log shows rainfall AND the number of birds seen at a lake, over 5 days.",
+  evidence:`<table class="data"><tr><th>Day</th><th>Rainfall (mm)</th><th>Birds seen</th></tr>
+  <tr><td>1</td><td class="num">0</td><td class="num">30</td></tr><tr><td>2</td><td class="num">5</td><td class="num">28</td></tr>
+  <tr><td>3</td><td class="num">20</td><td class="num">12</td></tr><tr><td>4</td><td class="num">2</td><td class="num">31</td></tr>
+  <tr><td>5</td><td class="num">18</td><td class="num">14</td></tr></table>`,
+  options:{A:"Higher rainfall days tend to have fewer birds at the lake",B:"Rainfall causes birds to stop flying entirely",C:"Birds and rainfall are completely unrelated",D:"Exactly 30 birds visit the lake on every dry day"},
+  why:"On the two highest-rainfall days (20mm, 18mm) bird counts are lowest (12,14); on low-rainfall days counts are highest — a consistent pattern, safely described as a 'tendency,' not a rule.",
+  wrong:"B claims a cause the data can't prove — birds could simply be sheltering, not literally unable to fly. C ignores the clear pattern. D is too exact — Day 1 shows 30, but that's not guaranteed 'every' dry day since we only have one dry-day example."
+},
+{
+  band:"ASSET Challenge", answer:"B",
+  stem:"See two symbols spotted on electrical appliances, with mixed and unclear examples given deliberately.",
+  evidence:`<div class="symbolrow">
+  <div class="symwrap"><svg class="sym" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="#E15B4F" stroke-width="3"/><line x1="10" y1="30" x2="30" y2="10" stroke="#E15B4F" stroke-width="3"/></svg>Symbol Y</div>
+  </div>
+  <div class="example-box"><b>Symbol Y</b> appears on: a hairdryer used near water, a phone charger, an electric kettle<br>
+  <b>Symbol Y does NOT appear on:</b> a battery-powered torch, a wind-up clock, a wooden toy</div>`,
+  options:{A:"Made for outdoor use",B:"Do not use with wet hands / near water",C:"Requires two batteries",D:"Suitable for children"},
+  why:"Every symbol example plugs into mains electricity and poses a real water/shock risk; every non-example either runs on battery or has no electrical risk at all.",
+  wrong:"A, C and D aren't backed by the pattern — battery use, outdoor use, and child-safety are never actually distinguished by these examples."
+},
+{
+  band:"ASSET Challenge", answer:"C",
+  stem:"Final case. A school science fair judge is comparing three student experiments on plant growth, all measuring height after 14 days, but each changed a DIFFERENT variable.",
+  evidence:`<table class="data"><tr><th>Experiment</th><th>Variable changed</th><th>Other conditions</th><th>Height (cm)</th></tr>
+  <tr><td>1</td><td>Sunlight: full vs none</td><td>Same water, same soil</td><td>Full: 18 / None: 4</td></tr>
+  <tr><td>2</td><td>Water: daily vs weekly</td><td>Different soil types used</td><td>Daily: 15 / Weekly: 9</td></tr>
+  <tr><td>3</td><td>Soil: sandy vs clay</td><td>Same water, same sunlight</td><td>Sandy: 10 / Clay: 16</td></tr></table>
+  <p class="stem" style="margin-top:10px;font-weight:600;">Which experiment's result is LEAST trustworthy as evidence for its own variable?</p>`,
+  options:{A:"Experiment 1 — sunlight was the only thing that differed",B:"Experiment 3 — water and sunlight were kept equal",C:"Experiment 2 — soil type also differed, not just watering",D:"All three are equally trustworthy"},
+  why:"In Experiment 2, TWO things changed at once (water schedule AND soil type) — so the height difference could be due to either one, or both. You can't isolate watering as the true cause.",
+  wrong:"A and B each changed only one variable while holding the rest equal, which is exactly what makes a comparison trustworthy. D ignores that Experiment 2 breaks this rule."
+}
+];
+
+const container = document.getElementById('test-container');
+const selections = {};
+let currentBand = null;
+
+QUESTIONS.forEach((q, i) => {
+  if(q.band !== currentBand){
+    currentBand = q.band;
+    const bh = document.createElement('div');
+    bh.className = 'band-header';
+    bh.innerHTML = `<div class="eyebrow">Question ${i+1} onward</div><h2>${currentBand}</h2>`;
+    container.appendChild(bh);
+  }
+  const qDiv = document.createElement('div');
+  qDiv.className = 'q';
+  qDiv.dataset.answer = q.answer;
+  qDiv.dataset.index = i;
+  let optsHtml = '';
+  for(const [letter, text] of Object.entries(q.options)){
+    optsHtml += `<button class="opt" data-opt="${letter}"><span class="letter">${letter}</span>${text}</button>`;
+  }
+  qDiv.innerHTML = `
+    <div class="q-head"><span>QUESTION ${i+1}</span><span>${q.band}</span></div>
+    <div class="q-body">
+      ${q.evidence ? `<div class="evidence">${q.evidence}</div>` : ''}
+      <p class="stem">${q.stem}</p>
+      <div class="options">${optsHtml}</div>
+      <div class="explain">
+        <div class="row"><b>Correct answer: ${q.answer}</b></div>
+        <div class="row"><b>Why it's right:</b> ${q.why}</div>
+        <div class="row"><b>Why the others are wrong:</b> ${q.wrong}</div>
+      </div>
+    </div>`;
+  container.appendChild(qDiv);
+
+  qDiv.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(qDiv.classList.contains('locked')) return;
+      qDiv.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+      btn.classList.add('selected');
+      selections[i] = btn.dataset.opt;
+      updateProgress();
+    });
+  });
+});
+
+function updateProgress(){
+  const total = QUESTIONS.length;
+  const done = Object.keys(selections).length;
+  document.getElementById('pfill').style.width = (done/total*100)+'%';
+  document.getElementById('pcount').textContent = done + ' / ' + total;
+  const btn = document.getElementById('submitBtn');
+  const hint = document.getElementById('submitHint');
+  if(done === total){
+    btn.disabled = false;
+    hint.textContent = 'All questions answered — ready to submit';
+  } else {
+    btn.disabled = true;
+    hint.textContent = (total-done) + ' question(s) left to answer';
+  }
+}
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  let score = 0;
+  document.querySelectorAll('.q').forEach((qDiv, i) => {
+    qDiv.classList.add('locked');
+    const correct = qDiv.dataset.answer;
+    const chosen = selections[i];
+    if(chosen === correct) score++;
+    qDiv.querySelectorAll('.opt').forEach(o => {
+      if(o.dataset.opt === correct) o.classList.add('correct');
+      else if(o.dataset.opt === chosen) o.classList.add('wrong');
+    });
+  });
+  document.getElementById('scoreText').textContent = score + ' / ' + QUESTIONS.length;
+  const results = document.getElementById('results');
+  results.classList.add('show');
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitHint').textContent = 'Test submitted — review the answer key below';
+  results.scrollIntoView({behavior:'smooth'});
+});
+</script>
+</body>
+</html>
