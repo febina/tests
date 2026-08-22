@@ -1,1409 +1,1116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>INACC Space Academy | National Aerospace Olympiad Prep</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-space: #060913;
-      --bg-card: rgba(18, 26, 47, 0.85);
-      --bg-card-border: rgba(64, 120, 255, 0.25);
-      --neon-cyan: #00f2fe;
-      --neon-blue: #4facfe;
-      --neon-purple: #9d4edd;
-      --neon-gold: #ffd166;
-      --neon-green: #06d6a0;
-      --neon-red: #ef476f;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --font-display: 'Fredoka', cursive, sans-serif;
-      --font-body: 'Outfit', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: var(--bg-space);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      min-height: 100vh;
-      overflow-x: hidden;
-      background-image: 
-        radial-gradient(ellipse at top, #1b2735 0%, #090a0f 100%),
-        radial-gradient(1px 1px at 25px 5px, white 100%, transparent),
-        radial-gradient(2px 2px at 50px 25px, #00f2fe 100%, transparent),
-        radial-gradient(1px 1px at 125px 45px, white 100%, transparent),
-        radial-gradient(1.5px 1.5px at 80px 120px, #ffd166 100%, transparent);
-      background-size: 100% 100%, 250px 250px, 300px 300px, 200px 200px, 350px 350px;
-    }
-    #app-container { display: flex; flex-direction: column; min-height: 100vh; }
-    
-    /* NAV */
-    header {
-      background: rgba(10, 15, 30, 0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--bg-card-border);
-      position: sticky; top: 0; z-index: 1000;
-      padding: 0.75rem 1.5rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo-badge { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
-    .logo-badge .rocket-icon { font-size: 1.8rem; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
-    .logo-badge h1 { font-family: var(--font-display); font-size: 1.4rem; color: #fff; letter-spacing: 0.5px; }
-    .logo-badge span { color: var(--neon-cyan); font-weight: 800; }
-    
-    .nav-stats { display: flex; gap: 1.25rem; align-items: center; font-size: 0.9rem; }
-    .stat-pill {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 999px;
-      padding: 0.35rem 0.85rem;
-      display: flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono);
-    }
-    .nav-links { display: flex; gap: 0.5rem; }
-    .nav-btn {
-      background: transparent; border: none; color: var(--text-muted);
-      font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
-      padding: 0.5rem 0.9rem; border-radius: 8px; cursor: pointer; transition: all 0.2s;
-    }
-    .nav-btn:hover, .nav-btn.active { color: #fff; background: rgba(0, 242, 254, 0.15); border-bottom: 2px solid var(--neon-cyan); }
-    
-    /* MAIN VIEW CONTAINER */
-    main { flex: 1; padding: 2rem 1.5rem; max-width: 1280px; margin: 0 auto; width: 100%; }
-    .view-section { display: none; animation: fadeIn 0.3s ease-out; }
-    .view-section.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INACC Space Science Olympiad Prep Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #050814;
+  --bg-surface: #0c1328;
+  --bg-card: rgba(16, 26, 54, 0.9);
+  --cyan: #00e5ff;
+  --cyan-dim: rgba(0, 229, 255, 0.15);
+  --gold: #ffd000;
+  --purple: #a855f7;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(64, 120, 255, 0.25);
+  --font-title: 'Orbitron', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+#stars-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+header {
+  background: rgba(8, 14, 32, 0.95);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hud {
+  display: flex;
+  gap: 14px;
+  background: rgba(255,255,255,0.04);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.nav-strip {
+  background: #091024;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0.4rem 1rem;
+  gap: 8px;
+}
+.nav-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+.nav-tab:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.nav-tab.active { background: var(--cyan-dim); border-color: var(--cyan); color: var(--cyan); }
+.container { max-width: 1300px; margin: 0 auto; padding: 1.5rem; }
+.panel { display: none; }
+.panel.active { display: block; }
 
-    /* CARD UTILS */
-    .glass-card {
-      background: var(--bg-card);
-      border: 1px solid var(--bg-card-border);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-      backdrop-filter: blur(8px);
-      padding: 1.5rem;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-      color: #050b18; font-family: var(--font-display); font-weight: 700;
-      border: none; border-radius: 12px; padding: 0.85rem 1.75rem;
-      font-size: 1.1rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-      min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    }
-    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 25px rgba(0, 242, 254, 0.7); }
-    .btn-secondary {
-      background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.2);
-      font-family: var(--font-body); font-weight: 600; border-radius: 12px;
-      padding: 0.75rem 1.4rem; cursor: pointer; transition: all 0.2s; min-height: 44px;
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.15); }
-    .btn-danger { background: var(--neon-red); color: white; border: none; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer; }
+.btn {
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-cyan { background: linear-gradient(135deg, #00e5ff, #0284c7); color: #040817; font-weight: 800; }
+.btn-gold { background: linear-gradient(135deg, #ffd000, #ea580c); color: #040817; font-weight: 800; }
+.btn-outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--border); }
 
-    /* MISSION DASHBOARD */
-    .hero-banner {
-      background: linear-gradient(135deg, rgba(30, 41, 79, 0.8) 0%, rgba(13, 17, 34, 0.9) 100%);
-      border: 1px solid rgba(79, 172, 254, 0.4);
-      border-radius: 20px; padding: 2.5rem; margin-bottom: 2rem;
-      display: grid; grid-template-columns: 1fr 340px; gap: 2rem; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .hero-banner::after {
-      content: '🚀'; position: absolute; right: -20px; bottom: -30px; font-size: 14rem; opacity: 0.08; pointer-events: none;
-    }
-    .mission-path-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-top: 1.5rem;
-    }
-    .chapter-card {
-      background: rgba(17, 24, 45, 0.9); border: 1px solid var(--bg-card-border);
-      border-radius: 16px; padding: 1.5rem; cursor: pointer; transition: all 0.25s; position: relative;
-    }
-    .chapter-card:hover { transform: translateY(-4px); border-color: var(--neon-cyan); box-shadow: 0 6px 20px rgba(0, 242, 254, 0.2); }
-    .chapter-card .ch-num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-cyan); font-weight: 700; }
-    .chapter-card h3 { font-family: var(--font-display); font-size: 1.3rem; margin: 0.4rem 0 0.8rem 0; color: #fff; }
-    .progress-bar-wrap { background: rgba(255,255,255,0.1); border-radius: 999px; height: 8px; overflow: hidden; margin-top: 1rem; }
-    .progress-bar-fill { background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple)); height: 100%; border-radius: 999px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  position: relative;
+}
+.tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
 
-    /* LESSON VIEWER */
-    .learn-container { display: grid; grid-template-columns: 280px 1fr; gap: 1.75rem; }
-    .sidebar-sections { background: rgba(13, 20, 38, 0.95); border: 1px solid var(--bg-card-border); border-radius: 14px; padding: 1rem; height: fit-content; }
-    .sidebar-sections h4 { font-family: var(--font-display); margin-bottom: 0.75rem; color: var(--neon-cyan); }
-    .sec-item {
-      padding: 0.65rem 0.85rem; border-radius: 8px; font-size: 0.9rem; cursor: pointer;
-      margin-bottom: 0.35rem; transition: all 0.2s; color: var(--text-muted);
-    }
-    .sec-item:hover, .sec-item.active { background: rgba(0, 242, 254, 0.15); color: #fff; font-weight: 600; }
-    
-    .lesson-content { background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 16px; padding: 2rem; }
-    .callout-box {
-      border-left: 4px solid var(--neon-cyan); background: rgba(0, 242, 254, 0.05);
-      padding: 1.25rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0;
-    }
-    .callout-mystery { border-left-color: var(--neon-purple); background: rgba(157, 78, 221, 0.08); }
-    .callout-power { border-left-color: var(--neon-gold); background: rgba(255, 209, 102, 0.08); }
-    .callout-hero { border: 1px solid var(--neon-cyan); background: radial-gradient(circle at top, rgba(0,242,254,0.15), rgba(15,23,42,0.95)); border-radius: 14px; padding: 1.5rem; margin: 1.5rem 0; }
+/* Chapter Detail Layout */
+.chapter-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.sidebar-sections {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.section-nav-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.section-nav-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.section-nav-btn.active {
+  background: var(--cyan-dim);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  font-weight: 700;
+}
+.content-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+}
 
-    /* QUIZ & ENGINE */
-    .quiz-card { max-width: 800px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--bg-card-border); border-radius: 20px; padding: 2.5rem; }
-    .q-opt-btn {
-      width: 100%; text-align: left; background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 1rem 1.25rem;
-      border-radius: 12px; margin-bottom: 0.75rem; font-size: 1.05rem; cursor: pointer;
-      transition: all 0.2s; font-family: var(--font-body);
-    }
-    .q-opt-btn:hover:not(.disabled) { background: rgba(0, 242, 254, 0.15); border-color: var(--neon-cyan); }
-    .q-opt-btn.correct { background: rgba(6, 214, 160, 0.25) !important; border-color: var(--neon-green) !important; color: #a7f3d0; font-weight: 700; }
-    .q-opt-btn.incorrect { background: rgba(239, 71, 111, 0.25) !important; border-color: var(--neon-red) !important; color: #fecdd3; }
-    
-    /* SIMULATION CANVAS / LABS */
-    .sim-box { background: #030712; border: 1px solid var(--bg-card-border); border-radius: 14px; padding: 1.5rem; margin: 1.5rem 0; text-align: center; }
-    canvas { background: #000; border-radius: 10px; max-width: 100%; }
+/* Quiz Engine */
+.quiz-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.opt-btn {
+  width: 100%;
+  text-align: left;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.opt-btn:hover { background: rgba(0, 229, 255, 0.1); border-color: var(--cyan); }
+.opt-btn.correct { background: rgba(16, 185, 129, 0.2) !important; border-color: var(--green) !important; color: #a7f3d0; }
+.opt-btn.wrong { background: rgba(239, 68, 68, 0.2) !important; border-color: var(--red) !important; color: #fecaca; }
 
-    /* FLASHCARD */
-    .flashcard {
-      perspective: 1000px; max-width: 500px; height: 260px; margin: 2rem auto; cursor: pointer;
-    }
-    .flashcard-inner {
-      position: relative; width: 100%; height: 100%; text-align: center;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d;
-    }
-    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-    .fc-front, .fc-back {
-      position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-      border-radius: 16px; border: 1px solid var(--neon-cyan);
-      display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;
-      background: linear-gradient(135deg, rgba(20, 30, 55, 0.95), rgba(10, 15, 30, 0.95));
-    }
-    .fc-back { transform: rotateY(180deg); border-color: var(--neon-purple); background: linear-gradient(135deg, #1e1035, #0a0f20); }
-
-    /* MODAL */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-      z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem;
-    }
-    .modal-overlay.active { display: flex; }
-    .modal-box { background: #0f172a; border: 1px solid var(--neon-cyan); border-radius: 20px; max-width: 550px; width: 100%; padding: 2rem; max-height: 90vh; overflow-y: auto; }
-
-    /* BADGE GRID */
-    .badge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .badge-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px; padding: 1.25rem 0.75rem; text-align: center; transition: all 0.3s;
-    }
-    .badge-card.unlocked { border-color: var(--neon-gold); background: rgba(255, 209, 102, 0.1); box-shadow: 0 0 15px rgba(255, 209, 102, 0.2); }
-    .badge-card .b-icon { font-size: 2.2rem; margin-bottom: 0.5rem; filter: grayscale(1); opacity: 0.4; }
-    .badge-card.unlocked .b-icon { filter: grayscale(0); opacity: 1; transform: scale(1.1); }
-
-    @media (max-width: 840px) {
-      .hero-banner { grid-template-columns: 1fr; }
-      .learn-container { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-    }
-  </style>
+@media (max-width: 900px) {
+  .chapter-layout { grid-template-columns: 1fr; }
+  header { flex-direction: column; gap: 8px; }
+}
+</style>
 </head>
 <body>
-<div id="app-container">
-  
-  <!-- TOP NAVIGATION HEADER -->
-  <header>
-    <div class="logo-badge" onclick="navigateTo('dashboard')">
-      <span class="rocket-icon">🚀</span>
-      <div>
-        <h1>INACC <span>SPACE ACADEMY</span></h1>
-        <small style="color:var(--text-muted);font-size:0.75rem;font-family:var(--font-mono)">GRADE 4–6 OLYMPIAD PREP</small>
-      </div>
-    </div>
+<canvas id="stars-bg"></canvas>
 
-    <div class="nav-stats">
-      <div class="stat-pill" title="Commander XP Points">⚡ <span id="nav-xp">0</span> XP</div>
-      <div class="stat-pill" title="Stars Collected">⭐ <span id="nav-stars">0</span></div>
-      <div class="stat-pill" title="Mastery Rank">🎖️ <span id="nav-rank">Cadet</span></div>
-    </div>
+<header>
+  <div class="brand">
+    <span>🚀</span>
+    <span>INACC SPACE ACADEMY</span>
+  </div>
+  <div class="hud">
+    <div>👤 <span id="hud-name">Cadet</span></div>
+    <div>⚡ <span id="hud-xp" style="color:var(--gold);">0 XP</span></div>
+    <div>⭐ <span id="hud-stars" style="color:var(--cyan);">0/80 MCQs</span></div>
+  </div>
+</header>
 
-    <nav class="nav-links">
-      <button class="nav-btn active" onclick="navigateTo('dashboard')">Mission Control</button>
-      <button class="nav-btn" onclick="navigateTo('syllabus')">Syllabus</button>
-      <button class="nav-btn" onclick="navigateTo('simulations')">Simulators</button>
-      <button class="nav-btn" onclick="navigateTo('flashcards')">Flashcards</button>
-      <button class="nav-btn" onclick="navigateTo('revision')">Revision</button>
-      <button class="nav-btn" onclick="navigateTo('timed_test')">15-Min Test</button>
-      <button class="nav-btn" onclick="navigateTo('mistakes')">Mistake Book</button>
-    </nav>
-  </header>
-
-  <!-- MAIN DYNAMIC CONTENT -->
-  <main>
-
-    <!-- VIEW: FIRST RUN ONBOARDING MODAL -->
-    <div id="onboarding-modal" class="modal-overlay">
-      <div class="modal-box">
-        <h2 style="font-family:var(--font-display);color:var(--neon-cyan);margin-bottom:0.5rem">👨‍🚀 Welcome, Space Explorer!</h2>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem">Your mission to conquer the INACC National Aerospace Olympiad begins now. Prepare your flight profile:</p>
-        
-        <label style="display:block;margin-bottom:0.5rem;font-weight:600">Astronaut Call-Sign (Your Name):</label>
-        <input type="text" id="ob-name-input" placeholder="e.g. Commander Neil" style="width:100%;padding:0.75rem;border-radius:8px;border:1px solid var(--neon-blue);background:#050b18;color:#fff;font-size:1rem;margin-bottom:1.25rem">
-        
-        <label style="display:block;margin-bottom:0.5rem;font-weight:600">Choose Space Avatar:</label>
-        <div style="display:flex;gap:0.75rem;font-size:1.8rem;margin-bottom:1.5rem;cursor:pointer" id="avatar-selector">
-          <span class="avatar-opt" onclick="selectAvatar('👨‍🚀', this)" style="border:2px solid var(--neon-cyan);border-radius:8px;padding:4px">👨‍🚀</span>
-          <span class="avatar-opt" onclick="selectAvatar('👩‍🚀', this)" style="border:2px solid transparent;border-radius:8px;padding:4px">👩‍🚀</span>
-          <span class="avatar-opt" onclick="selectAvatar('🛸', this)" style="border:2px solid transparent;border-radius:8px;padding:4px">🛸</span>
-          <span class="avatar-opt" onclick="selectAvatar('🤖', this)" style="border:2px solid transparent;border-radius:8px;padding:4px">🤖</span>
-        </div>
-
-        <button class="btn-primary" style="width:100%" onclick="finishOnboarding()">LAUNCH MISSION CONTROL 🚀</button>
-      </div>
-    </div>
-
-    <!-- VIEW 1: MISSION CONTROL (DASHBOARD) -->
-    <section id="view-dashboard" class="view-section active">
-      <div class="hero-banner">
-        <div>
-          <h2 style="font-family:var(--font-display);font-size:2rem;margin-bottom:0.5rem">Welcome aboard, <span id="dash-user-name" style="color:var(--neon-cyan)">Commander</span>!</h2>
-          <p style="color:#cbd5e1;font-size:1.05rem;line-height:1.5;margin-bottom:1.5rem">
-            Prepare for Phase 1 of the INACC National Aerospace Olympiad (15-Minute Online Exam on 30 August 2026)[cite: 1]. Master 8 cosmic chapters, 68 sections, and test your knowledge against the official study guide!
-          </p>
-          <div style="display:flex;gap:1rem;flex-wrap:wrap">
-            <button class="btn-primary" onclick="startNextMission()">CONTINUE LEARNING 🌟</button>
-            <button class="btn-secondary" onclick="startTimedSimulator()">15-MIN OLYMPIAD SIMULATOR ⏱️</button>
-            <button class="btn-secondary" onclick="startMaster80Test()">MASTER 80-Q TEST 🏆</button>
-          </div>
-        </div>
-        <div class="glass-card" style="text-align:center;border-color:rgba(255,209,102,0.4)">
-          <div style="font-size:0.85rem;color:var(--neon-gold);font-weight:700;font-family:var(--font-mono)">OFFICIAL COUNTDOWN</div>
-          <div style="font-size:1.8rem;font-family:var(--font-display);color:#fff;margin:0.5rem 0">30 AUG 2026</div>
-          <div style="font-size:0.85rem;color:var(--text-muted)">Phase 1 Online Challenge[cite: 1]</div>
-          <div class="progress-bar-wrap" style="margin-top:1rem">
-            <div id="overall-progress-bar" class="progress-bar-fill" style="width: 0%"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;margin-top:0.5rem;font-size:0.8rem;font-family:var(--font-mono)">
-            <span>Mastery</span>
-            <span id="overall-progress-txt">0%</span>
-          </div>
-        </div>
-      </div>
-
-      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem">
-        <span>🗺️</span> Mission Flight Path (8 Chapters)
-      </h3>
-      <div class="mission-path-grid" id="chapter-list-grid">
-        <!-- Rendered dynamically -->
-      </div>
-
-      <!-- PARENT & PROGRESS INSIGHTS WIDGET -->
-      <div style="margin-top:2.5rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem">
-        <div class="glass-card">
-          <h4 style="font-family:var(--font-display);color:var(--neon-cyan);margin-bottom:1rem">📊 Cadet Flight Analytics</h4>
-          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.75rem">Adaptive recommendation based on recent mistake patterns:</p>
-          <div id="adaptive-recommendation" style="padding:1rem;background:rgba(255,255,255,0.04);border-radius:10px;font-size:0.95rem;line-height:1.4;border-left:4px solid var(--neon-gold)">
-            Loading flight telemetry...
-          </div>
-        </div>
-        <div class="glass-card">
-          <h4 style="font-family:var(--font-display);color:var(--neon-gold);margin-bottom:1rem">🎖️ Aerospace Achievement Badges</h4>
-          <div class="badge-grid" id="badge-display-grid">
-            <!-- Badges rendered here -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 2: SYLLABUS & CHAPTER LESSON VIEWER -->
-    <section id="view-syllabus" class="view-section">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
-        <div>
-          <h2 id="learn-chapter-title" style="font-family:var(--font-display);font-size:1.8rem;color:#fff">Chapter 1: Our Journey Into Space</h2>
-          <span id="learn-chapter-sub" style="color:var(--neon-cyan);font-family:var(--font-mono);font-size:0.9rem">6 Sections | 10 Olympiad MCQs</span>
-        </div>
-        <button class="btn-secondary" onclick="navigateTo('dashboard')">Back to Mission Control</button>
-      </div>
-
-      <div class="learn-container">
-        <!-- SECTION DIRECTORY -->
-        <div class="sidebar-sections">
-          <h4>Missions & Sections</h4>
-          <div id="section-nav-list">
-            <!-- Dynamic Section Links -->
-          </div>
-          <button class="btn-primary" style="width:100%;margin-top:1.5rem;font-size:0.95rem" onclick="launchChapterQuiz(currentChapterId)">
-            TAKE CHAPTER QUIZ 📝
-          </button>
-        </div>
-
-        <!-- MAIN SECTION READING & SIMULATION -->
-        <div class="lesson-content" id="section-lesson-body">
-          <!-- Dynamic Section Text Loaded Here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 3: INTERACTIVE QUIZ LAB -->
-    <section id="view-quiz" class="view-section">
-      <div class="quiz-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.1)">
-          <div>
-            <span id="quiz-badge-title" style="font-family:var(--font-mono);color:var(--neon-cyan);font-size:0.85rem">CHAPTER TEST</span>
-            <h3 id="quiz-question-number" style="font-family:var(--font-display);font-size:1.4rem">Question 1 of 10</h3>
-          </div>
-          <div id="quiz-timer-box" style="display:none;font-family:var(--font-mono);font-size:1.3rem;color:var(--neon-gold);background:rgba(255,209,102,0.1);padding:0.4rem 1rem;border-radius:8px;border:1px solid var(--neon-gold)">
-            ⏱️ <span id="quiz-timer-digits">15:00</span>
-          </div>
-        </div>
-
-        <div id="quiz-question-text" style="font-size:1.25rem;font-weight:600;line-height:1.5;margin-bottom:1.75rem">
-          Loading question text...
-        </div>
-
-        <div id="quiz-options-container">
-          <!-- 4 Multiple choice buttons -->
-        </div>
-
-        <div id="quiz-feedback-box" style="display:none;margin-top:1.5rem;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.05)">
-          <div id="quiz-feedback-status" style="font-weight:700;font-size:1.1rem;margin-bottom:0.4rem"></div>
-          <div id="quiz-feedback-expl" style="color:var(--text-muted);line-height:1.4"></div>
-          <button id="quiz-next-btn" class="btn-primary" style="margin-top:1rem" onclick="handleQuizNext()">Next Question ➡️</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 4: SIMULATIONS LAB -->
-    <section id="view-simulations" class="view-section">
-      <h2 style="font-family:var(--font-display);font-size:2rem;color:var(--neon-cyan);margin-bottom:0.5rem">🔬 Space Physics & Mission Simulators</h2>
-      <p style="color:var(--text-muted);margin-bottom:2rem">Test the laws of gravity, orbital mechanics, lunar phases, and rocketry in our interactive cosmic laboratory!</p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2rem">
-        <!-- SIMULATOR 1: NEWTON'S ORBIT CANNON -->
-        <div class="glass-card">
-          <h3 style="font-family:var(--font-display);color:#fff">🌍 Orbit & Gravity Simulator</h3>
-          <p style="font-size:0.85rem;color:var(--text-muted);margin:0.5rem 0">Launch a satellite horizontally. If speed matches Earth's curvature, it achieves stable orbit[cite: 1]!</p>
-          <div class="sim-box">
-            <canvas id="orbitCanvas" width="300" height="200"></canvas>
-            <div style="margin-top:0.75rem;display:flex;gap:0.5rem;align-items:center;justify-content:center">
-              <label style="font-size:0.85rem;font-family:var(--font-mono)">Velocity: </label>
-              <input type="range" id="orbitSpeed" min="3" max="11" value="7" style="cursor:pointer">
-              <button class="btn-secondary" style="padding:0.3rem 0.75rem;font-size:0.8rem" onclick="runOrbitSim()">Launch 🚀</button>
-            </div>
-            <div id="orbitSimStatus" style="font-size:0.85rem;color:var(--neon-cyan);margin-top:0.5rem;font-family:var(--font-mono)">Set velocity and launch!</div>
-          </div>
-        </div>
-
-        <!-- SIMULATOR 2: MOON PHASES -->
-        <div class="glass-card">
-          <h3 style="font-family:var(--font-display);color:#fff">🌕 Moon Phase Simulator</h3>
-          <p style="font-size:0.85rem;color:var(--text-muted);margin:0.5rem 0">Drag or click to move the Moon around Earth and watch the illuminated phase shift[cite: 1]!</p>
-          <div class="sim-box">
-            <canvas id="moonCanvas" width="300" height="200"></canvas>
-            <input type="range" id="moonAngle" min="0" max="360" value="0" style="width:80%;margin-top:0.75rem" oninput="drawMoonSim()">
-            <div id="moonPhaseName" style="font-weight:700;color:var(--neon-gold);margin-top:0.5rem;font-family:var(--font-mono)">Phase: New Moon (0°)</div>
-          </div>
-        </div>
-
-        <!-- SIMULATOR 3: ROCKET STAGING -->
-        <div class="glass-card">
-          <h3 style="font-family:var(--font-display);color:#fff">🚀 Rocket Staging Simulator</h3>
-          <p style="font-size:0.85rem;color:var(--text-muted);margin:0.5rem 0">Drop heavy empty stages to accelerate your payload into orbit[cite: 1]!</p>
-          <div class="sim-box" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px">
-            <div id="rocket-visual" style="font-size:3rem;transition:all 0.5s">🚀</div>
-            <div id="staging-altitude" style="font-family:var(--font-mono);font-size:1.1rem;color:var(--neon-cyan);margin:0.75rem 0">Alt: 0 km | Mass: 100%</div>
-            <div style="display:flex;gap:0.5rem">
-              <button class="btn-primary" style="font-size:0.85rem;padding:0.4rem 0.8rem" onclick="advanceStage()">Ignite Stage 🔥</button>
-              <button class="btn-secondary" style="font-size:0.85rem;padding:0.4rem 0.8rem" onclick="resetStaging()">Reset</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 5: FLASHCARD SYSTEM -->
-    <section id="view-flashcards" class="view-section">
-      <div style="text-align:center;max-width:600px;margin:0 auto">
-        <h2 style="font-family:var(--font-display);font-size:2rem;color:var(--neon-gold)">⚡ Rapid Space Flashcards</h2>
-        <p style="color:var(--text-muted);margin-bottom:1.5rem">Click the card to flip and verify key facts from the official INACC guide[cite: 1]!</p>
-        
-        <div class="flashcard" id="main-flashcard" onclick="flipFlashcard()">
-          <div class="flashcard-inner">
-            <div class="fc-front">
-              <span style="font-size:0.8rem;color:var(--neon-cyan);font-family:var(--font-mono);margin-bottom:0.75rem">QUESTION (CLICK TO REVEAL)</span>
-              <h3 id="fc-q-text" style="font-family:var(--font-display);font-size:1.3rem">What keeps planets orbiting the Sun?</h3>
-            </div>
-            <div class="fc-back">
-              <span style="font-size:0.8rem;color:var(--neon-purple);font-family:var(--font-mono);margin-bottom:0.75rem">CORRECT CONCEPT</span>
-              <h3 id="fc-a-text" style="font-family:var(--font-display);font-size:1.4rem;color:var(--neon-green)">Gravity!</h3>
-            </div>
-          </div>
-        </div>
-
-        <div style="display:flex;justify-content:center;gap:1rem;margin-top:1.5rem">
-          <button class="btn-secondary" style="border-color:var(--neon-red);color:var(--neon-red)" onclick="nextFlashcard(false)">Need Practice ❌</button>
-          <button class="btn-primary" onclick="nextFlashcard(true)">I Know It! ⭐</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- VIEW 6: MISTAKE NOTEBOOK -->
-    <section id="view-mistakes" class="view-section">
-      <h2 style="font-family:var(--font-display);font-size:2rem;color:var(--neon-red);margin-bottom:0.5rem">🧠 My Space Mistake Notebook</h2>
-      <p style="color:var(--text-muted);margin-bottom:1.5rem">Every missed question is automatically cataloged here for precision review.</p>
-      
-      <div id="mistakes-container" style="display:grid;gap:1rem">
-        <!-- Rendered mistakes list -->
-      </div>
-    </section>
-
-    <!-- VIEW 7: REVISION CENTER -->
-    <section id="view-revision" class="view-section">
-      <h2 style="font-family:var(--font-display);font-size:2rem;color:var(--neon-cyan);margin-bottom:0.5rem">📖 High-Yield Revision Labs</h2>
-      <p style="color:var(--text-muted);margin-bottom:1.5rem">Consolidated key facts, India Space milestones, Space Heroes, and planetary stats[cite: 1].</p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem">
-        <div class="glass-card">
-          <h3 style="font-family:var(--font-display);color:var(--neon-gold);margin-bottom:0.75rem">🇮🇳 India Space Timeline[cite: 1]</h3>
-          <ul style="list-style:none;font-size:0.9rem;line-height:1.8">
-            <li>🚀 <strong>1962:</strong> INCOSPAR established[cite: 1]</li>
-            <li>🚀 <strong>1963:</strong> First sounding rocket launched from Thumba[cite: 1]</li>
-            <li>🚀 <strong>1969:</strong> ISRO officially founded[cite: 1]</li>
-            <li>🛰️ <strong>1975:</strong> Aryabhata, India's 1st satellite launched[cite: 1]</li>
-            <li>👨‍🚀 <strong>1984:</strong> Rakesh Sharma reaches space aboard Salyut 7[cite: 1]</li>
-            <li>🌕 <strong>2008:</strong> Chandrayaan-1 confirms lunar water molecules[cite: 1]</li>
-            <li>🔴 <strong>2013:</strong> Mangalyaan reaches Mars on maiden attempt[cite: 1]</li>
-            <li>🌕 <strong>2023:</strong> Chandrayaan-3 lands near Moon's South Pole[cite: 1]</li>
-            <li>☀️ <strong>Aditya-L1:</strong> India's dedicated solar observatory[cite: 1]</li>
-            <li>👨‍🚀 <strong>Gaganyaan:</strong> India's human spaceflight program[cite: 1]</li>
-          </ul>
-        </div>
-
-        <div class="glass-card">
-          <h3 style="font-family:var(--font-display);color:var(--neon-cyan);margin-bottom:0.75rem">🪐 Planetary & Orbit Reference[cite: 1]</h3>
-          <ul style="list-style:none;font-size:0.9rem;line-height:1.8">
-            <li>🔥 <strong>Hottest Planet:</strong> Venus (Greenhouse Effect)[cite: 1]</li>
-            <li>⚡ <strong>Fastest Orbit:</strong> Mercury (88 Earth Days)[cite: 1]</li>
-            <li>👑 <strong>Largest Planet:</strong> Jupiter (>1300 Earths)[cite: 1]</li>
-            <li>🔄 <strong>Sideways Planet:</strong> Uranus (Rolls on its side)[cite: 1]</li>
-            <li>🛰️ <strong>LEO (160–2000 km):</strong> ISS, Earth mapping[cite: 1]</li>
-            <li>🛰️ <strong>MEO (2000–35,786 km):</strong> GPS Navigation[cite: 1]</li>
-            <li>🛰️ <strong>GEO (35,786 km):</strong> Matches Earth rotation (TV & Weather)[cite: 1]</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </main>
+<div class="nav-strip">
+  <button class="nav-tab active" onclick="showTab('dashboard')">🛰️ Mission Control</button>
+  <button class="nav-tab" onclick="showTab('study')">📖 8 Chapters (68 Sections)</button>
+  <button class="nav-tab" onclick="showTab('sim15')">🚨 15-Min Test (Phase 1)</button>
+  <button class="nav-tab" onclick="showTab('master80')">🏆 80-MCQ Master Exam</button>
+  <button class="nav-tab" onclick="showTab('mistakes')">🧠 Space Mistake Book</button>
 </div>
 
-<!-- ========================================================================= -->
-<!-- JAVASCRIPT: SYLLABUS DATA, OFFICIAL 80 MCQS, STATE ENGINE, SIMULATORS -->
-<!-- ========================================================================= -->
+<div class="container">
+
+  <!-- TAB 1: DASHBOARD -->
+  <div id="panel-dashboard" class="panel active">
+    <div style="background: linear-gradient(135deg, rgba(26,41,128,0.4), rgba(38,208,206,0.1)); border:1px solid var(--border); border-radius:14px; padding:2rem; margin-bottom:1.5rem;">
+      <h1 style="font-family:var(--font-title); font-size:1.8rem; margin-bottom:0.5rem; color:var(--cyan);">INACC Space Science Olympiad</h1>
+      <p style="color:var(--text-muted); font-size:1rem; margin-bottom:1.2rem;">Authoritative syllabus prep covering all 8 Chapters, all 68 individual sections, Space Mysteries, Space Heroes, and the full 80 Study Guide MCQs for Grades 4–6[cite: 1].</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-cyan" onclick="showTab('study')">Enter 68-Section Study Guide</button>
+        <button class="btn btn-gold" onclick="start15MinTest()">Take 15-Min Simulator</button>
+        <button class="btn btn-outline" onclick="showTab('master80')">Attempt 80-Question Exam</button>
+      </div>
+    </div>
+
+    <h2 style="font-family:var(--font-title); font-size:1.2rem; color:var(--cyan); margin-bottom:1rem;">Chapter Quick Select (8 Chapters)</h2>
+    <div class="grid" id="dashboard-ch-grid"></div>
+  </div>
+
+  <!-- TAB 2: STUDY GUIDE (8 CHAPTERS, ALL 68 SECTIONS) -->
+  <div id="panel-study" class="panel">
+    <!-- Chapter selector bar -->
+    <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin-bottom:1rem;" id="study-ch-tabs"></div>
+
+    <div class="chapter-layout">
+      <!-- Sidebar listing all individual sections of the active chapter -->
+      <div class="sidebar-sections">
+        <h4 style="font-family:var(--font-title); font-size:0.85rem; color:var(--cyan); margin-bottom:10px;" id="sidebar-ch-title">Sections</h4>
+        <div id="sidebar-section-list"></div>
+        <button class="btn btn-gold" style="width:100%; margin-top:12px; justify-content:center;" onclick="launchActiveChapterQuiz()">Take 10-Q Chapter Quiz 📝</button>
+      </div>
+
+      <!-- Main section content display -->
+      <div class="content-box" id="study-content-area"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: 15-MINUTE TEST SIMULATOR -->
+  <div id="panel-sim15" class="panel">
+    <div id="sim15-landing" class="quiz-container" style="text-align:center;">
+      <h2 style="font-family:var(--font-title); color:var(--gold);">🚨 Phase 1: 15-Minute Exam Simulator</h2>
+      <p style="color:var(--text-muted); margin:1rem 0;">Phase 1 is a 15-minute nationwide online test scheduled for 30 August 2026[cite: 1]. Complete 20 rapid-fire randomized MCQs before the timer hits 00:00!</p>
+      <button class="btn btn-gold" style="margin:auto;" onclick="begin15MinTest()">Start 15-Minute Countdown</button>
+    </div>
+    <div id="sim15-running" class="quiz-container" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span id="s15-progress" style="font-weight:bold; color:var(--cyan);">Q 1 / 20</span>
+        <span id="s15-clock" style="font-family:var(--font-title); font-size:1.3rem; color:var(--red); font-weight:bold;">15:00</span>
+      </div>
+      <h3 id="s15-question" style="margin-bottom:1.5rem;">Question text?</h3>
+      <div id="s15-options"></div>
+      <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+        <button class="btn btn-outline" onclick="prevS15()">Previous</button>
+        <button class="btn btn-cyan" onclick="nextS15()">Next Question →</button>
+      </div>
+    </div>
+    <div id="sim15-summary" class="quiz-container" style="display:none; text-align:center;"></div>
+  </div>
+
+  <!-- TAB 4: MASTER 80-MCQ ASSESSMENT -->
+  <div id="panel-master80" class="panel">
+    <div id="m80-landing" class="quiz-container" style="text-align:center;">
+      <h2 style="font-family:var(--font-title); color:var(--cyan);">🏆 Full 80-Question Master Assessment</h2>
+      <p style="color:var(--text-muted); margin:1rem 0;">Direct interactive execution of all 80 authoritative MCQs across all 8 chapters from the official INACC Study Guide[cite: 1].</p>
+      <button class="btn btn-cyan" style="margin:auto;" onclick="beginMaster80()">Start 80-Question Master Exam</button>
+    </div>
+    <div id="m80-running" class="quiz-container" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span id="m80-progress" style="font-weight:bold; color:var(--cyan);">Q 1 / 80</span>
+        <span id="m80-badge" class="tag">CHAPTER 1</span>
+      </div>
+      <h3 id="m80-question" style="margin-bottom:1.5rem;">Question text?</h3>
+      <div id="m80-options"></div>
+      <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+        <button class="btn btn-outline" onclick="prevM80()">Previous</button>
+        <button class="btn btn-cyan" onclick="nextM80()">Next Question →</button>
+      </div>
+    </div>
+    <div id="m80-summary" class="quiz-container" style="display:none; text-align:center;"></div>
+  </div>
+
+  <!-- TAB 5: MISTAKE NOTEBOOK -->
+  <div id="panel-mistakes" class="panel">
+    <h2 style="font-family:var(--font-title); color:var(--cyan); margin-bottom:1rem;">🧠 Space Mistake Notebook</h2>
+    <div class="grid" id="mistakes-grid"></div>
+  </div>
+
+</div>
+
 <script>
-/* ---------------------------------------------------------------------------
-   1. AUTHORITATIVE STUDY GUIDE SYLLABUS & CONTENT
---------------------------------------------------------------------------- */
-const SYLLABUS_DATA = [
+/* ==========================================================================
+   COMPLETE INACC STUDY GUIDE DATA (8 CHAPTERS, ALL 68 SECTIONS, ALL 80 MCQS)[cite: 1]
+========================================================================== */
+const INACC_COMPLETE_SYLLABUS = [
   {
-    id: 1,
+    ch: 1,
     title: "Our Journey Into Space",
-    sectionsCount: 6,
     icon: "🌟",
-    desc: "Ancient sky-watchers, Aryabhata, Copernicus, Galileo, Kepler, Newton, and what space is.",
+    briefing: "Imagine this... One evening, all lights in your city go out. You look up and see thousands of twinkling stars and a bright Moon. 'What exactly am I looking at?' Ancient sky-watchers asked this for millennia[cite: 1].",
+    mystery: {
+      q: "Why do stars only appear at night?",
+      a: "The stars are actually shining all the time—even during the day! We cannot see them because the Sun is much brighter, scattering light in our atmosphere to make the sky blue. At night, when our side turns away, stars emerge[cite: 1]."
+    },
+    powerFacts: [
+      "Astronomy is one of the oldest sciences[cite: 1].",
+      "Aryabhata was a famous Indian astronomer and mathematician[cite: 1].",
+      "Galileo used a telescope to study the sky[cite: 1].",
+      "Kepler discovered planets move in elliptical orbits[cite: 1].",
+      "Newton explained gravity[cite: 1].",
+      "Space officially begins at the Kármán Line (~100 km)[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1: The First Sky Watchers",
-        content: `
-          <p>Before clocks and calendars existed, humans looked to the sky[cite: 1]. The Sun was their daily clock, the Moon was their monthly calendar, and star patterns tracked the seasons so ancient farmers knew when to plant seeds and harvest crops[cite: 1].</p>
-          <div class="callout-box">
-            <strong>Sailors Used Stars as GPS:</strong> Ancient sailors relied on <strong>Polaris (the North Star)</strong> because it sits almost directly above Earth's North Pole and hardly moves in the sky[cite: 1]!
-          </div>
-        `
-      },
-      {
-        title: "Section 2: Ancient Civilizations & Astronomy",
-        content: `
-          <p>Ancient Egyptians watched for the bright star <strong>Sirius</strong>, which rose right before the annual Nile River flood that made their soil fertile[cite: 1]. Ancient Chinese astronomers documented comets and eclipses, while ancient Indian scholars laid down advanced mathematical methods to track celestial motions[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 3: Meet the Space Heroes",
-        content: `
-          <div class="callout-hero">
-            <h4>🌟 Aryabhata (India)</h4>
-            <p>Proposed 1,500 years ago that Earth rotates on its axis, causing day, night, and the apparent motion of the stars[cite: 1]. India's first satellite was named in his honor[cite: 1]!</p>
-          </div>
-          <div class="callout-hero">
-            <h4>🔭 Galileo Galilei</h4>
-            <p>Pointed his telescope to space and discovered 4 large moons around Jupiter, sunspots, and lunar mountains[cite: 1].</p>
-          </div>
-          <div class="callout-hero">
-            <h4>🍎 Isaac Newton & Johannes Kepler</h4>
-            <p>Kepler discovered planets move in <strong>ellipses</strong>[cite: 1]. Newton discovered <strong>Universal Gravitation</strong>, the invisible pull keeping planets and moons in orbit[cite: 1].</p>
-          </div>
-        `
-      },
-      {
-        title: "Section 4: What is Space?",
-        content: `
-          <p>Space officially begins at the <strong>Kármán Line (100 km altitude)</strong> where Earth's atmosphere becomes virtually nonexistent[cite: 1]. Space is a vacuum with no air to scatter sunlight, which is why it looks pitch black even when the Sun is blazing[cite: 1]!</p>
-        `
-      },
-      {
-        title: "Section 5: Stars, Planets and Galaxies",
-        content: `
-          <p>A <strong>star</strong> is a massive sphere of hot gas generating its own light via nuclear reactions (the Sun is our closest star)[cite: 1]. A <strong>planet</strong> reflects sunlight and does not make its own light[cite: 1]. Our solar system resides in the <strong>Milky Way Galaxy</strong>[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 6: The Universe - Our Cosmic Home",
-        content: `
-          <p>The universe includes all matter, galaxies, stars, and planets[cite: 1]. India continues contributing to deep cosmos exploration through missions like Chandrayaan-3, Aditya-L1, and Gaganyaan[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "The First Sky Watchers", content: "Before clocks, people observed the Sun, Moon, and stars. The sky became humanity's first clock and calendar. Ancient farmers observed stars to know when to plant seeds and harvest crops. Ancient sailors used the North Star (Polaris) as nature's GPS for sea navigation[cite: 1]." },
+      { id: 2, title: "Amazing Civilizations That Studied the Sky", content: "Ancient Egyptians tracked the bright star Sirius, which appeared annually right before the life-giving Nile River flooded. Ancient Chinese astronomers recorded comets, eclipses, and meteor showers. Ancient Indian astronomers calculated planetary motion, eclipses, and calendars[cite: 1]." },
+      { id: 3, title: "Meet the Space Heroes", content: "Aryabhata (suggested Earth rotates on its axis). Nicolaus Copernicus (proposed the Sun is at the center of the Solar System). Galileo Galilei (discovered 4 moons of Jupiter and Moon craters). Johannes Kepler (discovered elliptical planetary orbits). Isaac Newton (discovered universal gravity)[cite: 1]." },
+      { id: 4, title: "What is Space?", content: "Space begins roughly 100 km above Earth at the Kármán Line. It is a vacuum with no air to breathe, no weather, and almost no sound. Space appears pitch black because there is no atmosphere to scatter sunlight[cite: 1]." },
+      { id: 5, title: "Stars, Planets and Galaxies", content: "A star is a giant ball of hot gas producing its own light and heat (Sun is our nearest star). Planets do not produce light; they reflect sunlight. A galaxy is a gigantic collection of stars, gas, and dust held together by gravity (our home is the Milky Way Galaxy)[cite: 1]." },
+      { id: 6, title: "The Universe – Our Cosmic Home", content: "The universe is everything that exists, containing billions of galaxies. Humans explore space to understand how planets form and whether life exists elsewhere. Missions like Chandrayaan-3 and Aditya-L1 expand our cosmic frontiers[cite: 1]." }
     ]
   },
   {
-    id: 2,
+    ch: 2,
     title: "Orbits, Satellites & Rockets",
-    sectionsCount: 8,
     icon: "🚀",
-    desc: "Gravity, Kepler's 3 Laws, LEO/MEO/GEO orbits, Newton's Third Law, and multi-stage rocketry.",
+    briefing: "Imagine kicking a football from a mountain so fast that as it falls, Earth curves away beneath it at the exact same rate. The football never lands—it enters orbit![cite: 1]",
+    mystery: {
+      q: "If gravity pulls satellites toward Earth, why don't they fall?",
+      a: "Satellites travel forward at high speeds while gravity pulls them inward. They are constantly falling around Earth, staying in a perpetual free-fall balance called an orbit[cite: 1]."
+    },
+    powerFacts: [
+      "An orbit is the path an object follows around another object[cite: 1].",
+      "Kepler discovered that planetary orbits are ellipses[cite: 1].",
+      "Gravity keeps planets, moons, and satellites in orbit[cite: 1].",
+      "LEO, MEO, and GEO are different satellite orbits[cite: 1].",
+      "Rockets operate on Newton's Third Law of Motion[cite: 1].",
+      "PSLV is known as the Workhorse of ISRO[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1 & 2: Orbits & Kepler's Laws",
-        content: `
-          <p>An orbit occurs when an object falls around a body because forward speed perfectly balances gravitational pull[cite: 1].</p>
-          <div class="callout-box">
-            <strong>Kepler's 3 Laws of Planetary Motion:</strong>
-            <br>1. Orbits are oval-shaped <em>ellipses</em>[cite: 1].
-            <br>2. Planets move faster when closer to the Sun[cite: 1].
-            <br>3. Farther planets take much longer to complete an orbit (Mercury = 88 days; Neptune = 165 years)[cite: 1]!
-          </div>
-        `
-      },
-      {
-        title: "Section 3 & 4: Newton's Gravity & Satellites",
-        content: `
-          <p>Gravity keeps the Moon orbiting Earth and Earth orbiting the Sun[cite: 1]. Natural satellites are celestial bodies (like the Moon), while artificial satellites are human-built tools launched for weather, navigation, and TV[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 5: LEO, MEO, and GEO Orbits",
-        content: `
-          <p>🛰️ <strong>LEO (160–2,000 km):</strong> Earth imaging & Space Stations (ISS)[cite: 1].<br>
-          🛰️ <strong>MEO (2,000–35,786 km):</strong> GPS navigation constellations[cite: 1].<br>
-          🛰️ <strong>GEO (35,786 km):</strong> Matches Earth's 24-hr spin, staying fixed over one spot for communication and weather monitoring[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 6, 7 & 8: How Rockets Work & Staging",
-        content: `
-          <p>Rockets fly via <strong>Newton's Third Law of Motion</strong>: for every action, there is an equal and opposite reaction[cite: 1]. Exhaust gas rushes down, thrusting the rocket upward[cite: 1]! Rocket staging discards heavy empty fuel tanks so the spacecraft gets lighter and faster[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "What is an Orbit?", content: "An orbit is the curved path an object follows around another body in space due to gravity and forward motion balancing each other. The Moon orbits Earth at ~3,700 km/h[cite: 1]." },
+      { id: 2, title: "Kepler's Amazing Discarded Rules (3 Laws)", content: "1st Law: Planets move in oval-shaped ellipses with the Sun at one focus. 2nd Law: Planets move faster when closer to the Sun. 3rd Law: Planets farther from the Sun take longer to complete an orbit[cite: 1]." },
+      { id: 3, title: "Newton's Big Idea – Gravity", content: "Gravity is the attractive force between masses. The greater the mass, the stronger the gravity. It keeps the Moon bound to Earth and planets bound to the Sun[cite: 1]." },
+      { id: 4, title: "Natural and Artificial Satellites", content: "Natural satellites (like Earth's Moon, or Jupiter's 90+ moons) occur naturally. Artificial satellites are built by humans for television, communication, weather forecasting, and GPS mapping[cite: 1]." },
+      { id: 5, title: "Different Types of Satellite Orbits", content: "Low Earth Orbit (LEO: 160–2,000 km, used by ISS). Medium Earth Orbit (MEO: 2,000–35,786 km, used by GPS). Geostationary Orbit (GEO: ~35,786 km, matches Earth's 24h rotation, used for TV and weather)[cite: 1]." },
+      { id: 6, title: "How Rockets Work", content: "Rockets function based on Newton's Third Law: For every action, there is an equal and opposite reaction. Burning fuel expels hot gas downward at extreme speeds, generating upward thrust[cite: 1]." },
+      { id: 7, title: "Rocket Stages and Fuels", content: "Rockets use multiple stages (Stage 1 lift, Stage 2 continuation, Stage 3 insertion). Dropping empty stages makes the rocket lighter and faster. Fuels include Liquid Hydrogen, Liquid Oxygen, and Kerosene[cite: 1]." },
+      { id: 8, title: "Modern Rockets and the Future", content: "Reusable rockets land back on Earth to reduce flight costs. ISRO utilizes PSLV (Workhorse), GSLV (Cryogenic engine), and LVM3 (Heavy lifter for Chandrayaan-3)[cite: 1]." }
     ]
   },
   {
-    id: 3,
+    ch: 3,
     title: "India's Space Adventure",
-    sectionsCount: 11,
     icon: "🇮🇳",
-    desc: "Sarabhai, ISRO, Thumba, Aryabhata, PSLV/GSLV/LVM3, Chandrayaan, Mangalyaan, Aditya-L1, Gaganyaan.",
+    briefing: "Imagine starting a space program with very little money, carrying rocket parts on bicycles and bullock carts, and growing to land on the Moon's South Pole![cite: 1]",
+    mystery: {
+      q: "How did a newly independent country become a top space power?",
+      a: "Through vision, dedication, and cost-effective indigenous engineering led by pioneers like Dr. Vikram Sarabhai and Dr. A.P.J. Abdul Kalam[cite: 1]."
+    },
+    powerFacts: [
+      "Dr. Vikram Sarabhai is the Father of the Indian Space Program[cite: 1].",
+      "ISRO was founded on August 15, 1969[cite: 1].",
+      "India's first satellite was Aryabhata (1975)[cite: 1].",
+      "Chandrayaan-1 discovered water molecules on the Moon[cite: 1].",
+      "Chandrayaan-3 soft-landed near the Lunar South Pole[cite: 1].",
+      "Mangalyaan reached Mars on its very first attempt[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1-4: The Birth of ISRO & Aryabhata",
-        content: `
-          <p><strong>Dr. Vikram Sarabhai</strong> is celebrated as the Father of the Indian Space Program[cite: 1]. INCOSPAR was formed in 1962, becoming <strong>ISRO in 1969</strong>[cite: 1]. Early rockets launched from Thumba in 1963 with parts carried on bicycles[cite: 1]! India's first satellite was <strong>Aryabhata (1975)</strong>[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 5: India's Launch Vehicles",
-        content: `
-          <p>🚀 <strong>SLV:</strong> India's first launch vehicle, led by Dr. A.P.J. Abdul Kalam[cite: 1].<br>
-          🚀 <strong>PSLV:</strong> The trusted 'Workhorse of ISRO'[cite: 1].<br>
-          🚀 <strong>LVM3:</strong> India's heaviest rocket, which launched Chandrayaan-2 and Chandrayaan-3[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 6-11: Lunar, Mars & Solar Milestones",
-        content: `
-          <p>🌕 <strong>Chandrayaan-1 (2008):</strong> Confirmed water molecules on the Moon[cite: 1].<br>
-          🔴 <strong>Mangalyaan (2013):</strong> Made India the first country to reach Mars on its maiden attempt[cite: 1]!<br>
-          🌕 <strong>Chandrayaan-3 (2023):</strong> Historic landing near the Moon's South Pole[cite: 1].<br>
-          ☀️ <strong>Aditya-L1:</strong> Studying solar storms at the L1 Lagrange point[cite: 1].<br>
-          👨‍🚀 <strong>Gaganyaan:</strong> Preparing to send Indian astronauts to Low Earth Orbit[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "The Birth of India's Space Program", content: "In 1947, India faced massive developmental needs. Dr. Vikram Sarabhai envisioned space technology to improve agriculture, communication, and education. INCOSPAR was established in 1962[cite: 1]." },
+      { id: 2, title: "Thumba – Where the Dream Began", content: "Thumba in Kerala was chosen because it sits on Earth's magnetic equator. Early scientists used a local church as an office and transported sounding rockets by bicycle. First launch: Nov 21, 1963[cite: 1]." },
+      { id: 3, title: "The Creation of ISRO", content: "In 1969, the Indian Space Research Organisation (ISRO) was formally established to harness space science for national development[cite: 1]." },
+      { id: 4, title: "India's First Satellite – Aryabhata", content: "Launched in 1975, named after the ancient astronomer Aryabhata. It marked India's official entry into satellite design and operations[cite: 1]." },
+      { id: 5, title: "India's Rockets (SLV, PSLV, GSLV, LVM3)", content: "SLV (led by Dr. A.P.J. Abdul Kalam), PSLV (The Workhorse of ISRO), GSLV (advanced cryogenic fuels for high orbits), and LVM3 (India's heaviest operational launch vehicle)[cite: 1]." },
+      { id: 6, title: "Chandrayaan – India's Journey to the Moon", content: "Chandrayaan-1 (2008: discovered water molecules on the Moon). Chandrayaan-2 (2019: high-resolution lunar orbiter). Chandrayaan-3 (2023: historic soft-landing near the Lunar South Pole)[cite: 1]." },
+      { id: 7, title: "Mangalyaan – India Reaches Mars", content: "Launched in 2013 (Mars Orbiter Mission). India became the first nation in the world to successfully enter Mars orbit on its maiden attempt, and at record low cost[cite: 1]." },
+      { id: 8, title: "Aditya-L1 – India's Mission to the Sun", content: "India's first dedicated solar observatory, stationed at the Sun-Earth L1 Lagrange point to study solar storms, coronal mass ejections, and space weather[cite: 1]." },
+      { id: 9, title: "Gaganyaan – Human Spaceflight Mission", content: "India's landmark initiative to send Indian astronauts (Gaganauts) into Low Earth Orbit and safely return them to Earth[cite: 1]." },
+      { id: 10, title: "How Space Helps Us Every Day", content: "ISRO satellites support live weather forecasts, cyclone warning systems, telemedicine, tele-education, mapping, and emergency disaster management[cite: 1]." },
+      { id: 11, title: "The Future of India's Space Program", content: "Future plans include the Bharatiya Antariksh Station (BAS), lunar sample return, and deep-space missions across the Solar System[cite: 1]." }
     ]
   },
   {
-    id: 4,
+    ch: 4,
     title: "The Changing Sky",
-    sectionsCount: 6,
     icon: "🌍",
-    desc: "Earth's rotation, revolution, 23.5° axial tilt, seasons, Polaris navigation, and constellations.",
+    briefing: "The Sun rises in the east and sets in the west. Seasons shift and winter nights grow long. Why does the sky constantly change?[cite: 1]",
+    mystery: {
+      q: "If it's summer in India in June, why is it winter in Australia?",
+      a: "Earth is tilted 23.5°. In June, the Northern Hemisphere is tilted toward the Sun (summer), while the Southern Hemisphere tilts away (winter)[cite: 1]."
+    },
+    powerFacts: [
+      "Earth rotates on its axis once every 24 hours (causes day/night)[cite: 1].",
+      "Earth revolves around the Sun in 365¼ days (creates the year)[cite: 1].",
+      "Seasons are caused by Earth's 23.5° axial tilt, NOT distance to the Sun[cite: 1].",
+      "Polaris (North Star) sits directly above the North Pole for navigation[cite: 1].",
+      "Constellations are star patterns in the night sky[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1 & 2: Rotation vs. Revolution",
-        content: `
-          <p><strong>Rotation (24 Hours):</strong> Earth spins on its axis, producing Day and Night[cite: 1].<br>
-          <strong>Revolution (365¼ Days):</strong> Earth travels in orbit around the Sun, defining one year[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 3 & 4: The Secret of Seasons",
-        content: `
-          <div class="callout-box callout-power">
-            <strong>CRUCIAL OLYMPIAD CONCEPT:</strong> Seasons are caused by <strong>Earth's 23.5° axial tilt</strong>, NOT because Earth gets closer or further from the Sun[cite: 1]! When the Northern Hemisphere tilts toward the Sun, it experiences Summer, while the Southern Hemisphere tilts away and experiences Winter[cite: 1].
-          </div>
-        `
-      },
-      {
-        title: "Section 5 & 6: Constellations & Navigation",
-        content: `
-          <p><strong>Constellations</strong> are recognizable star patterns like Orion (The Hunter with his 3-star Belt) and Ursa Major (The Great Bear containing the Big Dipper)[cite: 1]. The Big Dipper's pointer stars direct travelers to Polaris (North Star)[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "Day and Night – Earth's Daily Spin", content: "Earth spins continuously like a top. This motion is called Rotation (takes ~24 hours). The side facing the Sun has day; the side facing away has night[cite: 1]." },
+      { id: 2, title: "Earth's Journey Around the Sun", content: "While rotating, Earth moves around the Sun in an elliptical path. This motion is called Revolution (takes ~365¼ days or 1 year)[cite: 1]." },
+      { id: 3, title: "Daily, Monthly, and Yearly Changes", content: "Daily changes (day/night) come from rotation. Monthly changes (Moon phases) come from lunar orbit. Yearly changes (visible constellations) come from Earth's revolution[cite: 1]." },
+      { id: 4, title: "The Secret of the Seasons", content: "Earth is tilted on its axis by 23.5°. Summer occurs when your hemisphere tilts toward the Sun (direct rays, longer days). Winter occurs when tilting away[cite: 1]." },
+      { id: 5, title: "Finding Directions Using the Sky", content: "The North Star (Polaris) sits directly above Earth's North Pole and stays fixed. Sailors used Polaris and constellations to navigate across uncharted oceans[cite: 1]." },
+      { id: 6, title: "Constellations", content: "Star patterns named by ancient cultures. Key examples: Orion (The Hunter, with Orion's Belt), Ursa Major (The Great Bear / Big Dipper), and Scorpius[cite: 1]." }
     ]
   },
   {
-    id: 5,
+    ch: 5,
     title: "The Moon – Earth's Best Friend",
-    sectionsCount: 9,
     icon: "🌕",
-    desc: "Giant Impact Theory, 8 moon phases, ocean tides, tidal locking, eclipses, Apollo and Chandrayaan.",
+    briefing: "Why does the Moon follow your car at night? Because it is 384,400 km away! Earth's natural satellite has circled us for over 4 billion years[cite: 1].",
+    mystery: {
+      q: "Is the far side of the Moon always completely dark?",
+      a: "No! The far side receives sunlight just like the near side during its lunar month. We never see it from Earth only because of tidal locking[cite: 1]."
+    },
+    powerFacts: [
+      "The Moon shines by reflecting sunlight[cite: 1].",
+      "The Giant Impact Theory explains Moon formation (Theia collision)[cite: 1].",
+      "One phase cycle takes approximately 29.5 days[cite: 1].",
+      "Moon's gravity is the primary cause of ocean tides[cite: 1].",
+      "Tidal locking makes the same side face Earth always[cite: 1].",
+      "Solar eclipse = Moon blocks Sun; Lunar eclipse = Earth's shadow covers Moon[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1 & 2: Origin & Characteristics",
-        content: `
-          <p>The Moon is Earth's only natural satellite[cite: 1]. The leading <strong>Giant Impact Theory</strong> explains that 4.5 billion years ago, a Mars-sized body named Theia collided with Earth, ejecting debris that coalesced into the Moon[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 3 & 4: Moon Phases & Tidal Locking",
-        content: `
-          <p>The Moon takes ~29.5 days to complete its phase cycle: New Moon → Waxing Crescent → First Quarter → Waxing Gibbous → Full Moon → Waning Gibbous → Last Quarter → Waning Crescent[cite: 1].<br>
-          Because its rotation period equals its orbital revolution period (<strong>Tidal Locking</strong>), we always see the exact same face of the Moon[cite: 1]!</p>
-        `
-      },
-      {
-        title: "Section 5-9: Tides & Eclipses",
-        content: `
-          <p>🌊 <strong>Tides:</strong> Caused primarily by the Moon's gravitational pull on Earth's oceans[cite: 1].<br>
-          🌑 <strong>Solar Eclipse:</strong> Moon moves between Earth and the Sun, blocking sunlight[cite: 1].<br>
-          🔴 <strong>Lunar Eclipse:</strong> Earth passes between the Sun and Moon, casting Earth's shadow across the Moon[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "Getting to Know the Moon", content: "Earth's only natural satellite. It has no atmosphere, no weather, and no air. Footprints left by astronauts stay preserved for millions of years[cite: 1]." },
+      { id: 2, title: "How the Moon Was Born", content: "Giant Impact Theory: ~4.5 billion years ago, a Mars-sized object named Theia collided with young Earth. Debris was blasted into orbit and merged to form the Moon[cite: 1]." },
+      { id: 3, title: "Why Does the Moon Change Shape?", content: "The Moon doesn't physically change shape. As it orbits Earth, we see differing amounts of its sunlit half from our vantage point[cite: 1]." },
+      { id: 4, title: "The Eight Main Moon Phases", content: "New Moon → Waxing Crescent → First Quarter → Waxing Gibbous → Full Moon → Waning Gibbous → Last Quarter → Waning Crescent (cycle = 29.5 days)[cite: 1]." },
+      { id: 5, title: "The Moon and Oceans – Tides", content: "The Moon's gravitational pull tugs on Earth's oceans, producing two high tides and two low tides every day[cite: 1]." },
+      { id: 6, title: "Tidal Locking – Why We See One Side", content: "The Moon takes the same time to rotate once on its axis as it does to revolve around Earth (~27.3 days), locking one face toward Earth[cite: 1]." },
+      { id: 7, title: "Eclipses (Solar and Lunar)", content: "Solar Eclipse: Moon moves between Earth and Sun, casting shadow on Earth. Lunar Eclipse: Earth moves between Sun and Moon, casting shadow on Moon[cite: 1]." },
+      { id: 8, title: "Exploring the Moon – Apollo", content: "Apollo 11 landed Neil Armstrong and Buzz Aldrin on the Moon on July 20, 1969 ('One small step for man, one giant leap for mankind')[cite: 1]." },
+      { id: 9, title: "India and the Moon – Chandrayaan", content: "Chandrayaan-1 found water molecules in 2008. Chandrayaan-3 achieved history in 2023 with a soft landing near the Moon's South Pole[cite: 1]." }
     ]
   },
   {
-    id: 6,
+    ch: 6,
     title: "The Solar System",
-    sectionsCount: 8,
     icon: "🪐",
-    desc: "Solar Nebula origin, the Sun, Terrestrial vs. Gas Giants, planetary characteristics and orders.",
+    briefing: "Imagine a birthday cake the size of a city—Earth is just a tiny sugar grain on it! Our solar system is vast, beautiful, and mostly empty space[cite: 1].",
+    mystery: {
+      q: "Why doesn't Saturn sink in water?",
+      a: "Saturn is composed almost entirely of gas (hydrogen and helium) and has an average density less than water. In a giant bathtub, Saturn would float![cite: 1]"
+    },
+    powerFacts: [
+      "Solar System formed ~4.6 billion years ago from a solar nebula[cite: 1].",
+      "The Sun contains ~99.8% of all mass in the Solar System[cite: 1].",
+      "Mercury is closest; Venus is the hottest planet[cite: 1].",
+      "Jupiter is the largest; Saturn is famous for magnificent rings[cite: 1].",
+      "Uranus rotates on its side; Neptune has the fastest winds (>2,000 km/h)[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1 & 2: Origin & The Sun",
-        content: `
-          <p>Formed ~4.6 billion years ago from a rotating solar nebula[cite: 1]. The Sun contains <strong>99.8% of all mass</strong> in the solar system, fusing hydrogen into helium to generate heat and light[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 3-7: The 8 Planets Comparison",
-        content: `
-          <p>🪨 <strong>Terrestrial (Rocky) Planets:</strong> Mercury (smallest/fastest), Venus (hottest via runaway greenhouse effect), Earth (supports life/liquid water), Mars (Red Planet, Olympus Mons)[cite: 1].<br>
-          🪐 <strong>Giant Planets:</strong> Jupiter (largest, Great Red Spot), Saturn (spectacular ice rings, lowest density), Uranus (sideways tilt), Neptune (fiercest supersonic winds)[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "How the Solar System Was Born", content: "Formed 4.6 billion years ago from a spinning cloud of gas and dust (solar nebula). Gravity collapsed the center to form the Sun, and disk debris formed planets[cite: 1]." },
+      { id: 2, title: "The Sun – Heart of the Solar System", content: "A yellow dwarf star holding 99.8% of the system's mass. Nuclear fusion converts hydrogen into helium in its core, providing light and heat[cite: 1]." },
+      { id: 3, title: "Mercury and Venus – Inner Hot Worlds", content: "Mercury: Smallest planet, no atmosphere, cratered, 88-day orbit. Venus: Earth's 'evil twin', runaway greenhouse effect makes it the hottest planet (~465°C)[cite: 1]." },
+      { id: 4, title: "Earth and Mars – Worlds of Possibility", content: "Earth: Supports liquid oceans and life. Mars: The Red Planet, iron oxide soil, home to Olympus Mons (largest volcano) and Valles Marineris[cite: 1]." },
+      { id: 5, title: "The Giant Planets – Jupiter and Saturn", content: "Jupiter: Largest planet, Great Red Spot storm, moons Europa/Ganymede. Saturn: Spectacular ring system of ice and rock, moon Titan[cite: 1]." },
+      { id: 6, title: "Uranus and Neptune – The Ice Giants", content: "Uranus: Tilted 98° on its side, methane blue-green atmosphere. Neptune: Outermost planet, extreme supersonic winds over 2,000 km/h[cite: 1]." },
+      { id: 7, title: "Comparing the Planets", content: "Terrestrial Rocky Planets (Mercury, Venus, Earth, Mars) vs Giant Gas & Ice Planets (Jupiter, Saturn, Uranus, Neptune)[cite: 1]." },
+      { id: 8, title: "Future Solar System Exploration", content: "Searching for biosignatures, exploring subsurface oceans on moons, and developing human settlements on Mars[cite: 1]." }
     ]
   },
   {
-    id: 7,
+    ch: 7,
     title: "Moons, Asteroids & Comets",
-    sectionsCount: 10,
     icon: "☄️",
-    desc: "Europa, Titan, Io, Ganymede, Asteroid Belt, Near-Earth Asteroids, Comets, Kuiper Belt, Pluto.",
+    briefing: "Beyond the planets travel glowing cosmic visitors, moons with hidden oceans, and ancient asteroids that hold clues to the origin of worlds[cite: 1].",
+    mystery: {
+      q: "Why does a comet's tail always point away from the Sun?",
+      a: "Solar wind and solar radiation pressure push vaporized gas and dust directly away from the Sun, regardless of the comet's travel direction[cite: 1]."
+    },
+    powerFacts: [
+      "Europa (Jupiter) harbors a vast subsurface liquid ocean[cite: 1].",
+      "Titan (Saturn) has lakes and rivers of liquid methane[cite: 1].",
+      "Io (Jupiter) is the most volcanically active body in the Solar System[cite: 1].",
+      "Ganymede is the largest moon (larger than Mercury)[cite: 1].",
+      "The Asteroid Belt is located between Mars and Jupiter[cite: 1].",
+      "Pluto was reclassified as a Dwarf Planet in 2006[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1-4: Unique Moons",
-        content: `
-          <p>🌊 <strong>Europa (Jupiter):</strong> Hidden liquid water ocean under icy crust[cite: 1].<br>
-          ⛽ <strong>Titan (Saturn):</strong> Dense atmosphere with liquid methane/ethane lakes[cite: 1].<br>
-          🌋 <strong>Io (Jupiter):</strong> Most volcanically active body in the solar system[cite: 1].<br>
-          👑 <strong>Ganymede (Jupiter):</strong> Largest moon, bigger than planet Mercury[cite: 1]!</p>
-        `
-      },
-      {
-        title: "Section 5-10: Asteroids, Comets & Dwarf Planets",
-        content: `
-          <p>🪨 <strong>Asteroid Belt:</strong> Rocky remnants situated between Mars and Jupiter[cite: 1].<br>
-          ☄️ <strong>Comets:</strong> 'Dirty snowballs' of ice and dust; tails always point away from the Sun due to solar wind[cite: 1].<br>
-          ❄️ <strong>Kuiper Belt & Pluto:</strong> Icy doughnut-shaped zone past Neptune housing Pluto (reclassified as dwarf planet in 2006)[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "Amazing Moons of the Solar System", content: "Over 300 moons orbit planets across the solar system, exhibiting volcanic eruptions, hydrocarbon lakes, and icy crusts[cite: 1]." },
+      { id: 2, title: "Europa – Moon with a Hidden Ocean", content: "Europa (Jupiter) is covered in a global ice shell. Beneath lies a liquid water ocean containing more water than all Earth's oceans combined[cite: 1]." },
+      { id: 3, title: "Titan – The Moon with Weather", content: "Saturn's largest moon has a thick atmosphere and liquid cycle with rain, rivers, and lakes made of liquid methane and ethane[cite: 1]." },
+      { id: 4, title: "Io and Ganymede – Fire and Ice", content: "Io: Squeezed by Jupiter's gravity, driving hundreds of active volcanoes. Ganymede: Largest moon in the Solar System with its own magnetic field[cite: 1]." },
+      { id: 5, title: "Asteroids – Rocky Remnants", content: "Rocky chunks left over from solar system formation. Most reside in the Asteroid Belt between Mars and Jupiter[cite: 1]." },
+      { id: 6, title: "Near-Earth Asteroids & Planetary Defense", content: "Asteroids with orbits nearing Earth. Space agencies track them to develop deflection systems (planetary defense)[cite: 1]." },
+      { id: 7, title: "Comets – The Cosmic Snowballs", content: "Made of ice, dust, and rock. Approaching the Sun vaporizes ice to form a glowing coma and a tail pointing away from the Sun[cite: 1]." },
+      { id: 8, title: "Halley's Comet", content: "Famous comet visible from Earth every ~76 years. Next predicted appearance is in 2061[cite: 1]." },
+      { id: 9, title: "Dwarf Planets and Pluto's Story", content: "In 2006, Pluto was reclassified as a dwarf planet because it does not clear its orbital neighborhood. Others include Ceres, Eris, Haumea, Makemake[cite: 1]." },
+      { id: 10, title: "The Kuiper Belt and the Cosmic Edge", content: "A vast disc of icy bodies and dwarf planets extending beyond Neptune into the distant Oort Cloud[cite: 1]." }
     ]
   },
   {
-    id: 8,
+    ch: 8,
     title: "Exploring the Universe",
-    sectionsCount: 10,
     icon: "🌌",
-    desc: "Sputnik, Gagarin, Apollo, ISS, Mars Rovers, Hubble, James Webb Space Telescope, Exoplanets.",
+    briefing: "Close your eyes and imagine the year 2050: the first child to walk on Mars could be reading this right now![cite: 1]",
+    mystery: {
+      q: "Why do we place giant telescopes in space?",
+      a: "Earth's atmosphere blurs, distorts, and blocks wavelengths of cosmic light. In space, telescopes capture crystal-clear images[cite: 1]."
+    },
+    powerFacts: [
+      "Sputnik 1 (1957) was the first artificial satellite[cite: 1].",
+      "Yuri Gagarin (1961) was the first human in space[cite: 1].",
+      "Neil Armstrong (1969) was the first human on the Moon[cite: 1].",
+      "The ISS is an international microgravity orbital laboratory[cite: 1].",
+      "James Webb Space Telescope detects deep infrared from early galaxies[cite: 1].",
+      "Exoplanets are planets orbiting distant stars[cite: 1]."
+    ],
     sections: [
-      {
-        title: "Section 1-5: Historic Spaceflight & Stations",
-        content: `
-          <p>🛰️ <strong>1957:</strong> Sputnik 1 inaugurated the Space Age[cite: 1].<br>
-          👨‍🚀 <strong>1961:</strong> Yuri Gagarin becomes the first human in space[cite: 1].<br>
-          🌕 <strong>1969:</strong> Neil Armstrong & Buzz Aldrin land on the Moon with Apollo 11[cite: 1].<br>
-          🛸 <strong>ISS:</strong> International Space Station continuously inhabited orbital laboratory since 2000[cite: 1].</p>
-        `
-      },
-      {
-        title: "Section 6-10: Mars Rovers, Space Telescopes & Beyond",
-        content: `
-          <p>🔴 <strong>Mars Rovers:</strong> Spirit, Opportunity, Curiosity, and Perseverance collecting sample cores[cite: 1].<br>
-          🔭 <strong>Hubble (1990) & James Webb (2021):</strong> Space telescopes studying cosmic evolution and ancient galaxies[cite: 1].<br>
-          🪐 <strong>Exoplanets:</strong> Planets orbiting other stars, some in habitable zones[cite: 1].<br>
-          👩‍🚀 <strong>Kalpana Chawla:</strong> First woman of Indian origin in space, inspiring generations[cite: 1].</p>
-        `
-      }
+      { id: 1, title: "The Space Race – A New Era Begins", content: "Mid-20th-century rivalry between the USA and USSR that accelerated the rapid birth of rocketry, computers, and space missions[cite: 1]." },
+      { id: 2, title: "Sputnik – The First Artificial Satellite", content: "Launched by the USSR on Oct 4, 1957. A beach-ball-sized radio satellite that marked the dawn of the Space Age[cite: 1]." },
+      { id: 3, title: "Yuri Gagarin – First Human in Space", content: "On April 12, 1961, Soviet cosmonaut Yuri Gagarin orbited Earth aboard Vostok 1 for 108 minutes[cite: 1]." },
+      { id: 4, title: "Apollo and the Moon Landings", content: "On July 20, 1969, Apollo 11 landed Neil Armstrong and Buzz Aldrin on the Moon, returning invaluable lunar rock samples[cite: 1]." },
+      { id: 5, title: "Space Stations – Homes in Space", content: "Habitable orbital research labs. The International Space Station (ISS) has been continuously occupied by international crews since 2000[cite: 1]." },
+      { id: 6, title: "Mars Rovers – Robotic Geologists", content: "Robotic explorers including Spirit, Opportunity, Curiosity, and Perseverance searching for water history and biosignatures on Mars[cite: 1]." },
+      { id: 7, title: "Hubble and James Webb Space Telescopes", content: "Hubble (1990: optical space views). James Webb Space Telescope (2021: giant gold beryllium mirror studying the earliest galaxies in infrared)[cite: 1]." },
+      { id: 8, title: "Searching for Life Beyond Earth (Exoplanets)", content: "Astronomers have cataloged thousands of exoplanets orbiting other stars, searching for atmospheric water vapor and biosignatures[cite: 1]." },
+      { id: 9, title: "Space Hero: Kalpana Chawla", content: "First woman of Indian origin in space. Flew STS-87 and STS-107, inspiring millions of young students worldwide to pursue science[cite: 1]." },
+      { id: 10, title: "You – The Future Space Explorer", content: "Today's students are tomorrow's aerospace engineers, lunar base builders, and Mars astronauts[cite: 1]." }
     ]
   }
 ];
 
-/* ---------------------------------------------------------------------------
-   2. AUTHORITATIVE 80 INACC OLYMPIAD MCQS (Directly from Study Guide)
---------------------------------------------------------------------------- */
-const MASTER_80_MCQS = [
-  // Chapter 1 (Q1-Q10)
-  { id: 1, ch: 1, q: "Which star helped ancient Egyptians predict flooding of the Nile River?", opts: ["Polaris", "Sirius", "Vega", "Betelgeuse"], ans: 1, expl: "The rising of Sirius signaled the rich annual flooding of the Nile River[cite: 1]." },
-  { id: 2, ch: 1, q: "Which Indian astronomer suggested that Earth rotates on its axis?", opts: ["Newton", "Galileo", "Aryabhata", "Kepler"], ans: 2, expl: "Aryabhata proposed Earth's axial rotation over 1,500 years ago[cite: 1]." },
-  { id: 3, ch: 1, q: "Who first proposed that Earth orbits the Sun?", opts: ["Copernicus", "Newton", "Galileo", "Ptolemy"], ans: 0, expl: "Nicolaus Copernicus proposed the heliocentric model where Earth orbits the Sun[cite: 1]." },
-  { id: 4, ch: 1, q: "Galileo discovered four large moons orbiting which planet?", opts: ["Mars", "Saturn", "Jupiter", "Earth"], ans: 2, expl: "Galileo discovered the 4 Galilean moons of Jupiter (Io, Europa, Ganymede, Callisto)[cite: 1]." },
-  { id: 5, ch: 1, q: "What force keeps planets moving around the Sun?", opts: ["Magnetism", "Electricity", "Gravity", "Light"], ans: 2, expl: "The Sun's gravity holds the planets in their orbital paths[cite: 1]." },
-  { id: 6, ch: 1, q: "The closest star to Earth is:", opts: ["Sirius", "Polaris", "Alpha Centauri", "The Sun"], ans: 3, expl: "The Sun is our closest star (~150 million km away)[cite: 1]." },
-  { id: 7, ch: 1, q: "What is the name of our galaxy?", opts: ["Andromeda", "Whirlpool", "Milky Way", "Sombrero"], ans: 2, expl: "Our Solar System resides inside the Milky Way Galaxy[cite: 1]." },
-  { id: 8, ch: 1, q: "According to the Kármán line, space officially begins near:", opts: ["10 km", "50 km", "100 km", "500 km"], ans: 2, expl: "The Kármán Line at 100 km altitude marks the official boundary of space[cite: 1]." },
-  { id: 9, ch: 1, q: "Which scientist formulated the law of universal gravitation?", opts: ["Galileo", "Aryabhata", "Newton", "Kepler"], ans: 2, expl: "Sir Isaac Newton formulated the Law of Universal Gravitation[cite: 1]." },
-  { id: 10, ch: 1, q: "A planet shines because it:", opts: ["Produces its own light", "Reflects sunlight", "Burns fuel", "Creates electricity"], ans: 1, expl: "Planets do not produce light; they shine by reflecting sunlight[cite: 1]." },
-
-  // Chapter 2 (Q11-Q20)
-  { id: 11, ch: 2, q: "What is an orbit?", opts: ["A type of rocket", "A path followed around another object", "A star", "A telescope"], ans: 1, expl: "An orbit is the curved path followed by a celestial object or satellite around another[cite: 1]." },
-  { id: 12, ch: 2, q: "Who formulated the three laws of planetary motion?", opts: ["Newton", "Galileo", "Kepler", "Aryabhata"], ans: 2, expl: "Johannes Kepler formulated the three fundamental laws of planetary motion[cite: 1]." },
-  { id: 13, ch: 2, q: "What shape are planetary orbits?", opts: ["Square", "Triangle", "Ellipse", "Rectangle"], ans: 2, expl: "Kepler's First Law states planetary orbits are oval-shaped ellipses[cite: 1]." },
-  { id: 14, ch: 2, q: "What force keeps planets in orbit?", opts: ["Magnetism", "Gravity", "Electricity", "Heat"], ans: 1, expl: "Gravitational attraction balances forward inertia to keep bodies in orbit[cite: 1]." },
-  { id: 15, ch: 2, q: "Earth's natural satellite is:", opts: ["Mars", "Sun", "Moon", "Venus"], ans: 2, expl: "The Moon is Earth's only natural satellite[cite: 1]." },
-  { id: 16, ch: 2, q: "Which orbit is commonly used by GPS satellites?", opts: ["LEO", "MEO", "GEO", "Polar Orbit"], ans: 1, expl: "GPS navigation constellations operate in Medium Earth Orbit (MEO)[cite: 1]." },
-  { id: 17, ch: 2, q: "Which orbit is commonly used by communication satellites and many weather satellites?", opts: ["GEO", "LEO", "MEO", "Lunar Orbit"], ans: 0, expl: "Geostationary Orbit (GEO at ~35,786 km) keeps satellites synchronized with Earth's rotation[cite: 1]." },
-  { id: 18, ch: 2, q: "Rockets work because of:", opts: ["Kepler's Laws", "Newton's Third Law", "Electricity", "Magnetism"], ans: 1, expl: "Newton's Third Law: downward exhaust action creates upward reaction thrust[cite: 1]." },
-  { id: 19, ch: 2, q: "Why do rockets use stages?", opts: ["To look bigger", "To carry passengers", "To become lighter during flight", "To slow down"], ans: 2, expl: "Dropping spent heavy propellant tanks allows the vehicle to achieve higher speeds[cite: 1]." },
-  { id: 20, ch: 2, q: "Which ISRO launch vehicle carried Chandrayaan-3 into space?", opts: ["PSLV", "SSLV", "LVM3", "SLV"], ans: 2, expl: "LVM3 (Launch Vehicle Mark-3) successfully launched Chandrayaan-3[cite: 1]." },
-
-  // Chapter 3 (Q21-Q30)
-  { id: 21, ch: 3, q: "Who is known as the Father of the Indian Space Program?", opts: ["A.P.J. Abdul Kalam", "Vikram Sarabhai", "Rakesh Sharma", "Homi Bhabha"], ans: 1, expl: "Dr. Vikram Sarabhai envisioned and founded India's space program[cite: 1]." },
-  { id: 22, ch: 3, q: "ISRO was established in:", opts: ["1947", "1962", "1969", "1975"], ans: 2, expl: "ISRO was formally founded in 1969, succeeding INCOSPAR (1962)[cite: 1]." },
-  { id: 23, ch: 3, q: "India's first satellite was:", opts: ["Rohini", "Aryabhata", "INSAT", "Chandrayaan"], ans: 1, expl: "Aryabhata was launched in 1975 as India's premier satellite[cite: 1]." },
-  { id: 24, ch: 3, q: "Which rocket is called the Workhorse of ISRO?", opts: ["SLV", "GSLV", "PSLV", "LVM3"], ans: 2, expl: "The Polar Satellite Launch Vehicle (PSLV) is known as ISRO's Workhorse[cite: 1]." },
-  { id: 25, ch: 3, q: "Which Indian mission provided strong evidence of water molecules on the Moon?", opts: ["Chandrayaan-3", "Chandrayaan-2", "Chandrayaan-1", "Aditya-L1"], ans: 2, expl: "Chandrayaan-1 (2008) discovered spectroscopic evidence of lunar water molecules[cite: 1]." },
-  { id: 26, ch: 3, q: "Which Indian mission successfully landed near the Moon's South Polar region?", opts: ["Chandrayaan-1", "Chandrayaan-2", "Chandrayaan-3", "Mangalyaan"], ans: 2, expl: "Chandrayaan-3 made history in August 2023 with a soft landing near the South Pole[cite: 1]." },
-  { id: 27, ch: 3, q: "What is the popular name of India's Mars Orbiter Mission?", opts: ["Aditya", "Gaganyaan", "Mangalyaan", "Rohini"], ans: 2, expl: "Mangalyaan reached Mars orbit on ISRO's first attempt in 2014[cite: 1]." },
-  { id: 28, ch: 3, q: "Which mission studies the Sun?", opts: ["Chandrayaan-3", "Aditya-L1", "Mangalyaan", "Gaganyaan"], ans: 1, expl: "Aditya-L1 is India's dedicated solar observation observatory[cite: 1]." },
-  { id: 29, ch: 3, q: "Who was the first Indian in space?", opts: ["Kalpana Chawla", "Vikram Sarabhai", "Rakesh Sharma", "Abdul Kalam"], ans: 2, expl: "Wing Commander Rakesh Sharma flew aboard Salyut 7 in 1984[cite: 1]." },
-  { id: 30, ch: 3, q: "What is the primary objective of the Gaganyaan mission?", opts: ["Study Mars", "Land on the Moon", "Send Indian astronauts into orbit around Earth", "Study the Sun"], ans: 2, expl: "Gaganyaan will launch Indian astronauts into Low Earth Orbit and return them safely[cite: 1]." },
-
-  // Chapter 4 (Q31-Q40)
-  { id: 31, ch: 4, q: "What causes day and night on Earth?", opts: ["The Moon's motion", "Earth's rotation", "Earth's revolution", "The Sun's movement"], ans: 1, expl: "Earth rotating on its axis once every 24 hours causes day and night[cite: 1]." },
-  { id: 32, ch: 4, q: "How long does the Earth take to complete one rotation on its axis?", opts: ["12 hours", "24 hours", "30 days", "365 days"], ans: 1, expl: "Earth takes approximately 24 hours to complete 1 full spin[cite: 1]." },
-  { id: 33, ch: 4, q: "What is Earth's movement around the Sun called?", opts: ["Rotation", "Oscillation", "Revolution", "Reflection"], ans: 2, expl: "Earth moving around the Sun along its orbit is called revolution[cite: 1]." },
-  { id: 34, ch: 4, q: "How long does Earth take to complete one revolution around the Sun?", opts: ["24 hours", "30 days", "365 days", "500 days"], ans: 2, expl: "Earth completes one revolution in approximately 365¼ days (one year)[cite: 1]." },
-  { id: 35, ch: 4, q: "What is the main reason for the changing seasons on Earth?", opts: ["Distance from the Sun", "Earth's axial tilt", "Moon phases", "Clouds"], ans: 1, expl: "Earth's 23.5° axial tilt causes varying sunlight angles throughout the year[cite: 1]." },
-  { id: 36, ch: 4, q: "What is the name of the star that helps locate north?", opts: ["Sirius", "Polaris", "Betelgeuse", "Vega"], ans: 1, expl: "Polaris (the North Star) sits directly above Earth's true geographic North Pole[cite: 1]." },
-  { id: 37, ch: 4, q: "What are constellations?", opts: ["Planets", "Galaxies", "Patterns of stars", "Satellites"], ans: 2, expl: "Constellations are recognizable patterns formed by groups of stars[cite: 1]." },
-  { id: 38, ch: 4, q: "Which constellation contains Orion's Belt?", opts: ["Orion", "Ursa Major", "Scorpius", "Draco"], ans: 0, expl: "The prominent 3-star belt is located in Orion (The Hunter)[cite: 1]." },
-  { id: 39, ch: 4, q: "Why do different constellations appear during different seasons?", opts: ["The stars move away", "Earth's revolution changes our view of the sky", "The Moon blocks them", "Clouds cover them"], ans: 1, expl: "Earth's changing orbital position brings different nighttime star fields into view[cite: 1]." },
-  { id: 40, ch: 4, q: "What causes stars to appear to move across the sky each night?", opts: ["Earth's rotation", "The Sun's gravity", "The Moon's orbit", "Clouds"], ans: 0, expl: "Earth spinning from west to east makes celestial stars appear to sweep across the sky[cite: 1]." },
-
-  // Chapter 5 (Q41-Q50)
-  { id: 41, ch: 5, q: "What is the Moon?", opts: ["A planet", "A star", "Earth's natural satellite", "An asteroid"], ans: 2, expl: "The Moon is Earth's only natural satellite[cite: 1]." },
-  { id: 42, ch: 5, q: "Why does the Moon shine?", opts: ["It produces its own light", "It reflects sunlight", "It burns fuel", "It glows naturally"], ans: 1, expl: "The Moon shines by reflecting light from the Sun[cite: 1]." },
-  { id: 43, ch: 5, q: "Which theory best explains the Moon's formation?", opts: ["Nebula Theory", "Giant Impact Theory", "Steady State Theory", "Capture Theory"], ans: 1, expl: "The Giant Impact Theory states a protoplanet (Theia) collided with early Earth[cite: 1]." },
-  { id: 44, ch: 5, q: "Approximately how long does a complete Moon phase cycle take?", opts: ["7 days", "15 days", "29.5 days", "365 days"], ans: 2, expl: "A complete lunar phase cycle (synodic month) takes ~29.5 days[cite: 1]." },
-  { id: 45, ch: 5, q: "What causes ocean tides?", opts: ["Earth's rotation only", "Moon's gravity primarily", "Wind", "Clouds"], ans: 1, expl: "The gravitational pull of the Moon on ocean waters causes tides[cite: 1]." },
-  { id: 46, ch: 5, q: "Why do we always see the same side of the Moon?", opts: ["The Moon does not rotate", "Tidal locking", "Gravity disappears", "The Moon is flat"], ans: 1, expl: "Tidal locking means the Moon's rotation period matches its orbital period[cite: 1]." },
-  { id: 47, ch: 5, q: "What happens during a solar eclipse?", opts: ["Earth blocks the Sun", "Moon blocks the Sun", "Sun blocks the Moon", "Stars block the Sun"], ans: 1, expl: "The Moon moves directly between Earth and the Sun, blocking sunlight[cite: 1]." },
-  { id: 48, ch: 5, q: "What happens during a lunar eclipse?", opts: ["Moon blocks Earth", "Sun blocks Moon", "Earth's shadow falls on the Moon", "Stars block the Moon"], ans: 2, expl: "Earth passes between Sun and Moon, casting its shadow across the lunar surface[cite: 1]." },
-  { id: 49, ch: 5, q: "Which mission discovered evidence of water on the Moon?", opts: ["Chandrayaan-3", "Apollo 11", "Chandrayaan-1", "Aditya-L1"], ans: 2, expl: "Chandrayaan-1 confirmed evidence of water molecules on the Moon in 2008[cite: 1]." },
-  { id: 50, ch: 5, q: "Which Chandrayaan mission landed near the Moon's South Pole?", opts: ["Chandrayaan-1", "Chandrayaan-2", "Chandrayaan-3", "None of them"], ans: 2, expl: "Chandrayaan-3 achieved the historic soft landing near the lunar South Pole[cite: 1]." },
-
-  // Chapter 6 (Q51-Q60)
-  { id: 51, ch: 6, q: "About how old is the Solar System?", opts: ["1 million years", "100 million years", "4.6 billion years", "10 billion years"], ans: 2, expl: "Our Solar System formed ~4.6 billion years ago from a solar nebula[cite: 1]." },
-  { id: 52, ch: 6, q: "What is the Sun?", opts: ["A planet", "A moon", "A star", "A comet"], ans: 2, expl: "The Sun is a medium-sized star at the gravitational center of our system[cite: 1]." },
-  { id: 53, ch: 6, q: "Which planet is closest to the Sun?", opts: ["Venus", "Earth", "Mercury", "Mars"], ans: 2, expl: "Mercury is the innermost and fastest planet[cite: 1]." },
-  { id: 54, ch: 6, q: "Which planet is the hottest in the Solar System?", opts: ["Mercury", "Venus", "Mars", "Jupiter"], ans: 1, expl: "Venus is hottest (>460°C) due to a runaway greenhouse effect trapping heat[cite: 1]." },
-  { id: 55, ch: 6, q: "Which planet is known as the Red Planet?", opts: ["Venus", "Earth", "Mars", "Saturn"], ans: 2, expl: "Mars is called the Red Planet because iron minerals in its soil rust[cite: 1]." },
-  { id: 56, ch: 6, q: "Which is the largest planet?", opts: ["Earth", "Saturn", "Neptune", "Jupiter"], ans: 3, expl: "Jupiter is the giant of our solar system, holding over 1,300 Earths[cite: 1]." },
-  { id: 57, ch: 6, q: "Which planet is famous for its rings?", opts: ["Mars", "Saturn", "Mercury", "Venus"], ans: 1, expl: "Saturn has the most spectacular and vast ring system made of ice and rock[cite: 1]." },
-  { id: 58, ch: 6, q: "Which planet rotates on its side?", opts: ["Jupiter", "Neptune", "Uranus", "Earth"], ans: 2, expl: "Uranus has an extreme ~98° tilt, appearing to roll along its orbit[cite: 1]." },
-  { id: 59, ch: 6, q: "Which planet is farthest from the Sun?", opts: ["Saturn", "Uranus", "Neptune", "Mars"], ans: 2, expl: "Neptune is the eighth and outermost major planet[cite: 1]." },
-  { id: 60, ch: 6, q: "What keeps the planets orbiting the Sun?", opts: ["Magnetism", "Gravity", "Electricity", "Wind"], ans: 1, expl: "The immense gravitational field of the Sun governs planetary orbits[cite: 1]." },
-
-  // Chapter 7 (Q61-Q70)
-  { id: 61, ch: 7, q: "Which moon of Jupiter is especially famous for its subsurface ocean beneath an icy crust?", opts: ["Titan", "Europa", "Io", "Earth's Moon"], ans: 1, expl: "Europa harbors a global subsurface liquid ocean beneath its cracked ice sheet[cite: 1]." },
-  { id: 62, ch: 7, q: "Which moon has rivers and lakes made of liquid methane?", opts: ["Europa", "Ganymede", "Titan", "Io"], ans: 2, expl: "Saturn's giant moon Titan features liquid hydrocarbon lakes and weather[cite: 1]." },
-  { id: 63, ch: 7, q: "Which moon is the most volcanically active object in the Solar System?", opts: ["Titan", "Europa", "Ganymede", "Io"], ans: 3, expl: "Jupiter's tidal squeezing powers hundreds of erupting sulfur volcanoes on Io[cite: 1]." },
-  { id: 64, ch: 7, q: "What is the largest moon in the Solar System?", opts: ["Titan", "Europa", "Ganymede", "Io"], ans: 2, expl: "Ganymede is the largest moon, exceeding Mercury in diameter[cite: 1]." },
-  { id: 65, ch: 7, q: "Where is the Asteroid Belt located?", opts: ["Between Earth and Mars", "Between Mars and Jupiter", "Between Jupiter and Saturn", "Beyond Neptune"], ans: 1, expl: "The Main Asteroid Belt is located between Mars and Jupiter[cite: 1]." },
-  { id: 66, ch: 7, q: "What are Near-Earth Asteroids?", opts: ["Asteroids inside the Sun", "Asteroids that orbit Jupiter", "Asteroids whose paths come near Earth", "Asteroids beyond Pluto"], ans: 2, expl: "NEAs have orbital paths that bring them into proximity with Earth[cite: 1]." },
-  { id: 67, ch: 7, q: "What are comets mainly made of?", opts: ["Iron and steel", "Ice, dust, and rock", "Pure gas", "Liquid water"], ans: 1, expl: "Comets are icy cosmic snowballs containing rock and dust[cite: 1]." },
-  { id: 68, ch: 7, q: "What happens to a comet when it approaches the Sun?", opts: ["It becomes colder", "It disappears immediately", "Its ice begins to evaporate and form a tail", "It turns into a planet"], ans: 2, expl: "Solar heating sublimates ice into gas and dust, forming a coma and glowing tail[cite: 1]." },
-  { id: 69, ch: 7, q: "Pluto is classified as a:", opts: ["Planet", "Moon", "Asteroid", "Dwarf Planet"], ans: 3, expl: "Pluto was reclassified as a Dwarf Planet by the IAU in 2006[cite: 1]." },
-  { id: 70, ch: 7, q: "Which doughnut-shaped region just beyond Neptune contains many icy bodies, including Pluto?", opts: ["Asteroid Belt", "Oort Cloud", "Kuiper Belt", "Van Allen Belt"], ans: 2, expl: "The Kuiper Belt extends beyond Neptune and houses icy dwarf worlds[cite: 1]." },
-
-  // Chapter 8 (Q71-Q80)
-  { id: 71, ch: 8, q: "What event marked the beginning of the Space Age?", opts: ["Apollo 11", "Sputnik 1", "ISS launch", "Mars Rover landing"], ans: 1, expl: "The launch of Sputnik 1 on Oct 4, 1957 inaugurated the Space Age[cite: 1]." },
-  { id: 72, ch: 8, q: "Who was the first human in space?", opts: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Rakesh Sharma"], ans: 2, expl: "Cosmonaut Yuri Gagarin orbited Earth aboard Vostok 1 in April 1961[cite: 1]." },
-  { id: 73, ch: 8, q: "Who was the first human to walk on the Moon?", opts: ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "Michael Collins"], ans: 1, expl: "Neil Armstrong stepped onto the lunar surface during Apollo 11 in July 1969[cite: 1]." },
-  { id: 74, ch: 8, q: "What is the ISS?", opts: ["A planet", "A space station", "A telescope", "A rocket"], ans: 1, expl: "The International Space Station is a microgravity research facility in LEO[cite: 1]." },
-  { id: 75, ch: 8, q: "Which NASA rover is collecting rock and soil samples on Mars for possible future return to Earth?", opts: ["Spirit", "Opportunity", "Curiosity", "Perseverance"], ans: 3, expl: "Perseverance is currently drilling and caching core samples in Jezero Crater[cite: 1]." },
-  { id: 76, ch: 8, q: "What is the Hubble Space Telescope used for?", opts: ["Mining asteroids", "Studying objects in space", "Launch satellites", "Measuring tides"], ans: 1, expl: "Hubble observes distant stars, nebulae, and deep galaxies above Earth's atmosphere[cite: 1]." },
-  { id: 77, ch: 8, q: "Which telescope studies some of the earliest galaxies in the universe?", opts: ["Galileo Telescope", "Hubble Telescope", "James Webb Space Telescope", "Kepler Telescope"], ans: 2, expl: "The James Webb Space Telescope uses infrared optics to view early cosmic dawn[cite: 1]." },
-  { id: 78, ch: 8, q: "What are planets orbiting other stars called?", opts: ["Dwarf planets", "Exoplanets", "Asteroids", "Satellites"], ans: 1, expl: "Planets outside our Solar System are called exoplanets[cite: 1]." },
-  { id: 79, ch: 8, q: "Which astronaut was the first woman of Indian origin in space?", opts: ["Sunita Williams", "Kalpana Chawla", "Valentina Tereshkova", "Sally Ride"], ans: 1, expl: "Kalpana Chawla was the pioneering first woman of Indian origin in space[cite: 1]." },
-  { id: 80, ch: 8, q: "Which future goal is scientists actively working toward?", opts: ["Moving Earth", "Human missions to Mars", "Turning the Moon into a star", "Stopping Earth's rotation"], ans: 1, expl: "Sustained human exploration and missions to Mars remain active priority goals[cite: 1]." }
+/* ==========================================================================
+   OFFICIAL 80 MCQS FROM INACC STUDY GUIDE[cite: 1]
+========================================================================== */
+const INACC_ALL_80_MCQS = [
+  { id: 1, ch: 1, q: "Which star helped ancient Egyptians predict flooding of the Nile River?", opts: ["Polaris", "Sirius", "Vega", "Betelgeuse"], ans: 1, exp: "Ancient Egyptians observed Sirius rising just before the annual Nile floods[cite: 1]." },
+  { id: 2, ch: 1, q: "Which Indian astronomer suggested that Earth rotates on its axis?", opts: ["Newton", "Galileo", "Aryabhata", "Kepler"], ans: 2, exp: "Aryabhata proposed that Earth rotates on its axis, making the sky appear to move[cite: 1]." },
+  { id: 3, ch: 1, q: "Who first proposed that Earth orbits the Sun?", opts: ["Copernicus", "Newton", "Galileo", "Ptolemy"], ans: 0, exp: "Nicolaus Copernicus proposed the heliocentric (Sun-centered) model[cite: 1]." },
+  { id: 4, ch: 1, q: "Galileo discovered four large moons orbiting which planet?", opts: ["Mars", "Saturn", "Jupiter", "Earth"], ans: 2, exp: "Galileo discovered 4 major moons orbiting Jupiter (Io, Europa, Ganymede, Callisto)[cite: 1]." },
+  { id: 5, ch: 1, q: "What force keeps planets moving around the Sun?", opts: ["Magnetism", "Electricity", "Gravity", "Light"], ans: 2, exp: "Universal gravity binds planets in orbital paths around the Sun[cite: 1]." },
+  { id: 6, ch: 1, q: "The closest star to Earth is:", opts: ["Sirius", "Polaris", "Alpha Centauri", "The Sun"], ans: 3, exp: "The Sun is our closest star (~150 million km away)[cite: 1]." },
+  { id: 7, ch: 1, q: "What is the name of our galaxy?", opts: ["Andromeda", "Whirlpool", "Milky Way", "Sombrero"], ans: 2, exp: "Our solar system is part of the Milky Way Galaxy[cite: 1]." },
+  { id: 8, ch: 1, q: "According to the Kármán line, space officially begins near:", opts: ["10 km", "50 km", "100 km", "500 km"], ans: 2, exp: "The Kármán Line marks the edge of space at ~100 km altitude[cite: 1]." },
+  { id: 9, ch: 1, q: "Which scientist formulated the law of universal gravitation?", opts: ["Galileo", "Aryabhata", "Newton", "Kepler"], ans: 2, exp: "Sir Isaac Newton explained gravity[cite: 1]." },
+  { id: 10, ch: 1, q: "A planet shines because it:", opts: ["Produces its own light", "Reflects sunlight", "Burns fuel", "Creates electricity"], ans: 1, exp: "Planets reflect sunlight rather than generating their own light[cite: 1]." },
+  { id: 11, ch: 2, q: "What is an orbit?", opts: ["A type of rocket", "A path followed around another object", "A star", "A telescope"], ans: 1, exp: "An orbit is the curved gravitational trajectory of a body around another object[cite: 1]." },
+  { id: 12, ch: 2, q: "Who formulated the three laws of planetary motion?", opts: ["Newton", "Galileo", "Kepler", "Aryabhata"], ans: 2, exp: "Johannes Kepler deduced the three laws of planetary motion[cite: 1]." },
+  { id: 13, ch: 2, q: "What shape are planetary orbits?", opts: ["Square", "Triangle", "Ellipse", "Rectangle"], ans: 2, exp: "Kepler proved planetary orbits are ellipses[cite: 1]." },
+  { id: 14, ch: 2, q: "What force keeps planets in orbit?", opts: ["Magnetism", "Gravity", "Electricity", "Heat"], ans: 1, exp: "Gravity keeps planets and satellites in orbit[cite: 1]." },
+  { id: 15, ch: 2, q: "Earth's natural satellite is:", opts: ["Mars", "Sun", "Moon", "Venus"], ans: 2, exp: "The Moon is Earth's only natural satellite[cite: 1]." },
+  { id: 16, ch: 2, q: "Which orbit is commonly used by GPS satellites?", opts: ["LEO", "MEO", "GEO", "Polar Orbit"], ans: 1, exp: "GPS constellations operate in Medium Earth Orbit (MEO)[cite: 1]." },
+  { id: 17, ch: 2, q: "Which orbit is commonly used by communication satellites and many weather satellites?", opts: ["GEO", "LEO", "MEO", "Lunar Orbit"], ans: 0, exp: "Geostationary Orbit (GEO) matches Earth's rotation to stay over one spot[cite: 1]." },
+  { id: 18, ch: 2, q: "Rockets work because of:", opts: ["Kepler's Laws", "Newton's Third Law", "Electricity", "Magnetism"], ans: 1, exp: "Newton's 3rd Law: For every action, there is an equal and opposite reaction[cite: 1]." },
+  { id: 19, ch: 2, q: "Why do rockets use stages?", opts: ["To look bigger", "To carry passengers", "To become lighter during flight", "To slow down"], ans: 2, exp: "Discarding empty fuel stages makes the rocket lighter and faster[cite: 1]." },
+  { id: 20, ch: 2, q: "Which ISRO launch vehicle carried Chandrayaan-3 into space?", opts: ["PSLV", "SSLV", "LVM3", "SLV"], ans: 2, exp: "Launch Vehicle Mark-3 (LVM3) carried Chandrayaan-3[cite: 1]." },
+  { id: 21, ch: 3, q: "Who is known as the Father of the Indian Space Program?", opts: ["A.P.J. Abdul Kalam", "Vikram Sarabhai", "Rakesh Sharma", "Homi Bhabha"], ans: 1, exp: "Dr. Vikram Sarabhai is the Father of the Indian Space Program[cite: 1]." },
+  { id: 22, ch: 3, q: "ISRO was established in:", opts: ["1947", "1962", "1969", "1975"], ans: 2, exp: "ISRO was founded on August 15, 1969[cite: 1]." },
+  { id: 23, ch: 3, q: "India's first satellite was:", opts: ["Rohini", "Aryabhata", "INSAT", "Chandrayaan"], ans: 1, exp: "Aryabhata was launched in 1975[cite: 1]." },
+  { id: 24, ch: 3, q: "Which rocket is called the Workhorse of ISRO?", opts: ["SLV", "GSLV", "PSLV", "LVM3"], ans: 2, exp: "PSLV is called the Workhorse of ISRO[cite: 1]." },
+  { id: 25, ch: 3, q: "Which Indian mission provided strong evidence of water molecules on the Moon?", opts: ["Chandrayaan-3", "Chandrayaan-2", "Chandrayaan-1", "Aditya-L1"], ans: 2, exp: "Chandrayaan-1 discovered water molecules on the Moon[cite: 1]." },
+  { id: 26, ch: 3, q: "Which Indian mission successfully landed near the Moon's South Polar region?", opts: ["Chandrayaan-1", "Chandrayaan-2", "Chandrayaan-3", "Mangalyaan"], ans: 2, exp: "Chandrayaan-3 soft-landed near the Lunar South Pole in August 2023[cite: 1]." },
+  { id: 27, ch: 3, q: "What is the popular name of India's Mars Orbiter Mission?", opts: ["Aditya", "Gaganyaan", "Mangalyaan", "Rohini"], ans: 2, exp: "Mangalyaan was India's Mars Orbiter Mission (2013)[cite: 1]." },
+  { id: 28, ch: 3, q: "Which mission studies the Sun?", opts: ["Chandrayaan-3", "Aditya-L1", "Mangalyaan", "Gaganyaan"], ans: 1, exp: "Aditya-L1 is India's dedicated solar observatory[cite: 1]." },
+  { id: 29, ch: 3, q: "Who was the first Indian in space?", opts: ["Kalpana Chawla", "Vikram Sarabhai", "Rakesh Sharma", "Abdul Kalam"], ans: 2, exp: "Rakesh Sharma flew in space in 1984[cite: 1]." },
+  { id: 30, ch: 3, q: "What is the primary objective of the Gaganyaan mission?", opts: ["Study Mars", "Land on the Moon", "Send Indian astronauts into orbit around Earth", "Study the Sun"], ans: 2, exp: "Gaganyaan aims to send Indian astronauts into Low Earth Orbit[cite: 1]." },
+  { id: 31, ch: 4, q: "What causes day and night on Earth?", opts: ["The Moon's motion", "Earth's rotation", "Earth's revolution", "The Sun's movement"], ans: 1, exp: "Earth's rotation on its axis creates day and night[cite: 1]." },
+  { id: 32, ch: 4, q: "How long does the Earth take to complete one rotation on its axis?", opts: ["12 hours", "24 hours", "30 days", "365 days"], ans: 1, exp: "Earth rotates once in approximately 24 hours[cite: 1]." },
+  { id: 33, ch: 4, q: "What is Earth's movement around the Sun called?", opts: ["Rotation", "Oscillation", "Revolution", "Reflection"], ans: 2, exp: "Earth's orbital path around the Sun is called Revolution[cite: 1]." },
+  { id: 34, ch: 4, q: "How long does Earth take to complete one revolution around the Sun?", opts: ["24 hours", "30 days", "365 days", "500 days"], ans: 2, exp: "Earth takes 365¼ days to revolve around the Sun[cite: 1]." },
+  { id: 35, ch: 4, q: "What is the main reason for the changing seasons on Earth?", opts: ["Distance from the Sun", "Earth's axial tilt", "Moon phases", "Clouds"], ans: 1, exp: "Earth's 23.5° axial tilt causes seasonal variations[cite: 1]." },
+  { id: 36, ch: 4, q: "What is the name of the star that helps locate north?", opts: ["Sirius", "Polaris", "Betelgeuse", "Vega"], ans: 1, exp: "Polaris (North Star) sits directly above the North Pole[cite: 1]." },
+  { id: 37, ch: 4, q: "What are constellations?", opts: ["Planets", "Galaxies", "Patterns of stars", "Satellites"], ans: 2, exp: "Constellations are recognizable patterns formed by groups of stars[cite: 1]." },
+  { id: 38, ch: 4, q: "Which constellation contains Orion's Belt?", opts: ["Orion", "Ursa Major", "Scorpius", "Draco"], ans: 0, exp: "Orion's Belt is part of Orion the Hunter[cite: 1]." },
+  { id: 39, ch: 4, q: "Why do different constellations appear during different seasons?", opts: ["The stars move away", "Earth's revolution changes our view of the sky", "The Moon blocks them", "Clouds cover them"], ans: 1, exp: "Earth's revolution around the Sun shifts our night sky view[cite: 1]." },
+  { id: 40, ch: 4, q: "What causes stars to appear to move across the sky each night?", opts: ["Earth's rotation", "The Sun's gravity", "The Moon's orbit", "Clouds"], ans: 0, exp: "Earth's rotation makes stars seem to rise in the east and set in the west[cite: 1]." },
+  { id: 41, ch: 5, q: "What is the Moon?", opts: ["A planet", "A star", "Earth's natural satellite", "An asteroid"], ans: 2, exp: "The Moon is Earth's only natural satellite[cite: 1]." },
+  { id: 42, ch: 5, q: "Why does the Moon shine?", opts: ["It produces its own light", "It reflects sunlight", "It burns fuel", "It glows naturally"], ans: 1, exp: "The Moon reflects sunlight toward Earth[cite: 1]." },
+  { id: 43, ch: 5, q: "Which theory best explains the Moon's formation?", opts: ["Nebula Theory", "Giant Impact Theory", "Steady State Theory", "Capture Theory"], ans: 1, exp: "The Giant Impact Theory describes collision with Theia[cite: 1]." },
+  { id: 44, ch: 5, q: "Approximately how long does a complete Moon phase cycle take?", opts: ["7 days", "15 days", "29.5 days", "365 days"], ans: 2, exp: "A lunar phase cycle takes roughly 29.5 days[cite: 1]." },
+  { id: 45, ch: 5, q: "What causes ocean tides?", opts: ["Earth's rotation only", "Moon's gravity primarily", "Wind", "Clouds"], ans: 1, exp: "The Moon's gravitational pull creates ocean tides[cite: 1]." },
+  { id: 46, ch: 5, q: "Why do we always see the same side of the Moon?", opts: ["The Moon does not rotate", "Tidal locking", "Gravity disappears", "The Moon is flat"], ans: 1, exp: "Tidal locking matches the Moon's rotation period to its orbit[cite: 1]." },
+  { id: 47, ch: 5, q: "What happens during a solar eclipse?", opts: ["Earth blocks the Sun", "Moon blocks the Sun", "Sun blocks the Moon", "Stars block the Sun"], ans: 1, exp: "The Moon passes between the Sun and Earth, blocking sunlight[cite: 1]." },
+  { id: 48, ch: 5, q: "What happens during a lunar eclipse?", opts: ["Moon blocks Earth", "Sun blocks Moon", "Earth's shadow falls on the Moon", "Stars block the Moon"], ans: 2, exp: "Earth passes between Sun and Moon, casting a shadow on the Moon[cite: 1]." },
+  { id: 49, ch: 5, q: "Which mission discovered evidence of water on the Moon?", opts: ["Chandrayaan-3", "Apollo 11", "Chandrayaan-1", "Aditya-L1"], ans: 2, exp: "Chandrayaan-1 discovered water molecules[cite: 1]." },
+  { id: 50, ch: 5, q: "Which Chandrayaan mission landed near the Moon's South Pole?", opts: ["Chandrayaan-1", "Chandrayaan-2", "Chandrayaan-3", "None of them"], ans: 2, exp: "Chandrayaan-3 landed near the South Pole in 2023[cite: 1]." },
+  { id: 51, ch: 6, q: "About how old is the Solar System?", opts: ["1 million years", "100 million years", "4.6 billion years", "10 billion years"], ans: 2, exp: "Formed 4.6 billion years ago[cite: 1]." },
+  { id: 52, ch: 6, q: "What is the Sun?", opts: ["A planet", "A moon", "A star", "A comet"], ans: 2, exp: "The Sun is a yellow dwarf star[cite: 1]." },
+  { id: 53, ch: 6, q: "Which planet is closest to the Sun?", opts: ["Venus", "Earth", "Mercury", "Mars"], ans: 2, exp: "Mercury is closest to the Sun[cite: 1]." },
+  { id: 54, ch: 6, q: "Which planet is the hottest in the Solar System?", opts: ["Mercury", "Venus", "Mars", "Jupiter"], ans: 1, exp: "Venus is hottest due to greenhouse effect[cite: 1]." },
+  { id: 55, ch: 6, q: "Which planet is known as the Red Planet?", opts: ["Venus", "Earth", "Mars", "Saturn"], ans: 2, exp: "Mars is the Red Planet due to iron oxide[cite: 1]." },
+  { id: 56, ch: 6, q: "Which is the largest planet?", opts: ["Earth", "Saturn", "Neptune", "Jupiter"], ans: 3, exp: "Jupiter is the largest planet[cite: 1]." },
+  { id: 57, ch: 6, q: "Which planet is famous for its rings?", opts: ["Mars", "Saturn", "Mercury", "Venus"], ans: 1, exp: "Saturn is famous for its rings[cite: 1]." },
+  { id: 58, ch: 6, q: "Which planet rotates on its side?", opts: ["Jupiter", "Neptune", "Uranus", "Earth"], ans: 2, exp: "Uranus rotates tilted on its side (~98°)[cite: 1]." },
+  { id: 59, ch: 6, q: "Which planet is farthest from the Sun?", opts: ["Saturn", "Uranus", "Neptune", "Mars"], ans: 2, exp: "Neptune is farthest from the Sun[cite: 1]." },
+  { id: 60, ch: 6, q: "What keeps the planets orbiting the Sun?", opts: ["Magnetism", "Gravity", "Electricity", "Wind"], ans: 1, exp: "The Sun's gravity binds all planets in orbit[cite: 1]." },
+  { id: 61, ch: 7, q: "Which moon of Jupiter is especially famous for its subsurface ocean beneath an icy crust?", opts: ["Titan", "Europa", "Io", "Earth's Moon"], ans: 1, exp: "Europa holds a vast liquid ocean beneath ice[cite: 1]." },
+  { id: 62, ch: 7, q: "Which moon has rivers and lakes made of liquid methane?", opts: ["Europa", "Ganymede", "Titan", "Io"], ans: 2, exp: "Saturn's moon Titan has liquid methane lakes[cite: 1]." },
+  { id: 63, ch: 7, q: "Which moon is the most volcanically active object in the Solar System?", opts: ["Titan", "Europa", "Ganymede", "Io"], ans: 3, exp: "Jupiter's moon Io is extremely volcanic[cite: 1]." },
+  { id: 64, ch: 7, q: "What is the largest moon in the Solar System?", opts: ["Titan", "Europa", "Ganymede", "Io"], ans: 2, exp: "Ganymede is the largest moon (larger than Mercury)[cite: 1]." },
+  { id: 65, ch: 7, q: "Where is the Asteroid Belt located?", opts: ["Between Earth and Mars", "Between Mars and Jupiter", "Between Jupiter and Saturn", "Beyond Neptune"], ans: 1, exp: "The Asteroid Belt is between Mars and Jupiter[cite: 1]." },
+  { id: 66, ch: 7, q: "What are Near-Earth Asteroids?", opts: ["Asteroids inside the Sun", "Asteroids that orbit Jupiter", "Asteroids whose paths come near Earth", "Asteroids beyond Pluto"], ans: 2, exp: "Near-Earth Asteroids have orbits coming near Earth[cite: 1]." },
+  { id: 67, ch: 7, q: "What are comets mainly made of?", opts: ["Iron and steel", "Ice, dust, and rock", "Pure gas", "Liquid water"], ans: 1, exp: "Comets are made of ice, dust, and rock ('dirty snowballs')[cite: 1]." },
+  { id: 68, ch: 7, q: "What happens to a comet when it approaches the Sun?", opts: ["It becomes colder", "It disappears immediately", "Its ice begins to evaporate and form a tail", "It turns into a planet"], ans: 2, exp: "Ice evaporates forming a glowing coma and tail[cite: 1]." },
+  { id: 69, ch: 7, q: "Pluto is classified as a:", opts: ["Planet", "Moon", "Asteroid", "Dwarf Planet"], ans: 3, exp: "Pluto is classified as a Dwarf Planet[cite: 1]." },
+  { id: 70, ch: 7, q: "Which doughnut-shaped region just beyond Neptune contains many icy bodies, including Pluto?", opts: ["Asteroid Belt", "Oort Cloud", "Kuiper Belt", "Van Allen Belt"], ans: 2, exp: "The Kuiper Belt extends beyond Neptune[cite: 1]." },
+  { id: 71, ch: 8, q: "What event marked the beginning of the Space Age?", opts: ["Apollo 11", "Sputnik 1", "ISS launch", "Mars Rover landing"], ans: 1, exp: "The launch of Sputnik 1 in 1957 marked the start of the Space Age[cite: 1]." },
+  { id: 72, ch: 8, q: "Who was the first human in space?", opts: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Rakesh Sharma"], ans: 2, exp: "Yuri Gagarin orbited Earth in 1961[cite: 1]." },
+  { id: 73, ch: 8, q: "Who was the first human to walk on the Moon?", opts: ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "Michael Collins"], ans: 1, exp: "Neil Armstrong walked on the Moon on Apollo 11 in 1969[cite: 1]." },
+  { id: 74, ch: 8, q: "What is the ISS?", opts: ["A planet", "A space station", "A telescope", "A rocket"], ans: 1, exp: "The International Space Station is an orbital laboratory[cite: 1]." },
+  { id: 75, ch: 8, q: "Which NASA rover is collecting rock and soil samples on Mars for possible future return to Earth?", opts: ["Spirit", "Opportunity", "Curiosity", "Perseverance"], ans: 3, exp: "Perseverance is collecting Mars core samples[cite: 1]." },
+  { id: 76, ch: 8, q: "What is the Hubble Space Telescope used for?", opts: ["Mining asteroids", "Studying objects in space", "Launching satellites", "Measuring tides"], ans: 1, exp: "Hubble is used for studying astronomical objects from orbit[cite: 1]." },
+  { id: 77, ch: 8, q: "Which telescope studies some of the earliest galaxies in the universe?", opts: ["Galileo Telescope", "Hubble Telescope", "James Webb Space Telescope", "Kepler Telescope"], ans: 2, exp: "James Webb Space Telescope studies deep infrared light from early galaxies[cite: 1]." },
+  { id: 78, ch: 8, q: "What are planets orbiting other stars called?", opts: ["Dwarf planets", "Exoplanets", "Asteroids", "Satellites"], ans: 1, exp: "Planets outside our solar system are called exoplanets[cite: 1]." },
+  { id: 79, ch: 8, q: "Which astronaut was the first woman of Indian origin in space?", opts: ["Sunita Williams", "Kalpana Chawla", "Valentina Tereshkova", "Sally Ride"], ans: 1, exp: "Kalpana Chawla was the first woman of Indian origin in space[cite: 1]." },
+  { id: 80, ch: 8, q: "Which future goal is scientists actively working toward?", opts: ["Moving Earth", "Human missions to Mars", "Turning the Moon into a star", "Stopping Earth's rotation"], ans: 1, exp: "Scientists are actively preparing for human missions to Mars[cite: 1]." }
 ];
 
-/* ---------------------------------------------------------------------------
-   3. APPLICATION STATE & LOCALSTORAGE MANAGER
---------------------------------------------------------------------------- */
-const STATE_KEY = "INACC_OLYMPIAD_CADET_V1";
-
-let appState = {
-  name: "Commander",
-  avatar: "👨‍🚀",
+/* ==========================================================================
+   STATE & PERSISTENCE
+========================================================================== */
+let state = {
   xp: 0,
   stars: 0,
-  chapterScores: {},
-  mistakes: [],
-  flashcardIdx: 0,
-  completedChapters: []
+  mistakes: []
 };
 
 function loadState() {
-  const saved = localStorage.getItem(STATE_KEY);
-  if (saved) {
-    try { appState = { ...appState, ...JSON.parse(saved) }; } catch(e){}
-  }
-  updateUIStats();
+  const s = localStorage.getItem("INACC_STATE_FULL");
+  if (s) { try { state = JSON.parse(s); } catch(e){} }
+  updateHUD();
 }
-
 function saveState() {
-  localStorage.setItem(STATE_KEY, JSON.stringify(appState));
-  updateUIStats();
+  localStorage.setItem("INACC_STATE_FULL", JSON.stringify(state));
+  updateHUD();
+}
+function addXP(pts) {
+  state.xp += pts;
+  saveState();
+}
+function updateHUD() {
+  document.getElementById("hud-xp").innerText = state.xp + " XP";
+  document.getElementById("hud-stars").innerText = state.stars + "/80 MCQs";
 }
 
-function updateUIStats() {
-  document.getElementById("nav-xp").innerText = appState.xp;
-  document.getElementById("nav-stars").innerText = appState.stars;
-  document.getElementById("dash-user-name").innerText = appState.name;
-  
-  // Rank calculation
-  let rank = "Cadet";
-  if (appState.xp > 300) rank = "Space Explorer";
-  if (appState.xp > 700) rank = "Mission Specialist";
-  if (appState.xp > 1200) rank = "Astronaut";
-  if (appState.xp > 2000) rank = "Aerospace Scientist";
-  if (appState.xp > 3000) rank = "Olympiad Champion";
-  document.getElementById("nav-rank").innerText = rank;
+function showTab(t) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-tab").forEach(b => b.classList.remove("active"));
 
-  // Overall Mastery
-  const totalCompleted = appState.completedChapters.length;
-  const pct = Math.round((totalCompleted / 8) * 100);
-  document.getElementById("overall-progress-bar").style.width = pct + "%";
-  document.getElementById("overall-progress-txt").innerText = pct + "%";
-
-  updateAdaptiveRecommendation();
-  renderBadges();
-}
-
-/* ---------------------------------------------------------------------------
-   4. NAVIGATION & VIEW SWITCHER
---------------------------------------------------------------------------- */
-function navigateTo(viewId) {
-  document.querySelectorAll(".view-section").forEach(v => v.classList.remove("active"));
-  document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-  
-  const target = document.getElementById("view-" + viewId);
+  const target = document.getElementById("panel-" + t);
   if (target) target.classList.add("active");
 
-  const btn = Array.from(document.querySelectorAll(".nav-btn")).find(b => b.getAttribute("onclick")?.includes(viewId));
+  const btn = Array.from(document.querySelectorAll(".nav-tab")).find(b => b.getAttribute("onclick").includes(t));
   if (btn) btn.classList.add("active");
 
-  if (viewId === "dashboard") renderChapterGrid();
-  if (viewId === "mistakes") renderMistakesBook();
-  if (viewId === "simulations") { setTimeout(() => { initOrbitSim(); drawMoonSim(); }, 100); }
-  if (viewId === "flashcards") showCurrentFlashcard();
+  if (t === 'mistakes') renderMistakes();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ---------------------------------------------------------------------------
-   5. ONBOARDING MODAL
---------------------------------------------------------------------------- */
-let tempAvatar = "👨‍🚀";
-function selectAvatar(emoji, el) {
-  tempAvatar = emoji;
-  document.querySelectorAll(".avatar-opt").forEach(a => a.style.borderColor = "transparent");
-  el.style.borderColor = "var(--neon-cyan)";
-}
-function finishOnboarding() {
-  const input = document.getElementById("ob-name-input").value.trim();
-  if (input) appState.name = input;
-  appState.avatar = tempAvatar;
-  saveState();
-  document.getElementById("onboarding-modal").classList.remove("active");
-}
+/* ==========================================================================
+   RENDER 8 CHAPTERS & 68 SECTIONS
+========================================================================== */
+let activeChNum = 1;
+let activeSecNum = 1;
 
-/* ---------------------------------------------------------------------------
-   6. CHAPTER LIST & STUDY VIEWER
---------------------------------------------------------------------------- */
-let currentChapterId = 1;
-
-function renderChapterGrid() {
-  const container = document.getElementById("chapter-list-grid");
-  container.innerHTML = "";
-  
-  SYLLABUS_DATA.forEach(ch => {
-    const isCompleted = appState.completedChapters.includes(ch.id);
-    const score = appState.chapterScores[ch.id] ?? 0;
-    
-    const card = document.createElement("div");
-    card.className = "chapter-card";
-    card.onclick = () => openChapter(ch.id);
-    card.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="ch-num">CHAPTER 0${ch.id}</span>
-        <span style="font-size:1.4rem">${ch.icon}</span>
-      </div>
-      <h3>${ch.title}</h3>
-      <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.4;margin-bottom:0.75rem">${ch.desc}</p>
-      <div style="font-size:0.8rem;color:var(--neon-cyan);display:flex;justify-content:space-between">
-        <span>${ch.sectionsCount} Sections</span>
-        <span>${isCompleted ? `Score: ${score}/10 ⭐` : "Not Started"}</span>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="progress-bar-fill" style="width:${isCompleted ? "100%" : "0%"}"></div>
+function initStudyGuide() {
+  // Render Dashboard Chapter Cards
+  const dGrid = document.getElementById("dashboard-ch-grid");
+  dGrid.innerHTML = "";
+  INACC_COMPLETE_SYLLABUS.forEach(c => {
+    dGrid.innerHTML += `
+      <div class="card" style="border-left: 4px solid var(--cyan);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:1.8rem;">${c.icon}</span>
+          <span class="tag">${c.sections.length} SECTIONS</span>
+        </div>
+        <h3 style="margin-bottom:6px;">Ch ${c.ch}: ${c.title}</h3>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">${c.briefing.substring(0, 85)}...</p>
+        <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="selectChapter(${c.ch})">Explore All Sections →</button>
       </div>
     `;
-    container.appendChild(card);
   });
+
+  // Render Top Chapter Tabs in Study Guide
+  const sTabs = document.getElementById("study-ch-tabs");
+  sTabs.innerHTML = "";
+  INACC_COMPLETE_SYLLABUS.forEach(c => {
+    sTabs.innerHTML += `
+      <button class="btn ${c.ch === activeChNum ? 'btn-cyan' : 'btn-outline'}" style="white-space:nowrap; padding:6px 14px; font-size:0.82rem;" id="tab-ch-${c.ch}" onclick="selectChapter(${c.ch})">
+        ${c.icon} Ch ${c.ch} (${c.sections.length} Sec)
+      </button>
+    `;
+  });
+
+  renderActiveChapterView();
 }
 
-function openChapter(chId) {
-  currentChapterId = chId;
-  const ch = SYLLABUS_DATA.find(c => c.id === chId);
-  document.getElementById("learn-chapter-title").innerText = `Chapter ${ch.id}: ${ch.title}`;
-  document.getElementById("learn-chapter-sub").innerText = `${ch.sectionsCount} Sections | 10 Official Olympiad MCQs`;
-  
-  const navList = document.getElementById("section-nav-list");
-  navList.innerHTML = "";
-  
-  ch.sections.forEach((sec, idx) => {
-    const item = document.createElement("div");
-    item.className = `sec-item ${idx === 0 ? "active" : ""}`;
-    item.innerText = sec.title;
-    item.onclick = () => loadSectionContent(idx);
-    navList.appendChild(item);
+function selectChapter(chNum) {
+  activeChNum = chNum;
+  activeSecNum = 1;
+  showTab('study');
+
+  INACC_COMPLETE_SYLLABUS.forEach(c => {
+    const b = document.getElementById("tab-ch-" + c.ch);
+    if (b) {
+      b.className = (c.ch === activeChNum) ? "btn btn-cyan" : "btn btn-outline";
+      b.style.whiteSpace = "nowrap";
+      b.style.padding = "6px 14px";
+      b.style.fontSize = "0.82rem";
+    }
   });
 
-  loadSectionContent(0);
-  navigateTo("syllabus");
+  renderActiveChapterView();
 }
 
-function loadSectionContent(secIdx) {
-  const ch = SYLLABUS_DATA.find(c => c.id === currentChapterId);
-  const sec = ch.sections[secIdx];
-  
-  document.querySelectorAll(".sec-item").forEach((el, i) => {
-    el.classList.toggle("active", i === secIdx);
+function renderActiveChapterView() {
+  const ch = INACC_COMPLETE_SYLLABUS.find(c => c.ch === activeChNum);
+  if (!ch) return;
+
+  document.getElementById("sidebar-ch-title").innerText = `CH ${ch.ch}: ${ch.sections.length} SECTIONS`;
+
+  // Render Sidebar buttons for EVERY section of this chapter
+  const sList = document.getElementById("sidebar-section-list");
+  sList.innerHTML = "";
+  ch.sections.forEach(s => {
+    sList.innerHTML += `
+      <button class="section-nav-btn ${s.id === activeSecNum ? 'active' : ''}" onclick="selectSection(${s.id})">
+        §${s.id}. ${s.title}
+      </button>
+    `;
   });
 
-  document.getElementById("section-lesson-body").innerHTML = `
-    <h3 style="font-family:var(--font-display);color:var(--neon-cyan);margin-bottom:1rem">${sec.title}</h3>
-    ${sec.content}
+  renderActiveSectionContent();
+}
+
+function selectSection(secId) {
+  activeSecNum = secId;
+  document.querySelectorAll(".section-nav-btn").forEach((b, idx) => {
+    b.classList.toggle("active", (idx + 1) === secId);
+  });
+  renderActiveSectionContent();
+}
+
+function renderActiveSectionContent() {
+  const ch = INACC_COMPLETE_SYLLABUS.find(c => c.ch === activeChNum);
+  const sec = ch.sections.find(s => s.id === activeSecNum);
+  const area = document.getElementById("study-content-area");
+
+  let factsHtml = ch.powerFacts.map(f => `<li style="margin-bottom:4px;">★ ${f}</li>`).join("");
+
+  area.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:1.5rem;">
+      <h2 style="font-family:var(--font-title); color:var(--cyan); font-size:1.4rem;">${ch.icon} Chapter ${ch.ch} · Section ${sec.id}</h2>
+      <span class="tag">Grade 4–6 INACC Syllabus</span>
+    </div>
+
+    <div style="background:rgba(255,208,0,0.08); border:1px solid rgba(255,208,0,0.3); border-radius:10px; padding:1.2rem; margin-bottom:1.5rem;">
+      <h4 style="color:var(--gold); margin-bottom:6px;">🚀 Mission Briefing</h4>
+      <p style="font-size:0.95rem;">${ch.briefing}</p>
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <h3 style="color:#fff; margin-bottom:10px; font-size:1.2rem;">${sec.title}</h3>
+      <p style="font-size:1.05rem; line-height:1.8; color:#e2e8f0; background:rgba(255,255,255,0.02); padding:1.2rem; border-radius:10px; border-left:4px solid var(--cyan);">${sec.content}</p>
+    </div>
+
+    <div style="background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.3); border-radius:10px; padding:1.2rem; margin-bottom:1.5rem;">
+      <h4 style="color:var(--purple); margin-bottom:6px;">🔍 Space Mystery: ${ch.mystery.q}</h4>
+      <p style="font-size:0.95rem; color:#f3e8ff;">${ch.mystery.a}</p>
+    </div>
+
+    <div style="background:rgba(0,229,255,0.06); border:1px solid var(--border); border-radius:10px; padding:1.2rem; margin-bottom:1.5rem;">
+      <h4 style="color:var(--cyan); margin-bottom:8px;">⚡ Olympiad Power Facts (Chapter ${ch.ch})</h4>
+      <ul style="list-style:none; font-size:0.9rem; color:#cbd5e1;">${factsHtml}</ul>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+      <button class="btn btn-outline" ${sec.id === 1 ? 'disabled style="opacity:0.4;"' : ''} onclick="selectSection(${sec.id - 1})">← Previous Section</button>
+      <button class="btn btn-cyan" ${sec.id === ch.sections.length ? 'disabled style="opacity:0.4;"' : ''} onclick="selectSection(${sec.id + 1})">Next Section →</button>
+    </div>
   `;
 }
 
-function startNextMission() {
-  const next = SYLLABUS_DATA.find(c => !appState.completedChapters.includes(c.id)) || SYLLABUS_DATA[0];
-  openChapter(next.id);
-}
+/* ==========================================================================
+   CHAPTER-WISE 10-QUESTION QUIZZES
+========================================================================== */
+function launchActiveChapterQuiz() {
+  const chQuestions = INACC_ALL_80_MCQS.filter(q => q.ch === activeChNum);
+  const area = document.getElementById("study-content-area");
 
-/* ---------------------------------------------------------------------------
-   7. INTERACTIVE QUIZ & OLYMPIAD ENGINE
---------------------------------------------------------------------------- */
-let quizQuestions = [];
-let quizIndex = 0;
-let quizScore = 0;
-let isTimedMode = false;
-let quizTimerInterval = null;
-let quizSecondsLeft = 900; // 15 mins
+  let qIdx = 0;
+  let qScore = 0;
 
-function launchChapterQuiz(chId) {
-  quizQuestions = MASTER_80_MCQS.filter(q => q.ch === chId);
-  startQuizSession(`Chapter ${chId} Official Quiz`, false);
-}
+  function renderQ() {
+    const q = chQuestions[qIdx];
+    let opts = q.opts.map((o, idx) => `
+      <button class="opt-btn" onclick="checkChQuiz(${idx})">${String.fromCharCode(65 + idx)}. ${o}</button>
+    `).join("");
 
-function startTimedSimulator() {
-  // 15-Minute 20-Q high pressure drill[cite: 1]
-  quizQuestions = [...MASTER_80_MCQS].sort(() => 0.5 - Math.random()).slice(0, 20);
-  startQuizSession("15-Minute Olympiad Simulator", true);
-}
-
-function startMaster80Test() {
-  quizQuestions = [...MASTER_80_MCQS];
-  startQuizSession("Master 80-Question Final Assessment", false);
-}
-
-function startQuizSession(title, timed) {
-  quizIndex = 0;
-  quizScore = 0;
-  isTimedMode = timed;
-  quizSecondsLeft = 900;
-  
-  document.getElementById("quiz-badge-title").innerText = title.toUpperCase();
-  document.getElementById("quiz-timer-box").style.display = timed ? "block" : "none";
-  
-  if (timed) {
-    clearInterval(quizTimerInterval);
-    quizTimerInterval = setInterval(() => {
-      quizSecondsLeft--;
-      const m = Math.floor(quizSecondsLeft / 60);
-      const s = quizSecondsLeft % 60;
-      document.getElementById("quiz-timer-digits").innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-      if (quizSecondsLeft <= 0) {
-        clearInterval(quizTimerInterval);
-        finishQuiz();
-      }
-    }, 1000);
+    area.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:10px;">
+        <span style="color:var(--cyan); font-weight:bold;">Chapter ${activeChNum} Quiz: Question ${qIdx + 1} of 10</span>
+        <span style="color:var(--gold); font-weight:bold;">Score: ${qScore}</span>
+      </div>
+      <h3 style="margin-bottom:1.5rem;">${q.q}</h3>
+      <div id="chq-opts">${opts}</div>
+      <div id="chq-fb" style="margin-top:1rem; display:none; padding:12px; border-radius:8px;"></div>
+    `;
   }
 
-  navigateTo("quiz");
-  showQuizQuestion();
-}
+  window.checkChQuiz = function(selected) {
+    const q = chQuestions[qIdx];
+    const btns = document.querySelectorAll("#chq-opts .opt-btn");
+    btns.forEach(b => b.disabled = true);
 
-function showQuizQuestion() {
-  const q = quizQuestions[quizIndex];
-  document.getElementById("quiz-question-number").innerText = `Question ${quizIndex + 1} of ${quizQuestions.length}`;
-  document.getElementById("quiz-question-text").innerText = q.q;
-  document.getElementById("quiz-feedback-box").style.display = "none";
-  
-  const optContainer = document.getElementById("quiz-options-container");
-  optContainer.innerHTML = "";
+    const fb = document.getElementById("chq-fb");
+    fb.style.display = "block";
 
-  q.opts.forEach((opt, idx) => {
-    const btn = document.createElement("button");
-    btn.className = "q-opt-btn";
-    btn.innerText = `${String.fromCharCode(65 + idx)}. ${opt}`;
-    btn.onclick = () => handleAnswer(idx, btn);
-    optContainer.appendChild(btn);
-  });
-}
-
-function handleAnswer(selectedIdx, btnEl) {
-  const q = quizQuestions[quizIndex];
-  const isCorrect = selectedIdx === q.ans;
-  
-  // Disable all buttons
-  document.querySelectorAll(".q-opt-btn").forEach(b => b.classList.add("disabled"));
-  
-  if (isCorrect) {
-    btnEl.classList.add("correct");
-    quizScore++;
-    appState.xp += 25;
-    appState.stars += 1;
-    document.getElementById("quiz-feedback-status").innerHTML = `<span style="color:var(--neon-green)">✅ Correct! Mission Data Confirmed!</span>`;
-  } else {
-    btnEl.classList.add("incorrect");
-    document.querySelectorAll(".q-opt-btn")[q.ans].classList.add("correct");
-    document.getElementById("quiz-feedback-status").innerHTML = `<span style="color:var(--neon-red)">🔍 Not this time. Let's investigate:</span>`;
-    
-    // Record mistake
-    if (!appState.mistakes.find(m => m.id === q.id)) {
-      appState.mistakes.push({ ...q, studentAns: q.opts[selectedIdx] });
+    if (selected === q.ans) {
+      btns[selected].classList.add("correct");
+      fb.style.background = "rgba(16,185,129,0.2)";
+      fb.style.border = "1px solid #10b981";
+      fb.innerHTML = `<strong>🌟 Correct! Mission confirmed.</strong><p style="font-size:0.85rem; margin-top:4px;">${q.exp}</p>`;
+      qScore++;
+      addXP(15);
+    } else {
+      btns[selected].classList.add("wrong");
+      btns[q.ans].classList.add("correct");
+      fb.style.background = "rgba(239,68,68,0.2)";
+      fb.style.border = "1px solid #ef4444";
+      fb.innerHTML = `<strong>⚠️ Not this time:</strong><p style="font-size:0.85rem; margin-top:4px;">${q.exp}</p>`;
+      recordMistake(q, selected);
     }
+
+    setTimeout(() => {
+      qIdx++;
+      if (qIdx < chQuestions.length) {
+        renderQ();
+      } else {
+        finishChQuiz(qScore);
+      }
+    }, 2000);
+  };
+
+  function finishChQuiz(score) {
+    state.stars = Math.max(state.stars, score);
+    saveState();
+    area.innerHTML = `
+      <div style="text-align:center; padding:2rem;">
+        <h2 style="font-family:var(--font-title); color:var(--cyan);">🎉 Chapter ${activeChNum} Quiz Complete!</h2>
+        <h1 style="color:var(--gold); font-size:3.5rem; margin:1rem 0;">${score} / 10</h1>
+        <p style="color:var(--text-muted); margin-bottom:1.5rem;">Earned ${score * 15} XP! Review any tricky concepts or proceed to the next chapter.</p>
+        <button class="btn btn-cyan" onclick="renderActiveSectionContent()">Back to Chapter Content</button>
+      </div>
+    `;
   }
 
-  saveState();
-  document.getElementById("quiz-feedback-expl").innerText = q.expl;
-  document.getElementById("quiz-feedback-box").style.display = "block";
+  renderQ();
 }
 
-function handleQuizNext() {
-  quizIndex++;
-  if (quizIndex < quizQuestions.length) {
-    showQuizQuestion();
-  } else {
-    finishQuiz();
+function recordMistake(q, givenIdx) {
+  if (!state.mistakes.find(m => m.id === q.id)) {
+    state.mistakes.push({
+      id: q.id,
+      ch: q.ch,
+      q: q.q,
+      given: q.opts[givenIdx],
+      correct: q.opts[q.ans],
+      exp: q.exp
+    });
+    saveState();
   }
 }
 
-function finishQuiz() {
-  clearInterval(quizTimerInterval);
-  const pct = Math.round((quizScore / quizQuestions.length) * 100);
-  
-  if (quizQuestions.length === 10 && quizQuestions[0].ch) {
-    const ch = quizQuestions[0].ch;
-    appState.chapterScores[ch] = Math.max(appState.chapterScores[ch] || 0, quizScore);
-    if (!appState.completedChapters.includes(ch)) appState.completedChapters.push(ch);
-    appState.xp += 100;
-  }
-  saveState();
-
-  alert(`🎯 Mission Complete!\nScore: ${quizScore} / ${quizQuestions.length} (${pct}%)\nXP Awarded: +${quizScore * 25}`);
-  navigateTo("dashboard");
-}
-
-/* ---------------------------------------------------------------------------
-   8. FLASHCARD SYSTEM
---------------------------------------------------------------------------- */
-let fcIndex = 0;
-function showCurrentFlashcard() {
-  const q = MASTER_80_MCQS[fcIndex % MASTER_80_MCQS.length];
-  document.getElementById("fc-q-text").innerText = q.q;
-  document.getElementById("fc-a-text").innerText = q.opts[q.ans];
-  document.getElementById("main-flashcard").classList.remove("flipped");
-}
-function flipFlashcard() {
-  document.getElementById("main-flashcard").classList.toggle("flipped");
-}
-function nextFlashcard(known) {
-  if (known) { appState.xp += 10; saveState(); }
-  fcIndex++;
-  showCurrentFlashcard();
-}
-
-/* ---------------------------------------------------------------------------
-   9. MISTAKE NOTEBOOK
---------------------------------------------------------------------------- */
-function renderMistakesBook() {
-  const container = document.getElementById("mistakes-container");
-  container.innerHTML = "";
-  
-  if (appState.mistakes.length === 0) {
-    container.innerHTML = `<div class="glass-card" style="text-align:center;color:var(--text-muted)">🌟 Clean log! No mistakes recorded yet.</div>`;
+function renderMistakes() {
+  const g = document.getElementById("mistakes-grid");
+  if (state.mistakes.length === 0) {
+    g.innerHTML = `<div class="card" style="grid-column:1/-1; text-align:center;"><h3 style="color:var(--green);">✨ Zero Recorded Mistakes!</h3><p style="color:var(--text-muted);">All answered questions are verified accurate.</p></div>`;
     return;
   }
-
-  appState.mistakes.forEach((m, idx) => {
-    const div = document.createElement("div");
-    div.className = "glass-card";
-    div.style.borderLeft = "4px solid var(--neon-red)";
-    div.innerHTML = `
-      <div style="font-size:0.8rem;color:var(--neon-cyan);font-family:var(--font-mono)">CHAPTER 0${m.ch} TOPIC REVIEW</div>
-      <h4 style="margin:0.4rem 0">${m.q}</h4>
-      <p style="color:var(--neon-red);font-size:0.9rem">Your Answer: ${m.studentAns}</p>
-      <p style="color:var(--neon-green);font-size:0.9rem">Correct Answer: ${m.opts[m.ans]}</p>
-      <p style="font-size:0.85rem;color:var(--text-muted);margin-top:0.5rem"><em>${m.expl}</em></p>
-      <button class="btn-danger" style="margin-top:0.75rem;font-size:0.8rem" onclick="clearMistake(${idx})">Mark Resolved ✓</button>
+  g.innerHTML = "";
+  state.mistakes.forEach(m => {
+    g.innerHTML += `
+      <div class="card" style="border-left:4px solid var(--red);">
+        <span class="tag">CHAPTER ${m.ch}</span>
+        <h4 style="margin:8px 0;">${m.q}</h4>
+        <p style="font-size:0.85rem; color:#fca5a5;">Your Answer: ${m.given}</p>
+        <p style="font-size:0.85rem; color:#86efac;">Correct: ${m.correct}</p>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:6px;">${m.exp}</p>
+      </div>
     `;
-    container.appendChild(div);
   });
 }
-function clearMistake(index) {
-  appState.mistakes.splice(index, 1);
+
+/* ==========================================================================
+   15-MINUTE EXAM SIMULATOR
+========================================================================== */
+let s15List = [];
+let s15Idx = 0;
+let s15Answers = {};
+let s15Timer = null;
+let s15Seconds = 900;
+
+function start15MinTest() {
+  showTab('sim15');
+}
+
+function begin15MinTest() {
+  document.getElementById("sim15-landing").style.display = "none";
+  document.getElementById("sim15-summary").style.display = "none";
+  document.getElementById("sim15-running").style.display = "block";
+
+  s15List = [...INACC_ALL_80_MCQS].sort(() => 0.5 - Math.random()).slice(0, 20);
+  s15Idx = 0;
+  s15Answers = {};
+  s15Seconds = 900;
+
+  clearInterval(s15Timer);
+  s15Timer = setInterval(() => {
+    s15Seconds--;
+    const m = Math.floor(s15Seconds / 60);
+    const s = s15Seconds % 60;
+    document.getElementById("s15-clock").innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    if (s15Seconds <= 0) {
+      clearInterval(s15Timer);
+      end15MinTest();
+    }
+  }, 1000);
+
+  renderS15Q();
+}
+
+function renderS15Q() {
+  const q = s15List[s15Idx];
+  document.getElementById("s15-progress").innerText = `Question ${s15Idx + 1} of 20 (Chapter ${q.ch})`;
+  document.getElementById("s15-question").innerText = q.q;
+
+  const c = document.getElementById("s15-options");
+  c.innerHTML = "";
+  q.opts.forEach((opt, idx) => {
+    const isSelected = s15Answers[s15Idx] === idx;
+    c.innerHTML += `
+      <button class="opt-btn ${isSelected ? 'correct' : ''}" style="${isSelected ? 'border-color:var(--cyan); background:var(--cyan-dim);' : ''}" onclick="pickS15(${idx})">
+        ${String.fromCharCode(65 + idx)}. ${opt}
+      </button>
+    `;
+  });
+}
+
+function pickS15(idx) {
+  s15Answers[s15Idx] = idx;
+  renderS15Q();
+}
+
+function nextS15() {
+  if (s15Idx < 19) { s15Idx++; renderS15Q(); }
+  else { end15MinTest(); }
+}
+function prevS15() {
+  if (s15Idx > 0) { s15Idx--; renderS15Q(); }
+}
+
+function end15MinTest() {
+  clearInterval(s15Timer);
+  document.getElementById("sim15-running").style.display = "none";
+  const sum = document.getElementById("sim15-summary");
+  sum.style.display = "block";
+
+  let correct = 0;
+  s15List.forEach((q, idx) => {
+    if (s15Answers[idx] === q.ans) correct++;
+    else if (s15Answers[idx] !== undefined) recordMistake(q, s15Answers[idx]);
+  });
+
+  addXP(correct * 20);
+  sum.innerHTML = `
+    <h2 style="font-family:var(--font-title); color:var(--cyan);">Phase 1 Mission Report</h2>
+    <h1 style="color:var(--gold); font-size:3.5rem; margin:1rem 0;">${correct} / 20</h1>
+    <p style="font-weight:bold; margin-bottom:1rem;">Score: ${Math.round((correct/20)*100)}% | Time Left: ${Math.floor(s15Seconds/60)}m ${s15Seconds%60}s</p>
+    <button class="btn btn-gold" onclick="begin15MinTest()">Retake 15-Min Test</button>
+  `;
+}
+
+/* ==========================================================================
+   MASTER 80-MCQ ASSESSMENT
+========================================================================== */
+let m80Idx = 0;
+let m80Answers = {};
+
+function beginMaster80() {
+  document.getElementById("m80-landing").style.display = "none";
+  document.getElementById("m80-summary").style.display = "none";
+  document.getElementById("m80-running").style.display = "block";
+  m80Idx = 0;
+  m80Answers = {};
+  renderM80Q();
+}
+
+function renderM80Q() {
+  const q = INACC_ALL_80_MCQS[m80Idx];
+  document.getElementById("m80-progress").innerText = `Question ${m80Idx + 1} of 80`;
+  document.getElementById("m80-badge").innerText = `CHAPTER ${q.ch}`;
+  document.getElementById("m80-question").innerText = q.q;
+
+  const c = document.getElementById("m80-options");
+  c.innerHTML = "";
+  q.opts.forEach((opt, idx) => {
+    const isSelected = m80Answers[m80Idx] === idx;
+    c.innerHTML += `
+      <button class="opt-btn ${isSelected ? 'correct' : ''}" style="${isSelected ? 'border-color:var(--cyan); background:var(--cyan-dim);' : ''}" onclick="pickM80(${idx})">
+        ${String.fromCharCode(65 + idx)}. ${opt}
+      </button>
+    `;
+  });
+}
+
+function pickM80(idx) {
+  m80Answers[m80Idx] = idx;
+  renderM80Q();
+}
+function nextM80() {
+  if (m80Idx < 79) { m80Idx++; renderM80Q(); }
+  else { endMaster80(); }
+}
+function prevM80() {
+  if (m80Idx > 0) { m80Idx--; renderM80Q(); }
+}
+
+function endMaster80() {
+  document.getElementById("m80-running").style.display = "none";
+  const sum = document.getElementById("m80-summary");
+  sum.style.display = "block";
+
+  let correct = 0;
+  INACC_ALL_80_MCQS.forEach((q, idx) => {
+    if (m80Answers[idx] === q.ans) correct++;
+    else if (m80Answers[idx] !== undefined) recordMistake(q, m80Answers[idx]);
+  });
+
+  addXP(correct * 10);
+  state.stars = Math.max(state.stars, correct);
   saveState();
-  renderMistakesBook();
+
+  sum.innerHTML = `
+    <h2 style="font-family:var(--font-title); color:var(--cyan);">🏆 National Master Assessment Completed</h2>
+    <h1 style="color:var(--gold); font-size:3.5rem; margin:1rem 0;">${correct} / 80</h1>
+    <p style="font-weight:bold; margin-bottom:1.5rem;">Overall Accuracy: ${Math.round((correct/80)*100)}%</p>
+    <button class="btn btn-cyan" onclick="beginMaster80()">Retake 80-MCQ Master Assessment</button>
+  `;
 }
 
-/* ---------------------------------------------------------------------------
-   10. ADAPTIVE LEARNING & BADGES
---------------------------------------------------------------------------- */
-function updateAdaptiveRecommendation() {
-  const el = document.getElementById("adaptive-recommendation");
-  if (appState.mistakes.length > 0) {
-    const lastMistake = appState.mistakes[appState.mistakes.length - 1];
-    el.innerHTML = `
-      🔴 <strong>Priority Focus:</strong> Chapter ${lastMistake.ch} Review<br>
-      You recently had questions to review on <em>"${lastMistake.q.substring(0, 45)}..."</em><br>
-      <button class="btn-primary" style="margin-top:0.75rem;font-size:0.8rem;padding:0.4rem 0.8rem" onclick="openChapter(${lastMistake.ch})">Train Chapter ${lastMistake.ch} Now</button>
-    `;
-  } else {
-    el.innerHTML = `🟢 <strong>Flight Status Nominal:</strong> All systems go! Proceed to your next uncompleted chapter or run the 15-Minute Simulator[cite: 1]!`;
+/* ==========================================================================
+   STARRY CANVAS
+========================================================================== */
+function initStars() {
+  const canvas = document.getElementById("stars-bg");
+  const ctx = canvas.getContext("2d");
+  let stars = [];
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = Array.from({ length: 100 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      s: Math.random() * 1.5,
+      a: Math.random()
+    }));
   }
-}
+  window.addEventListener("resize", resize);
+  resize();
 
-const BADGES = [
-  { id: 'b1', name: 'First Launch', icon: '🌟', req: s => s.xp >= 50 },
-  { id: 'b2', name: 'Moon Master', icon: '🌕', req: s => s.chapterScores[5] >= 8 },
-  { id: 'b3', name: 'ISRO Explorer', icon: '🇮🇳', req: s => s.chapterScores[3] >= 8 },
-  { id: 'b4', name: 'Planet Expert', icon: '🪐', req: s => s.chapterScores[6] >= 8 },
-  { id: 'b5', name: 'Olympiad Champion', icon: '🏆', req: s => s.completedChapters.length >= 8 }
-];
-
-function renderBadges() {
-  const container = document.getElementById("badge-display-grid");
-  if (!container) return;
-  container.innerHTML = "";
-  BADGES.forEach(b => {
-    const unlocked = b.req(appState);
-    const div = document.createElement("div");
-    div.className = `badge-card ${unlocked ? 'unlocked' : ''}`;
-    div.innerHTML = `
-      <div class="b-icon">${b.icon}</div>
-      <div style="font-size:0.8rem;font-weight:700">${b.name}</div>
-      <div style="font-size:0.7rem;color:var(--text-muted)">${unlocked ? 'Unlocked' : 'Locked'}</div>
-    `;
-    container.appendChild(div);
-  });
-}
-
-/* ---------------------------------------------------------------------------
-   11. SIMULATORS ENGINE (ORBIT CANVAS & MOON SIM)
---------------------------------------------------------------------------- */
-let orbitAnim = null;
-function initOrbitSim() {
-  const cvs = document.getElementById("orbitCanvas");
-  if (!cvs) return;
-  const ctx = cvs.getContext("2d");
-  ctx.clearRect(0,0,300,200);
-  
-  // Earth
-  ctx.fillStyle = "#00f2fe";
-  ctx.beginPath();
-  ctx.arc(150, 100, 35, 0, Math.PI*2);
-  ctx.fill();
-  
-  // Satellite start
-  ctx.fillStyle = "#ffd166";
-  ctx.beginPath();
-  ctx.arc(150, 45, 6, 0, Math.PI*2);
-  ctx.fill();
-}
-
-function runOrbitSim() {
-  const v = parseInt(document.getElementById("orbitSpeed").value);
-  const cvs = document.getElementById("orbitCanvas");
-  const ctx = cvs.getContext("2d");
-  const status = document.getElementById("orbitSimStatus");
-
-  cancelAnimationFrame(orbitAnim);
-  let angle = -Math.PI / 2;
-  let r = 55;
-
-  if (v < 6) {
-    status.innerText = "❌ Too slow! Gravity pulls the satellite down (Crashed)[cite: 1].";
-    function crashLoop() {
-      ctx.clearRect(0,0,300,200);
-      initOrbitSim();
-      r -= 0.6;
-      angle += 0.05;
-      ctx.fillStyle = "#ef476f";
-      ctx.beginPath();
-      ctx.arc(150 + Math.cos(angle)*r, 100 + Math.sin(angle)*r, 5, 0, Math.PI*2);
-      ctx.fill();
-      if (r > 35) orbitAnim = requestAnimationFrame(crashLoop);
-    }
-    crashLoop();
-  } else if (v > 8) {
-    status.innerText = "🚀 Speed too high! Spacecraft escapes Earth's gravity well[cite: 1]!";
-    function escapeLoop() {
-      ctx.clearRect(0,0,300,200);
-      initOrbitSim();
-      r += 1.2;
-      angle += 0.04;
-      ctx.fillStyle = "#ffd166";
-      ctx.beginPath();
-      ctx.arc(150 + Math.cos(angle)*r, 100 + Math.sin(angle)*r, 5, 0, Math.PI*2);
-      ctx.fill();
-      if (r < 140) orbitAnim = requestAnimationFrame(escapeLoop);
-    }
-    escapeLoop();
-  } else {
-    status.innerText = "⭐ Perfect orbital velocity! Balanced gravitational curve[cite: 1]!";
-    function orbitLoop() {
-      ctx.clearRect(0,0,300,200);
-      initOrbitSim();
-      angle += 0.05;
-      ctx.fillStyle = "#06d6a0";
-      ctx.beginPath();
-      ctx.arc(150 + Math.cos(angle)*r, 100 + Math.sin(angle)*r, 5, 0, Math.PI*2);
-      ctx.fill();
-      orbitAnim = requestAnimationFrame(orbitLoop);
-    }
-    orbitLoop();
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(st => {
+      ctx.fillStyle = `rgba(255, 255, 255, ${st.a})`;
+      ctx.fillRect(st.x, st.y, st.s, st.s);
+      st.a += (Math.random() - 0.5) * 0.02;
+      if (st.a < 0.1) st.a = 0.1;
+      if (st.a > 0.9) st.a = 0.9;
+    });
+    requestAnimationFrame(loop);
   }
+  loop();
 }
 
-function drawMoonSim() {
-  const angleDeg = parseInt(document.getElementById("moonAngle").value);
-  const cvs = document.getElementById("moonCanvas");
-  if (!cvs) return;
-  const ctx = cvs.getContext("2d");
-  ctx.clearRect(0,0,300,200);
-
-  // Sunlight indicator from right
-  ctx.fillStyle = "#ffd166";
-  ctx.font = "10px sans-serif";
-  ctx.fillText("SUNLIGHT ☀️ ➡️", 200, 20);
-
-  // Earth
-  ctx.fillStyle = "#4facfe";
-  ctx.beginPath();
-  ctx.arc(150, 100, 24, 0, Math.PI*2);
-  ctx.fill();
-
-  // Moon Position
-  const rad = (angleDeg * Math.PI) / 180;
-  const mx = 150 + Math.cos(rad) * 60;
-  const my = 100 + Math.sin(rad) * 60;
-
-  ctx.fillStyle = "#fff";
-  ctx.beginPath();
-  ctx.arc(mx, my, 10, 0, Math.PI*2);
-  ctx.fill();
-
-  // Phase Name Map
-  let pName = "New Moon";
-  if (angleDeg > 20 && angleDeg < 70) pName = "Waxing Crescent";
-  else if (angleDeg >= 70 && angleDeg <= 110) pName = "First Quarter";
-  else if (angleDeg > 110 && angleDeg < 160) pName = "Waxing Gibbous";
-  else if (angleDeg >= 160 && angleDeg <= 200) pName = "Full Moon";
-  else if (angleDeg > 200 && angleDeg < 250) pName = "Waning Gibbous";
-  else if (angleDeg >= 250 && angleDeg <= 290) pName = "Last Quarter";
-  else if (angleDeg > 290 && angleDeg < 340) pName = "Waning Crescent";
-
-  document.getElementById("moonPhaseName").innerText = `Phase: ${pName} (${angleDeg}°)[cite: 1]`;
-}
-
-let stageLevel = 1;
-function advanceStage() {
-  stageLevel++;
-  const vis = document.getElementById("rocket-visual");
-  const alt = document.getElementById("staging-altitude");
-  if (stageLevel === 2) {
-    vis.innerText = "🚀 💨 [Stage 1 Discarded]";
-    alt.innerText = "Alt: 70 km | Mass: 45% (Accelerating!)";
-  } else if (stageLevel === 3) {
-    vis.innerText = "🛰️ 💨 [Stage 2 Discarded]";
-    alt.innerText = "Alt: 250 km | Orbit Achieved!";
-  } else {
-    resetStaging();
-  }
-}
-function resetStaging() {
-  stageLevel = 1;
-  document.getElementById("rocket-visual").innerText = "🚀";
-  document.getElementById("staging-altitude").innerText = "Alt: 0 km | Mass: 100%";
-}
-
-/* ---------------------------------------------------------------------------
-   12. INITIALIZATION
---------------------------------------------------------------------------- */
 window.addEventListener("DOMContentLoaded", () => {
+  initStars();
   loadState();
-  renderChapterGrid();
-  
-  if (!localStorage.getItem(STATE_KEY)) {
-    document.getElementById("onboarding-modal").classList.add("active");
-  }
+  initStudyGuide();
 });
 </script>
 </body>
