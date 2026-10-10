@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Upside Down: English Academy</title>
+  <style>
+    /* =========================================================
+       THE UPSIDE DOWN: ENGLISH ACADEMY — THEME & STYLES (80s RETRO)
+       ========================================================= */
+    :root {
+      --bg-dark: #070913;
+      --bg-panel: #0f172a;
+      --bg-card: #162038;
+      --neon-blue: #00d4ff;
+      --neon-red: #ff2a5f;
+      --neon-purple: #a855f7;
+      --neon-yellow: #facc15;
+      --neon-green: #22c55e;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glow: rgba(0, 212, 255, 0.4);
+      --font-display: 'Courier New', Courier, monospace;
+      --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Ambient CRT Scanline Effect — explicitly pointer-events: none */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 10;
+      pointer-events: none !important;
+      opacity: 0.35;
+    }
+
+    /* Header & Navigation Bar */
+    header {
+      background: rgba(15, 23, 42, 0.98);
+      border-bottom: 2px solid var(--neon-blue);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      letter-spacing: 2px;
+      font-size: 1.25rem;
+      color: var(--neon-red);
+      text-shadow: 0 0 8px rgba(255, 42, 95, 0.7);
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 0.75rem;
+      color: var(--neon-blue);
+      display: block;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: var(--text-main);
+      border: 1px solid var(--neon-blue);
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 12px var(--neon-blue);
+      transform: translateY(-1px);
+    }
+
+    .btn-red {
+      border-color: var(--neon-red);
+    }
+    .btn-red:hover {
+      background: var(--neon-red);
+      color: #fff;
+      box-shadow: 0 0 12px var(--neon-red);
+    }
+
+    .btn-purple {
+      border-color: var(--neon-purple);
+    }
+    .btn-purple:hover {
+      background: var(--neon-purple);
+      color: #fff;
+      box-shadow: 0 0 12px var(--neon-purple);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      position: relative;
+      z-index: 20;
+    }
+
+    /* Portal / Hero Entry Screen */
+    .hero-panel {
+      text-align: center;
+      padding: 50px 20px;
+      background: radial-gradient(circle at center, #1e1b4b 0%, #070913 80%);
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--neon-red);
+      text-shadow: 0 0 15px rgba(255, 42, 95, 0.8), 2px 2px 0 #000;
+      margin-bottom: 12px;
+      letter-spacing: 3px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      max-width: 750px;
+      margin: 0 auto 24px;
+    }
+
+    /* Zone Grid */
+    .zone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .zone-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .zone-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 212, 255, 0.3);
+    }
+
+    .zone-badge {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--neon-yellow);
+      background: rgba(250, 204, 21, 0.1);
+      border: 1px solid var(--neon-yellow);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .zone-title {
+      font-size: 1.25rem;
+      color: #fff;
+      margin-bottom: 8px;
+      font-family: var(--font-display);
+    }
+
+    .zone-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .zone-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 12px;
+      font-size: 0.85rem;
+    }
+
+    /* Screen Views — Clean display handling */
+    .view-screen {
+      display: none;
+    }
+
+    .view-screen.active-view {
+      display: block !important;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    .view-panel {
+      background: var(--bg-panel);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      border-bottom: 2px solid var(--neon-blue);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .step-card {
+      background: #111a33;
+      border-left: 4px solid var(--neon-blue);
+      padding: 16px 20px;
+      margin-bottom: 18px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .step-badge {
+      color: var(--neon-yellow);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Comparison Tables */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.95rem;
+    }
+
+    .compare-table th, .compare-table td {
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .compare-table th {
+      background: #1e293b;
+      color: var(--neon-blue);
+      font-family: var(--font-display);
+    }
+
+    .compare-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Question Widget */
+    .quiz-box {
+      background: #17203d;
+      border: 1px solid var(--neon-purple);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 600px) {
+      .quiz-options { grid-template-columns: 1fr 1fr; }
+    }
+
+    .opt-btn {
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 12px;
+      border-radius: 6px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .opt-btn:hover {
+      background: #334155;
+      border-color: var(--neon-blue);
+    }
+
+    .opt-btn.correct {
+      background: rgba(34, 197, 94, 0.2) !important;
+      border-color: var(--neon-green) !important;
+      color: #4ade80 !important;
+      font-weight: bold;
+    }
+
+    .opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: var(--neon-red) !important;
+      color: #f87171 !important;
+    }
+
+    .feedback-banner {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 6px;
+      display: none;
+      font-size: 0.9rem;
+    }
+
+    /* Four Square Graphic Organiser */
+    .four-square {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 12px;
+      background: #090d16;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px dashed var(--neon-blue);
+      margin: 16px 0;
+    }
+
+    .four-square-box {
+      background: #131c33;
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .four-square-box h4 {
+      color: var(--neon-yellow);
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    textarea.writer-input {
+      width: 100%;
+      min-height: 80px;
+      background: #090e1a;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: inherit;
+      resize: vertical;
+      font-size: 0.9rem;
+    }
+
+    textarea.writer-input:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+    }
+
+    /* Badges & Pills */
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .badge-item {
+      background: #111a33;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.4;
+      transition: all 0.3s;
+    }
+
+    .badge-item.unlocked {
+      opacity: 1;
+      border-color: var(--neon-yellow);
+      box-shadow: 0 0 10px rgba(250, 204, 21, 0.3);
+    }
+
+    .badge-icon {
+      font-size: 1.5rem;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .status-mastered { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+    .status-unstarted { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid #64748b; }
+
+    /* Interactive reading text */
+    .passage-box {
+      background: #090e1a;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      padding: 18px;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin: 16px 0;
+    }
+
+    .clickable-pronoun {
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 212, 255, 0.15);
+      border: 1px solid var(--neon-blue);
+      color: var(--neon-yellow);
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .clickable-pronoun:hover {
+      background: var(--neon-blue);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP APP HEADER -->
+  <header>
+    <div class="brand" onclick="window.app.showHome()">
+      <div style="font-size: 1.8rem;">⚡</div>
+      <div>
+        <div class="brand-title">The Upside Down</div>
+        <span class="brand-tagline">English Academy — Grade 5 Mystery Portal</span>
+      </div>
+    </div>
+    <div class="nav-controls">
+      <button class="btn" onclick="window.app.showHome()">🗺️ Portal Map</button>
+      <button class="btn btn-purple" onclick="window.app.showDashboard()">📊 Mastery HQ</button>
+      <button class="btn btn-red" onclick="window.app.startFinalExam()">🏆 Final Exam</button>
+      <button class="btn" id="soundBtn" onclick="window.app.toggleSound()">🔊 Sound ON</button>
+      <button class="btn" style="border-color:#64748b;" onclick="window.app.resetProgress()">🔄 Reset</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- HERO / PORTAL OVERVIEW (HOME) -->
+    <div id="homeView" class="view-screen active-view">
+      <div class="hero-panel">
+        <h1 class="hero-title">ENTER THE UPSIDE DOWN</h1>
+        <p class="hero-subtitle">
+          Linguistic anomalies have breached Hawkins Academy. Solve the mysteries, master Grade 5 English, and restore balance to the dimension!
+        </p>
+        <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+          <button class="btn btn-red" style="font-size:1.05rem; padding:12px 24px;" onclick="window.app.openZone(1)">
+            🚀 Start Week 9 Adventure
+          </button>
+          <button class="btn btn-purple" style="font-size:1.05rem; padding:12px 24px;" onclick="window.app.showDashboard()">
+            📋 View Investigation Log
+          </button>
+        </div>
+      </div>
+
+      <!-- MAP SECTIONS -->
+      <h2 style="font-family:var(--font-display); color:var(--neon-blue); margin-bottom:16px;">
+        INVESTIGATION SITES (WEEK 9 CURRICULUM)
+      </h2>
+      <div class="zone-grid">
+
+        <!-- ZONE 1 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 1</span>
+            <h3 class="zone-title">Relative Pronoun Laboratory</h3>
+            <p class="zone-desc">
+              Decode who, whom, whose, which, and that[cite: 1, 12, 13]. Investigate the ancient city of Mohenjo-Daro with Tara and repair broken relative clauses[cite: 1, 80].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone1Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(1)">Enter Lab ⚡</button>
+          </div>
+        </div>
+
+        <!-- ZONE 2 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 2</span>
+            <h3 class="zone-title">Word Transformation Lab</h3>
+            <p class="zone-desc">
+              Re-engineer root words with prefixes (un-, re-, pre-, dis-, mis-, in-/il-/im-/ir-, over-) and suffixes (-able, -ment, -tion, -ful, -less, etc.) at the Pyramid Builder Challenge[cite: 4, 6, 7].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone2Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(2)">Enter Lab ⚡</button>
+          </div>
+        </div>
+
+        <!-- ZONE 3 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 3</span>
+            <h3 class="zone-title">Sentence & Clause Chamber</h3>
+            <p class="zone-desc">
+              From sounds to sentences: master phrases vs. clauses, independent vs. subordinate clauses, and construct Simple, Compound, and Complex sentences[cite: 8, 9, 10, 64].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone3Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(3)">Enter Chamber ⚡</button>
+          </div>
+        </div>
+
+        <!-- ZONE 4 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 4</span>
+            <h3 class="zone-title">Time-Travel Grammar Room</h3>
+            <p class="zone-desc">
+              Synchronize past actions with Simple Past vs. Past Continuous, harness V1/V2/V3 verb forms, and wield cohesive devices (However, Meanwhile, Later, Suddenly, Afterwards)[cite: 33, 34, 35, 64].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone4Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(4)">Enter Room ⚡</button>
+          </div>
+        </div>
+
+        <!-- ZONE 5 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 5</span>
+            <h3 class="zone-title">The Writer's Secret Lab</h3>
+            <p class="zone-desc">
+              Follow the 5-step writing process: Pre-writing, Drafting, Revising (ARMS Strategy), Editing (CUPS Strategy), and Publishing with the 4-Square Organiser[cite: 40, 43, 50, 54, 65, 68, 70].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone5Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(5)">Enter Lab ⚡</button>
+          </div>
+        </div>
+
+        <!-- ZONE 6 -->
+        <div class="zone-card">
+          <div>
+            <span class="zone-badge">ZONE 6</span>
+            <h3 class="zone-title">Historical Fiction Story Quest</h3>
+            <p class="zone-desc">
+              Synthesize your learning: combine authentic historical facts with fictional characters, pitch your story, and exchange Two Stars & One Wish feedback[cite: 65].
+            </p>
+          </div>
+          <div class="zone-meta">
+            <span id="zone6Status" class="status-pill status-unstarted">Not Mastered</span>
+            <button class="btn" onclick="window.app.openZone(6)">Enter Quest ⚡</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ZONE 1: RELATIVE PRONOUNS -->
+    <div id="zone1View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 1 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">The Relative Pronoun Laboratory</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP 1 & 2 — Concept Breakdown</span>
+          <h3>What are Relative Pronouns and Why Do Writers Use Them?</h3>
+          <p style="margin-top:6px;">
+            Relative pronouns are connector words that join extra information directly to a noun in a sentence without creating clumsy, repetitive sentences[cite: 13, 76]. They make your writing smooth, descriptive, and mature[cite: 13, 76].
+          </p>
+        </div>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Relative Pronoun</th>
+              <th>Used For</th>
+              <th>Source Example</th>
+              <th>The Decisive Detective Clue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">who</strong></td>
+              <td>People (Subject)[cite: 13, 76]</td>
+              <td>The artist <em>who</em> painted the mural became famous.[cite: 14, 77]</td>
+              <td>Performs the action (Substitute with <strong>he/she/they</strong>).</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">whom</strong></td>
+              <td>People (Object)[cite: 13, 76]</td>
+              <td>The guide <em>whom</em> we followed knew the city well.[cite: 14, 77]</td>
+              <td>Receives the action; often follows prepositions like <em>to, with, for</em> (Substitute with <strong>him/her/them</strong>)[cite: 13, 76].</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">whose</strong></td>
+              <td>Possession (Ownership)[cite: 13, 76]</td>
+              <td>The inventor <em>whose</em> idea changed the world was celebrated.[cite: 14, 77]</td>
+              <td>Shows belonging[cite: 13, 76]. <em>Whose</em> = belonging; <em>Who's</em> = contraction for 'who is'.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">which</strong></td>
+              <td>Animals or Things[cite: 13, 76]</td>
+              <td>The chariot <em>which</em> won the race belonged to the prince.[cite: 14, 77]</td>
+              <td>Adds extra, non-essential description about things/animals[cite: 13, 76].</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">that</strong></td>
+              <td>People, Animals, or Things[cite: 13, 76]</td>
+              <td>The book <em>that</em> I borrowed was fascinating.[cite: 14, 77]</td>
+              <td>Introduces essential identifying clauses about objects or groups[cite: 13, 76].</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="step-card" style="border-left-color:var(--neon-purple); margin-top:24px;">
+          <span class="step-badge">SOURCE READING INVESTIGATION</span>
+          <h3>Passage Analysis: Tara & Mohenjo-Daro (Indus Valley Civilization)[cite: 1, 80]</h3>
+          <p>
+            Click every highlighted relative pronoun in this historical fiction excerpt from your Week 9 materials to inspect which antecedent noun it connects[cite: 1, 79, 80]!
+          </p>
+
+          <div class="passage-box">
+            Nearly 4,500 years ago, a young girl named Tara lived in the bustling city of Mohenjo-Daro,
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('which', 'Mohenjo-Daro', 'Gives extra geographical detail about the ancient Indus Valley city')">which</span> was one of the largest cities of the Indus Valley Civilization[cite: 1, 80]. Every morning, she helped her grandfather,
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('who', 'her grandfather', 'Tells the profession of her grandfather as the subject performing the action')">who</span> was a skilled seal maker, carve tiny animals into soft stone[cite: 1, 80].
+            One day, a merchant
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('whose', 'a merchant', 'Shows ownership over the boat that sailed along the Indus River')">whose</span> boat had travelled along the Indus River arrived with unusual goods[cite: 1, 80]. He showed Tara a shiny blue stone
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('that', 'shiny blue stone', 'Specifies which precise rare object arrived from faraway mountains')">that</span> had come from a faraway mountain[cite: 1, 80]. Her grandfather explained that traders
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('who', 'traders', 'Refers to the merchants who visited the city')">who</span> visited the city exchanged precious materials...[cite: 1, 80] Later, Tara admired the tiny seal
+            <span class="clickable-pronoun" onclick="window.app.inspectPronoun('which', 'tiny seal', 'Adds descriptive detail to the bull seal carved by Tara')">which</span> she had carved with great care[cite: 1, 80].
+          </div>
+          <div id="pronounInspectResult" style="background:#131c33; padding:12px; border-radius:6px; border:1px solid var(--neon-blue); display:none;"></div>
+        </div>
+
+        <div class="quiz-box" id="zone1Quiz">
+          <h3 style="color:var(--neon-yellow);">⚡ Lab Diagnostics: Relative Pronoun Calibration</h3>
+          <p id="z1qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z1qOptions"></div>
+          <div class="feedback-banner" id="z1Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 2: WORD TRANSFORMATION -->
+    <div id="zone2View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 2 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">The Word Transformation Laboratory</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">STEP 1 & 2 — Prefixes vs. Suffixes</span>
+          <h3>Architectural Anatomy of a Word</h3>
+          <p>
+            <strong>Prefix:</strong> A group of letters added <em>BEFORE</em> a word to modify its meaning (e.g., <code>un + happy = unhappy</code> [not happy])[cite: 6, 7].<br>
+            <strong>Suffix:</strong> A group of letters added to the <em>END</em> of a word to change its meaning or function (e.g., <code>fear + less = fearless</code> [without fear])[cite: 6, 8].
+          </p>
+        </div>
+
+        <div class="step-card" style="border-left-color:var(--neon-yellow);">
+          <span class="step-badge">SOURCE CHALLENGE: EGYPTIAN ARCHITECT PLANS</span>
+          <h3>The Pyramid Builder's Challenge[cite: 5]</h3>
+          <p>
+            Ancient builders are placing heavy limestone blocks[cite: 5]. Solve the architect's blueprints using root words <strong>care</strong>, <strong>fear</strong>, and <strong>hope</strong>[cite: 5]!
+          </p>
+
+          <div style="background:#0b1120; padding:16px; border-radius:8px; margin-top:12px;">
+            <p><strong>1. Which completed word describes a builder placing heavy stones[cite: 5]?</strong></p>
+            <div style="margin:8px 0; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" onclick="window.app.checkPyramid(1, 'careful')">careful (-ful)</button>
+              <button class="btn" onclick="window.app.checkPyramid(1, 'careless')">careless (-less)</button>
+              <button class="btn" onclick="window.app.checkPyramid(1, 'uncare')">uncare (un-)</button>
+            </div>
+            <div id="pyrFeedback1" style="font-size:0.9rem; margin-top:4px;"></div>
+
+            <hr style="border-color:rgba(255,255,255,0.1); margin:14px 0;">
+
+            <p><strong>2. Which completed word describes workers who face high scaffolding without terror[cite: 5]?</strong></p>
+            <div style="margin:8px 0; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" onclick="window.app.checkPyramid(2, 'fearful')">fearful (-ful)</button>
+              <button class="btn" onclick="window.app.checkPyramid(2, 'fearless')">fearless (-less)</button>
+              <button class="btn" onclick="window.app.checkPyramid(2, 'disfear')">disfear (dis-)</button>
+            </div>
+            <div id="pyrFeedback2" style="font-size:0.9rem; margin-top:4px;"></div>
+
+            <hr style="border-color:rgba(255,255,255,0.1); margin:14px 0;">
+
+            <p><strong>3. Which completed word describes workers who believe they will finish the pyramid[cite: 5]?</strong></p>
+            <div style="margin:8px 0; display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" onclick="window.app.checkPyramid(3, 'hopeless')">hopeless (-less)</button>
+              <button class="btn" onclick="window.app.checkPyramid(3, 'hopeful')">hopeful (-ful)</button>
+              <button class="btn" onclick="window.app.checkPyramid(3, 'misinterpreting')">misinterpreting (mis-)</button>
+            </div>
+            <div id="pyrFeedback3" style="font-size:0.9rem; margin-top:4px;"></div>
+          </div>
+        </div>
+
+        <table class="compare-table" style="margin-top:20px;">
+          <thead>
+            <tr>
+              <th>Affix</th>
+              <th>Type</th>
+              <th>Core Meaning</th>
+              <th>Source Examples</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>un-</strong></td><td>Prefix</td><td>Not / Opposite of[cite: 7]</td><td>unhappy, undo[cite: 7]</td></tr>
+            <tr><td><strong>re-</strong></td><td>Prefix</td><td>Again / Back[cite: 7]</td><td>redo, revisit[cite: 7]</td></tr>
+            <tr><td><strong>pre-</strong></td><td>Prefix</td><td>Before / Prior to[cite: 7]</td><td>prepay, prehistoric[cite: 7]</td></tr>
+            <tr><td><strong>dis-</strong></td><td>Prefix</td><td>Not / Opposite of[cite: 7]</td><td>dislike, disapprove[cite: 7]</td></tr>
+            <tr><td><strong>mis-</strong></td><td>Prefix</td><td>Wrong / Badly[cite: 7]</td><td>misbehave, misinterpret[cite: 7]</td></tr>
+            <tr><td><strong>in-, il-, im-, ir-</strong></td><td>Prefix</td><td>Not / Without[cite: 7]</td><td>incorrect, illegal, impossible, irregular[cite: 7]</td></tr>
+            <tr><td><strong>over-</strong></td><td>Prefix</td><td>Above / Beyond[cite: 7]</td><td>overreact, oversleep[cite: 7]</td></tr>
+            <tr><td><strong>-er / -or</strong></td><td>Suffix</td><td>One who does / that which does[cite: 8]</td><td>teacher, actor[cite: 8]</td></tr>
+            <tr><td><strong>-able / -ible</strong></td><td>Suffix</td><td>Capable of / Worthy of[cite: 8]</td><td>readable, reversible[cite: 8]</td></tr>
+            <tr><td><strong>-ful</strong></td><td>Suffix</td><td>Full of / Characterized by[cite: 8]</td><td>beautiful, thankful, careful[cite: 8]</td></tr>
+            <tr><td><strong>-less</strong></td><td>Suffix</td><td>Without / Lacking[cite: 8]</td><td>fearless, homeless, hopeless[cite: 8]</td></tr>
+            <tr><td><strong>-ment</strong></td><td>Suffix</td><td>Denoting action or resulting state[cite: 8]</td><td>movement, excitement[cite: 8]</td></tr>
+            <tr><td><strong>-ion, -tion, -sion</strong></td><td>Suffix</td><td>Denoting action or process[cite: 8]</td><td>celebration, discussion, expression[cite: 8]</td></tr>
+            <tr><td><strong>-ity, -ty</strong></td><td>Suffix</td><td>Denoting a state or quality[cite: 8]</td><td>happiness, beauty[cite: 8]</td></tr>
+          </tbody>
+        </table>
+
+        <div class="quiz-box" id="zone2Quiz">
+          <h3 style="color:var(--neon-purple);">⚡ Interactive Affix Synthesis Challenge</h3>
+          <p id="z2qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z2qOptions"></div>
+          <div class="feedback-banner" id="z2Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 3: SENTENCES & CLAUSES -->
+    <div id="zone3View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 3 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">Sentence & Clause Investigation Room</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">SOURCE POSTER: FROM SOUNDS TO SENTENCES![cite: 9]</span>
+          <h3>The Linguistic Hierarchy (Little things build big meaning)[cite: 9]</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:10px; margin-top:12px;">
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">1. SOUNDS</div>
+              <small>Smallest unit we hear & say: <code>/b/ /a/ /t/</code> (3 sounds)[cite: 9]</small>
+            </div>
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">2. LETTERS</div>
+              <small>Symbols we see & write: <code>b-a-t</code> (3 letters)[cite: 9]</small>
+            </div>
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">3. WORDS</div>
+              <small>Letters having standalone meaning: <code>bat</code> (1 word)[cite: 9]</small>
+            </div>
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">4. PHRASE</div>
+              <small>No complete subject and predicate: <code>in the garden</code>[cite: 9]</small>
+            </div>
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">5. CLAUSE</div>
+              <small>Has subject & predicate: <code>because it was raining</code>[cite: 9]</small>
+            </div>
+            <div style="background:#090e1a; padding:10px; border-radius:6px; border-left:3px solid var(--neon-blue);">
+              <div style="color:var(--neon-yellow); font-weight:bold;">6. SENTENCE</div>
+              <small>Complete thought: <code>The children stayed inside because it was raining.</code>[cite: 9]</small>
+            </div>
+          </div>
+        </div>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Sentence Architecture</th>
+              <th>Formula / Building Blocks</th>
+              <th>Source Exemplar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">Simple Sentence</strong></td>
+              <td>1 Independent Clause (1 Subject + 1 Verb)[cite: 11, 64]</td>
+              <td><em>The ancient city was beautiful.</em>[cite: 11] / <em>The trader arrived early.</em>[cite: 64]</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">Compound Sentence</strong></td>
+              <td>Independent Clause + Coordinating Conjunction (, and, but, or, so, yet, for) + Independent Clause[cite: 11, 64]</td>
+              <td><em>The builders worked hard, and they finished the pyramid.</em>[cite: 11]</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">Complex Sentence</strong></td>
+              <td>1 Independent Clause + at least 1 Subordinate Clause (Because, Although, When, If, Since, etc.)[cite: 11, 64]</td>
+              <td><em>Although the journey was long, the explorer never gave up.</em>[cite: 11]</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="quiz-box" id="zone3Quiz">
+          <h3 style="color:var(--neon-yellow);">⚡ Clause Detective: Identify the Structure</h3>
+          <p id="z3qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z3qOptions"></div>
+          <div class="feedback-banner" id="z3Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 4: TIME-TRAVEL GRAMMAR -->
+    <div id="zone4View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 4 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">The Time-Travel Grammar Room</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">SOURCE CAROUSEL: TENSES & COHESIVE DEVICES[cite: 64]</span>
+          <h3>Simple Past vs. Past Continuous: When Worlds Collide</h3>
+          <p>
+            <strong>Simple Past ($Subject + V2 + Object$):</strong> Describes an action that started and finished in the past[cite: 34, 64].<br>
+            <em>Example:</em> "The merchant sold clay pots at the marketplace."[cite: 34] / "The potter made beautiful clay pots."[cite: 64]<br><br>
+            <strong>Past Continuous ($Subject + was/were + V1\text{-ing} + Object$):</strong> Describes an action happening at a particular time in the past or interrupted by another action[cite: 35, 64].<br>
+            <em>Example:</em> "The merchant was selling clay pots when the rain began."[cite: 35]
+          </p>
+        </div>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Cohesive Device</th>
+              <th>Narrative Function</th>
+              <th>Investigation Sentence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:var(--neon-red);">HOWEVER</strong></td>
+              <td>Shows contrast or difference[cite: 64]</td>
+              <td>The gates were locked; <em>however</em>, the children found an unlocked side entrance.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-blue);">MEANWHILE</strong></td>
+              <td>Shows that something else was happening[cite: 64]</td>
+              <td>Tara examined the map. <em>Meanwhile</em>, her grandfather continued carving stone seals.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-yellow);">LATER</strong></td>
+              <td>Shows a time that comes after[cite: 64]</td>
+              <td>They traded grain; <em>later</em>, the caravans moved toward the Great Bath.</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-purple);">SUDDENLY</strong></td>
+              <td>Shows something happened quickly and unexpectedly[cite: 64]</td>
+              <td><em>Suddenly</em>, the dim torch flickered and extinguished!</td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--neon-green);">AFTERWARDS</strong></td>
+              <td>Shows what happened after something else[cite: 64]</td>
+              <td>They finished inspecting the ruins; <em>afterwards</em>, they drafted their field reports.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="quiz-box" id="zone4Quiz">
+          <h3 style="color:var(--neon-red);">⚡ Time-Rift Correction Matrix</h3>
+          <p id="z4qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z4qOptions"></div>
+          <div class="feedback-banner" id="z4Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 5: WRITING PROCESS & WORKSPACE -->
+    <div id="zone5View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 5 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">The Writer's Secret Laboratory</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">SOURCE SEQUENCE: THE 5 PHASES OF WRITING[cite: 40, 66]</span>
+          <h3>The Mandatory 5-Stage Writing Workflow</h3>
+          <ol style="margin-left:20px; margin-top:8px;">
+            <li><strong>Pre-Writing (Planning):</strong> Brainstorming, selecting topic, purpose, audience, and organizing with graphic organizers[cite: 42, 67].</li>
+            <li><strong>Drafting (Composing):</strong> Turning the plan into paragraphs, capturing thoughts without freezing over spelling[cite: 45, 46, 68].</li>
+            <li><strong>Revising (ARMS Strategy):</strong> Reread and improve (<strong>A</strong>dd details, <strong>R</strong>emove clutter, <strong>M</strong>ove sentences, <strong>S</strong>ubstitute weak vocabulary)[cite: 48, 50, 69].</li>
+            <li><strong>Editing (CUPS Strategy):</strong> Checking for errors (<strong>C</strong>apitalization, <strong>U</strong>nderstanding, <strong>P</strong>unctuation, <strong>S</strong>pelling & Spaces)[cite: 52, 54, 70].</li>
+            <li><strong>Publishing:</strong> Sharing the finalized masterpiece with classmates, friends, or teachers[cite: 56, 57, 71].</li>
+          </ol>
+        </div>
+
+        <div class="step-card" style="border-left-color:var(--neon-yellow);">
+          <span class="step-badge">INTERACTIVE FOUR-SQUARE PLANNING ENGINE[cite: 43]</span>
+          <h3>Organise Your 5-Paragraph Historical Mystery Draft</h3>
+          <p>Use the Four-Square strategy from the source lessons to structure your writing piece before drafting[cite: 43]!</p>
+
+          <div class="four-square">
+            <div class="four-square-box" style="grid-column: span 2;">
+              <h4>Box 1: Introduction (Central Main Idea & Hook)[cite: 43]</h4>
+              <textarea class="writer-input" id="fsBox1" placeholder="Describe the setting and central problem (e.g., Tara discovers an encrypted seal in Mohenjo-Daro)..."></textarea>
+            </div>
+            <div class="four-square-box">
+              <h4>Box 2: Detail Paragraph 1[cite: 43]</h4>
+              <textarea class="writer-input" id="fsBox2" placeholder="First historical event or clue..."></textarea>
+            </div>
+            <div class="four-square-box">
+              <h4>Box 3: Detail Paragraph 2[cite: 43]</h4>
+              <textarea class="writer-input" id="fsBox3" placeholder="Complication or obstacle..."></textarea>
+            </div>
+            <div class="four-square-box">
+              <h4>Box 4: Detail Paragraph 3[cite: 43]</h4>
+              <textarea class="writer-input" id="fsBox4" placeholder="Climax or resolution..."></textarea>
+            </div>
+            <div class="four-square-box">
+              <h4>Box 5: Conclusion[cite: 43]</h4>
+              <textarea class="writer-input" id="fsBox5" placeholder="Closing reflection or lasting historical impact..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-purple" onclick="window.app.saveWriterDraft()">💾 Save Plan to Investigator Log</button>
+        </div>
+
+        <div class="quiz-box" id="zone5Quiz">
+          <h3 style="color:var(--neon-yellow);">⚡ ARMS vs. CUPS Protocol Check</h3>
+          <p id="z5qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z5qOptions"></div>
+          <div class="feedback-banner" id="z5Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ZONE 6: HISTORICAL FICTION QUEST -->
+    <div id="zone6View" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ZONE 6 // CURRICULUM MODULE</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-blue);">Historical Fiction Story Quest</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <div class="step-card">
+          <span class="step-badge">CURRICULUM CRITERIA</span>
+          <h3>Balancing Historical Fact with Imaginative Fiction</h3>
+          <p>
+            Historical fiction blends real historical facts (e.g., Harappan brick city layouts, the Great Bath, stone seal carving, trade boats along the Indus) with invented characters, emotional dialogue, and suspenseful plot conflicts[cite: 1, 80].
+          </p>
+        </div>
+
+        <div class="step-card" style="border-left-color:var(--neon-purple);">
+          <span class="step-badge">SOURCE ENGAGEMENT: THE STORY PITCH[cite: 65]</span>
+          <h3>Historical Fiction Story Pitch Deck[cite: 65]</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;">
+            <div>
+              <label style="font-size:0.85rem; color:var(--neon-yellow); font-weight:bold;">1. Setting (Time & Place):[cite: 65]</label>
+              <input type="text" id="pitchSetting" style="width:100%; background:#090e1a; border:1px solid #334155; color:#fff; padding:8px; border-radius:4px; margin-top:4px;" value="Mohenjo-Daro, Indus Valley, 2500 BCE">
+            </div>
+            <div>
+              <label style="font-size:0.85rem; color:var(--neon-yellow); font-weight:bold;">2. Main Character:[cite: 65]</label>
+              <input type="text" id="pitchChar" style="width:100%; background:#090e1a; border:1px solid #334155; color:#fff; padding:8px; border-radius:4px; margin-top:4px;" value="Tara, the apprentice seal maker">
+            </div>
+            <div>
+              <label style="font-size:0.85rem; color:var(--neon-yellow); font-weight:bold;">3. The Problem / Conflict:[cite: 65]</label>
+              <input type="text" id="pitchProblem" style="width:100%; background:#090e1a; border:1px solid #334155; color:#fff; padding:8px; border-radius:4px; margin-top:4px;" value="A stolen royal bull seal containing secret navigation coordinates">
+            </div>
+            <div>
+              <label style="font-size:0.85rem; color:var(--neon-yellow); font-weight:bold;">4. Verified Historical Fact:[cite: 65]</label>
+              <input type="text" id="pitchFact" style="width:100%; background:#090e1a; border:1px solid #334155; color:#fff; padding:8px; border-radius:4px; margin-top:4px;" value="Straight paved grid streets, covered drains, and steatite stone seals">
+            </div>
+          </div>
+
+          <div style="margin-top:20px;">
+            <h4 style="color:var(--neon-blue);">Peer Review Feedback Simulator: Two Stars and One Wish ⭐⭐🌠[cite: 65]</h4>
+            <div style="background:#0b1120; padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); margin-top:8px;">
+              <p>⭐ <strong>Star 1:</strong> Excellent authentic historical detail incorporating the Indus River trade network[cite: 65]!</p>
+              <p>⭐ <strong>Star 2:</strong> Effective relative clause integration ("the merchant whose boat had travelled...")[cite: 65].</p>
+              <p>🌠 <strong>Wish:</strong> Remember to substitute repetitive verbs using ARMS during revising[cite: 50, 65]!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-box" id="zone6Quiz">
+          <h3 style="color:var(--neon-yellow);">⚡ Historical Fiction Integrity Check</h3>
+          <p id="z6qText" style="margin-top:8px; font-size:1.05rem;"></p>
+          <div class="quiz-options" id="z6qOptions"></div>
+          <div class="feedback-banner" id="z6Feedback"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MASTERY HQ / DASHBOARD -->
+    <div id="dashboardView" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge">ACADEMY HQ // ANALYTICS</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-purple);">Investigator Mastery Terminal</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <p style="color:var(--text-muted); margin-bottom:16px;">
+          Student progress is tracked locally using Grade 5 PYP mastery thresholds (Below 60% = Reteach; 60–79% = Targeted Practice; 80–89% = Application Check; 90%+ = Full Master).
+        </p>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 1: Relative Pronouns</h4>
+            <div id="dashZ1" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 2: Word Transformations</h4>
+            <div id="dashZ2" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 3: Sentences & Clauses</h4>
+            <div id="dashZ3" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 4: Time-Travel Grammar</h4>
+            <div id="dashZ4" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 5: The Writing Process</h4>
+            <div id="dashZ5" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+          <div style="background:#111a33; padding:16px; border-radius:8px; border:1px solid var(--neon-blue);">
+            <h4>Zone 6: Historical Fiction</h4>
+            <div id="dashZ6" style="margin-top:6px; font-weight:bold;">Not Attempted</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:24px; font-family:var(--font-display); color:var(--neon-yellow);">Unlocked Academy Badges</h3>
+        <div class="badge-bar">
+          <div class="badge-item" id="badgeZ1"><span class="badge-icon">🔍</span><span>Indus Archaeologist (Zone 1)</span></div>
+          <div class="badge-item" id="badgeZ2"><span class="badge-icon">🏛️</span><span>Pyramid Architect (Zone 2)</span></div>
+          <div class="badge-item" id="badgeZ3"><span class="badge-icon">🧩</span><span>Clause Commander (Zone 3)</span></div>
+          <div class="badge-item" id="badgeZ4"><span class="badge-icon">⏳</span><span>Chronos Master (Zone 4)</span></div>
+          <div class="badge-item" id="badgeZ5"><span class="badge-icon">✍️</span><span>Grand Scribe (Zone 5)</span></div>
+          <div class="badge-item" id="badgeZ6"><span class="badge-icon">📜</span><span>Historical Novelist (Zone 6)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FINAL COMPREHENSIVE EXAMINATION VIEW -->
+    <div id="examView" class="view-screen">
+      <div class="view-panel">
+        <div class="section-header">
+          <div>
+            <span class="zone-badge" style="color:var(--neon-red); border-color:var(--neon-red);">FINAL ASSESSMENT // WEEK 9 EVALUATION</span>
+            <h2 style="font-family:var(--font-display); color:var(--neon-red);">Hawkins Academy Final Exam</h2>
+          </div>
+          <button class="btn" onclick="window.app.showHome()">⬅ Back to Map</button>
+        </div>
+
+        <p style="color:#cbd5e1; margin-bottom:20px;">
+          This cumulative examination tests all skills from Week 9: Relative Pronouns, Prefixes & Suffixes, Phrases & Clauses, Simple/Compound/Complex Sentences, Simple Past vs Past Continuous, Cohesive Devices, and the 5-Step Writing Process[cite: 1, 4, 8, 32, 38, 62, 74].
+        </p>
+
+        <div id="examQuestionsContainer"></div>
+
+        <button class="btn btn-red" style="font-size:1.1rem; padding:12px 24px; margin-top:20px;" onclick="window.app.submitFinalExam()">
+          📑 Submit Final Examination & Generate Report
+        </button>
+
+        <div id="examResultReport" style="margin-top:24px; display:none; background:#0e1726; padding:20px; border-radius:8px; border:2px solid var(--neon-green);"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- APPLICATION JAVASCRIPT -->
+  <script>
+    /* =========================================================
+       AUDIO SYNTHESIZER (Web Audio API)
+       ========================================================= */
+    const SoundEngine = {
+      enabled: true,
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      playSuccess() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } catch(e){}
+      },
+      playError() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } catch(e){}
+      }
+    };
+
+    /* =========================================================
+       CORE APP CONTROLLER (Attached directly to window)
+       ========================================================= */
+    window.app = {
+      progress: {
+        zone1: { mastered: false },
+        zone2: { mastered: false },
+        zone3: { mastered: false },
+        zone4: { mastered: false },
+        zone5: { mastered: false },
+        zone6: { mastered: false },
+        savedDraft: {}
+      },
+
+      init() {
+        const saved = localStorage.getItem('upsideDownEngAcademy');
+        if (saved) {
+          try { this.progress = Object.assign(this.progress, JSON.parse(saved)); } catch (e) {}
+        }
+        this.updateBadgesAndPills();
+        this.loadZoneQuestions();
+      },
+
+      save() {
+        try {
+          localStorage.setItem('upsideDownEngAcademy', JSON.stringify(this.progress));
+        } catch (e) {}
+        this.updateBadgesAndPills();
+      },
+
+      resetProgress() {
+        if (confirm("Reset all learning progress and badge records?")) {
+          localStorage.removeItem('upsideDownEngAcademy');
+          location.reload();
+        }
+      },
+
+      toggleSound() {
+        SoundEngine.enabled = !SoundEngine.enabled;
+        const btn = document.getElementById('soundBtn');
+        if (btn) btn.innerText = SoundEngine.enabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+      },
+
+      /* Robust view switcher */
+      switchView(viewId) {
+        const screens = document.querySelectorAll('.view-screen');
+        screens.forEach(el => el.classList.remove('active-view'));
+
+        const target = document.getElementById(viewId);
+        if (target) {
+          target.classList.add('active-view');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      },
+
+      showHome() {
+        this.switchView('homeView');
+      },
+
+      openZone(num) {
+        this.switchView('zone' + num + 'View');
+      },
+
+      showDashboard() {
+        this.switchView('dashboardView');
+      },
+
+      inspectPronoun(pronoun, antecedent, explanation) {
+        SoundEngine.playSuccess();
+        const box = document.getElementById('pronounInspectResult');
+        if (!box) return;
+        box.style.display = 'block';
+        box.innerHTML = `
+          <strong style="color:var(--neon-yellow);">PRONOUN DECODED: "${pronoun}"</strong><br>
+          <span style="color:var(--neon-blue);">Antecedent (Noun Described):</span> <strong>${antecedent}</strong><br>
+          <span style="color:#cbd5e1;">Instructional Purpose:</span> ${explanation}
+        `;
+      },
+
+      checkPyramid(qNum, selected) {
+        const correctAnswers = { 1: 'careful', 2: 'fearless', 3: 'hopeful' };
+        const box = document.getElementById('pyrFeedback' + qNum);
+        if (!box) return;
+        if (selected === correctAnswers[qNum]) {
+          SoundEngine.playSuccess();
+          box.innerHTML = `<span style="color:var(--neon-green);">✓ Correct! Root + affix formed <strong>${selected}</strong> perfectly!</span>`;
+        } else {
+          SoundEngine.playError();
+          box.innerHTML = `<span style="color:var(--neon-red);">✗ Incorrect word structure. Think about whether you need -ful (full of) or -less (without).</span>`;
+        }
+      },
+
+      saveWriterDraft() {
+        const b1 = document.getElementById('fsBox1')?.value || '';
+        const b2 = document.getElementById('fsBox2')?.value || '';
+        const b3 = document.getElementById('fsBox3')?.value || '';
+        const b4 = document.getElementById('fsBox4')?.value || '';
+        const b5 = document.getElementById('fsBox5')?.value || '';
+
+        this.progress.savedDraft = { b1, b2, b3, b4, b5 };
+        this.progress.zone5.mastered = true;
+        this.save();
+        SoundEngine.playSuccess();
+        alert("Draft blueprint securely archived into your Field Investigator Terminal!");
+      },
+
+      /* Zone Questions Bank */
+      zoneQuestions: {
+        1: [
+          {
+            q: "The merchant _______ boat had travelled along the Indus River arrived with unusual goods.",
+            options: ["who", "whose", "whom", "which"],
+            answer: 1,
+            why: "'Whose' is used because it expresses possession (the merchant owns or navigates the boat). 'Who' is for subject people, and 'which' is for animals/things."
+          },
+          {
+            q: "The traveller _______ we met shared many stories from distant kingdoms.",
+            options: ["who", "whom", "whose", "which"],
+            answer: 1,
+            why: "'Whom' is correct because the traveller is the object receiving the action (we met him). Clue: replace with 'him', not 'he'."
+          },
+          {
+            q: "The chariot _______ won the race belonged to the royal prince.",
+            options: ["who", "whom", "which", "whose"],
+            answer: 2,
+            why: "'Which' is used for non-human things or animals (the chariot)."
+          }
+        ],
+        2: [
+          {
+            q: "The prefix in-, il-, im-, or ir- fundamentally alters a root word to mean:",
+            options: ["again or back", "before or prior to", "not or without", "above or beyond"],
+            answer: 2,
+            why: "In-, il-, im-, ir- represent negative prefixes meaning 'not' or 'without' (e.g., impossible = not possible; illegal = not legal)."
+          },
+          {
+            q: "Choose the suffix that transforms an action or verb into 'one who performs the action':",
+            options: ["-less", "-able", "-er / -or", "-ment"],
+            answer: 2,
+            why: "-er and -or designate an agent/doer: teach -> teacher, act -> actor."
+          },
+          {
+            q: "Which word represents a valid transformation meaning 'state of being excited'?",
+            options: ["unexcitement", "excitement", "exciteful", "disexcite"],
+            answer: 1,
+            why: "The suffix -ment denotes an action or resulting state: excite + ment = excitement."
+          }
+        ],
+        3: [
+          {
+            q: "'The builders worked hard, and they finished the pyramid.' This sentence is:",
+            options: ["A simple sentence", "A compound sentence", "A complex sentence", "A phrase"],
+            answer: 1,
+            why: "It connects two independent clauses with a comma and the coordinating conjunction 'and' (FANBOYS)."
+          },
+          {
+            q: "'Because it was getting dark' cannot stand alone as a sentence because it is:",
+            options: ["An independent clause", "A subordinate (dependent) clause", "A prepositional phrase without a verb", "A simple sentence"],
+            answer: 1,
+            why: "It begins with the subordinating conjunction 'because' and leaves an incomplete thought requiring a main clause."
+          },
+          {
+            q: "'in the garden' represents which linguistic unit?",
+            options: ["A single sound", "A clause", "A phrase", "A complex sentence"],
+            answer: 2,
+            why: "A phrase is a group of words functioning together that lacks a complete subject-verb structure."
+          }
+        ],
+        4: [
+          {
+            q: "'The potter was making clay pots when it rained.' The underlined action was in progress. What tense is it?",
+            options: ["Simple Past Tense", "Past Continuous Tense", "Present Continuous Tense", "Past Participle (V3)"],
+            answer: 1,
+            why: "Past continuous (was/were + verb-ing) indicates an action in progress when another event occurred."
+          },
+          {
+            q: "Tara examined the map. ______________, her grandfather continued carving seals in the workshop.",
+            options: ["Suddenly", "Meanwhile", "However", "Afterwards"],
+            answer: 1,
+            why: "'Meanwhile' indicates that another action was happening simultaneously in another location."
+          },
+          {
+            q: "Select the correct V2 (Simple Past) form of the irregular verb 'bring':",
+            options: ["bringed", "brang", "brought", "has brought"],
+            answer: 2,
+            why: "The standard simple past (V2) of 'bring' is 'brought'."
+          }
+        ],
+        5: [
+          {
+            q: "In the ARMS revision strategy, the letter 'S' stands for:",
+            options: ["Spelling correctly", "Substitute better words/sentences", "Shorten every paragraph", "Space between words"],
+            answer: 1,
+            why: "In ARMS (Revising), S stands for 'Substitute better words or sentences'. Spelling belongs to CUPS (Editing)."
+          },
+          {
+            q: "What is the critical distinction between Revising and Editing?",
+            options: [
+              "Revising fixes spelling; editing reorganizes whole ideas",
+              "Revising improves ideas, clarity, and organisation; editing corrects grammar, spelling, and punctuation mechanics",
+              "Editing is done before drafting; revising is done at the very end",
+              "There is no difference"
+            ],
+            answer: 1,
+            why: "Revising shapes content and flow (ARMS); editing fixes mechanics, capitalization, spelling, and punctuation (CUPS)."
+          },
+          {
+            q: "Which step directly precedes Drafting in the canonical writing process?",
+            options: ["Pre-writing (Planning)", "Revising", "Editing", "Publishing"],
+            answer: 0,
+            why: "The writing process runs: 1. Pre-writing, 2. Drafting, 3. Revising, 4. Editing, 5. Publishing."
+          }
+        ],
+        6: [
+          {
+            q: "In historical fiction writing, which element MUST remain authentic and historically factual?",
+            options: ["The thoughts and exact words of fictional characters", "The historical setting, authentic background events, and real material culture", "The mystery plot outcome", "Every character's fictional pet"],
+            answer: 1,
+            why: "Historical fiction requires an accurate, factual historical backdrop (e.g., Harappan brick sewers, trade routes) into which fictional characters are woven."
+          },
+          {
+            q: "In peer feedback routines, the 'Two Stars and One Wish' technique requires:",
+            options: ["Two complaints and one reward", "Two positive strengths and one constructive recommendation for improvement", "Two grammar errors and one spelling fix", "Two ratings out of five"],
+            answer: 1,
+            why: "'Two Stars and One Wish' balances praise (two strengths) with one actionable goal for refinement."
+          },
+          {
+            q: "Why do historical fiction authors integrate relative pronouns into their stories?",
+            options: ["To artificially lengthen word count", "To efficiently embed rich historical detail directly next to the nouns they describe", "To replace all adjectives", "To avoid using verbs"],
+            answer: 1,
+            why: "Relative pronouns enable writers to weave historical detail seamlessly into the narrative without choppy sentences."
+          }
+        ]
+      },
+
+      loadZoneQuestions() {
+        for (let z = 1; z <= 6; z++) {
+          this.renderZoneQuiz(z, 0);
+        }
+      },
+
+      renderZoneQuiz(zoneNum, qIndex) {
+        const qList = this.zoneQuestions[zoneNum];
+        if (!qList || qIndex >= qList.length) return;
+        const item = qList[qIndex];
+        const qTextEl = document.getElementById(`z${zoneNum}qText`);
+        const qOptsEl = document.getElementById(`z${zoneNum}qOptions`);
+        const feedbackEl = document.getElementById(`z${zoneNum}Feedback`);
+
+        if (!qTextEl || !qOptsEl || !feedbackEl) return;
+
+        feedbackEl.style.display = 'none';
+        qTextEl.innerText = `Q${qIndex + 1} of ${qList.length}: ${item.q}`;
+        qOptsEl.innerHTML = '';
+
+        item.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'opt-btn';
+          btn.innerText = opt;
+          btn.onclick = () => {
+            const allBtns = qOptsEl.querySelectorAll('button');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (idx === item.answer) {
+              btn.classList.add('correct');
+              SoundEngine.playSuccess();
+              feedbackEl.style.display = 'block';
+              feedbackEl.style.background = 'rgba(34, 197, 94, 0.2)';
+              feedbackEl.style.border = '1px solid #22c55e';
+              feedbackEl.style.color = '#4ade80';
+              feedbackEl.innerHTML = `<strong>✓ Correct!</strong> ${item.why}`;
+
+              if (qIndex + 1 < qList.length) {
+                setTimeout(() => this.renderZoneQuiz(zoneNum, qIndex + 1), 1800);
+              } else {
+                this.progress['zone' + zoneNum].mastered = true;
+                this.save();
+                setTimeout(() => {
+                  feedbackEl.innerHTML += `<div style="margin-top:8px; font-weight:bold; color:var(--neon-yellow);">🎉 Zone Calibration Complete! Badge Acquired.</div>`;
+                }, 800);
+              }
+            } else {
+              btn.classList.add('wrong');
+              SoundEngine.playError();
+              feedbackEl.style.display = 'block';
+              feedbackEl.style.background = 'rgba(239, 68, 68, 0.2)';
+              feedbackEl.style.border = '1px solid #ff2a5f';
+              feedbackEl.style.color = '#f87171';
+              feedbackEl.innerHTML = `<strong>✗ Misconception Detected!</strong> ${item.why} <br><button class="btn" style="margin-top:8px;" onclick="window.app.renderZoneQuiz(${zoneNum}, ${qIndex})">Try Again 🔄</button>`;
+            }
+          };
+          qOptsEl.appendChild(btn);
+        });
+      },
+
+      updateBadgesAndPills() {
+        for (let i = 1; i <= 6; i++) {
+          const mastered = this.progress['zone' + i]?.mastered;
+          const statusPill = document.getElementById(`zone${i}Status`);
+          const dashStatus = document.getElementById(`dashZ${i}`);
+          const badge = document.getElementById(`badgeZ${i}`);
+
+          if (statusPill) {
+            statusPill.className = 'status-pill ' + (mastered ? 'status-mastered' : 'status-unstarted');
+            statusPill.innerText = mastered ? 'MASTERED ✓' : 'IN PROGRESS';
+          }
+          if (dashStatus) {
+            dashStatus.innerHTML = mastered
+              ? '<span style="color:var(--neon-green);">✓ 100% Mastery Verified</span>'
+              : '<span style="color:var(--neon-yellow);">Needs Practice / Incomplete</span>';
+          }
+          if (badge) {
+            if (mastered) badge.classList.add('unlocked');
+            else badge.classList.remove('unlocked');
+          }
+        }
+      },
+
+      /* Final Exam Engine */
+      finalExamData: [
+        {
+          q: "1. The queen _______ palace overlooked the sacred river was admired by all citizens.",
+          options: ["whose", "whom", "who", "which"],
+          ans: 0,
+          concept: "Relative Pronouns (Possession)"
+        },
+        {
+          q: "2. The guide _______ we followed through the ruins knew ancient script.",
+          options: ["which", "whose", "whom", "who's"],
+          ans: 2,
+          concept: "Relative Pronouns (Object)"
+        },
+        {
+          q: "3. Choose the root word and affix combination that means 'without fear':",
+          options: ["unfear", "fearful", "fearless", "misfear"],
+          ans: 2,
+          concept: "Affixes (-less)"
+        },
+        {
+          q: "4. The word 'illegal' uses the prefix 'il-' because the root begins with 'l'. What does this prefix mean?",
+          options: ["again", "prior to", "not / without", "very much"],
+          ans: 2,
+          concept: "Prefixes (il-)"
+        },
+        {
+          q: "5. 'Because it was getting dark, the explorer sped up his steps.' Identify the subordinate clause:",
+          options: ["the explorer sped up", "Because it was getting dark", "his steps", "sped up his steps"],
+          ans: 1,
+          concept: "Clauses (Subordinate)"
+        },
+        {
+          q: "6. 'The trader arrived early, and he opened his stall.' What type of sentence is this?",
+          options: ["Simple", "Compound", "Complex", "Fragment"],
+          ans: 1,
+          concept: "Sentence Types (Compound)"
+        },
+        {
+          q: "7. 'The potter was making clay pots when it rained.' The clause 'was making' is in which tense?",
+          options: ["Simple Past", "Past Continuous", "Present Continuous", "Past Perfect"],
+          ans: 1,
+          concept: "Verb Tenses (Past Continuous)"
+        },
+        {
+          q: "8. Which cohesive connective is designed specifically to establish contrast between two statements?",
+          options: ["Meanwhile", "Afterwards", "However", "Later"],
+          ans: 2,
+          concept: "Cohesive Devices"
+        },
+        {
+          q: "9. When applying the CUPS checklist during proofreading, what does the letter 'P' verify?",
+          options: ["Paragraphing", "Punctuation", "Pronunciation", "Planning"],
+          ans: 1,
+          concept: "Writing Process (CUPS)"
+        },
+        {
+          q: "10. In the ARMS revision strategy, replacing a dull word with an exciting synonym represents:",
+          options: ["Add", "Remove", "Move", "Substitute"],
+          ans: 3,
+          concept: "Writing Process (ARMS)"
+        }
+      ],
+
+      startFinalExam() {
+        this.switchView('examView');
+
+        const container = document.getElementById('examQuestionsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        this.finalExamData.forEach((item, idx) => {
+          const card = document.createElement('div');
+          card.style.background = '#111a33';
+          card.style.padding = '16px';
+          card.style.borderRadius = '8px';
+          card.style.marginBottom = '14px';
+          card.style.border = '1px solid rgba(0, 212, 255, 0.2)';
+
+          let optsHtml = '';
+          item.options.forEach((opt, oIdx) => {
+            optsHtml += `
+              <label style="display:block; margin:6px 0; cursor:pointer;">
+                <input type="radio" name="examQ${idx}" value="${oIdx}">
+                <span style="margin-left:8px;">${opt}</span>
+              </label>
+            `;
+          });
+
+          card.innerHTML = `
+            <div style="color:var(--neon-yellow); font-weight:bold; font-size:0.95rem;">${item.q}</div>
+            <div style="margin-top:10px;">${optsHtml}</div>
+          `;
+          container.appendChild(card);
+        });
+      },
+
+      submitFinalExam() {
+        let score = 0;
+        const total = this.finalExamData.length;
+        const diagnostic = [];
+
+        this.finalExamData.forEach((item, idx) => {
+          const selected = document.querySelector(`input[name="examQ${idx}"]:checked`);
+          if (selected && parseInt(selected.value) === item.ans) {
+            score++;
+          } else {
+            diagnostic.push({
+              question: item.q,
+              concept: item.concept
+            });
+          }
+        });
+
+        const percentage = Math.round((score / total) * 100);
+        const report = document.getElementById('examResultReport');
+        if (!report) return;
+        report.style.display = 'block';
+
+        let verdict = '';
+        if (percentage >= 90) {
+          verdict = '<span style="color:var(--neon-green); font-size:1.3rem;">EXEMPLARY ACADEMY DISTINCTION (Grade 5 PYP Advanced Mastery)</span>';
+          SoundEngine.playSuccess();
+        } else if (percentage >= 70) {
+          verdict = '<span style="color:var(--neon-yellow); font-size:1.3rem;">TARGETED MASTERY ACHIEVED — Minor Revision Recommended</span>';
+          SoundEngine.playSuccess();
+        } else {
+          verdict = '<span style="color:var(--neon-red); font-size:1.3rem;">ACTION REQUIRED — Foundational Reteaching Recommended</span>';
+          SoundEngine.playError();
+        }
+
+        let misHtml = '';
+        if (diagnostic.length > 0) {
+          misHtml = `<h4 style="color:var(--neon-red); margin-top:14px;">Identified Diagnostic Gaps to Revisit:</h4><ul style="margin-left:20px; margin-top:6px;">`;
+          diagnostic.forEach(d => {
+            misHtml += `<li><strong>${d.concept}:</strong> ${d.question}</li>`;
+          });
+          misHtml += `</ul>`;
+        } else {
+          misHtml = `<p style="color:var(--neon-green); margin-top:10px;">Zero misconceptions detected! Full syllabus command verified.</p>`;
+        }
+
+        report.innerHTML = `
+          <h3 style="font-family:var(--font-display); color:#fff;">OFFICIAL SCORE REPORT</h3>
+          <p style="font-size:1.1rem; margin:8px 0;">Calculated Score: <strong>${score} / ${total} (${percentage}%)</strong></p>
+          <p>${verdict}</p>
+          ${misHtml}
+          <div style="margin-top:16px;">
+            <button class="btn btn-purple" onclick="window.print()">🖨️ Print / Save Official Report</button>
+            <button class="btn" onclick="window.app.showHome()" style="margin-left:10px;">Return to Map</button>
+          </div>
+        `;
+
+        report.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+
+    // Auto-boot on load
+    window.addEventListener('DOMContentLoaded', () => {
+      window.app.init();
+    });
+  </script>
+</body>
+</html>
