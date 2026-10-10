@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spelling Quest: The Great Word Wizard Challenge!</title>
+  <style>
+    /* ==========================================================================
+       CSS STYLES - SPELLING QUEST GRADE 5
+       ========================================================================== */
+    :root {
+      --primary: #4338ca;
+      --primary-light: #6366f1;
+      --primary-dark: #312e81;
+      --secondary: #0ea5e9;
+      --accent: #f59e0b;
+      --accent-hover: #d97706;
+      --success: #10b981;
+      --error: #ef4444;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 14px;
+      --shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 10px -4px rgba(0, 0, 0, 0.04);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 60px;
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .top-stats {
+      display: flex;
+      gap: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 92px;
+      z-index: 90;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: thin;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      padding: 0.5rem 1rem;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: 2px solid transparent;
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    .nav-btn:hover {
+      background: #f1f5f9;
+      color: var(--primary);
+    }
+
+    .nav-btn.active {
+      background: #eef2ff !important;
+      color: var(--primary) !important;
+      border-color: var(--primary-light) !important;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+    }
+
+    .module-section {
+      display: none;
+    }
+
+    .module-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .card h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.6rem;
+    }
+
+    .card h3 {
+      color: var(--text);
+      margin: 1.5rem 0 0.75rem 0;
+      font-size: 1.25rem;
+    }
+
+    .char-dialogue {
+      display: flex;
+      gap: 1.25rem;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-left: 6px solid var(--primary-light);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 1.5rem 0;
+      align-items: flex-start;
+    }
+
+    .char-avatar {
+      font-size: 2.75rem;
+      line-height: 1;
+      background: white;
+      padding: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+
+    .char-speech {
+      flex: 1;
+    }
+
+    .char-name {
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+      font-size: 1.05rem;
+    }
+
+    .rule-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      margin: 1.25rem 0;
+    }
+
+    .rule-box strong {
+      color: #1d4ed8;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .example-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .data-table th, .data-table td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+
+    .data-table th {
+      background: #f1f5f9;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .data-table tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .highlight-root {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .highlight-suffix {
+      background: #fef3c7;
+      color: #92400e;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e1;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+    }
+
+    .practice-box {
+      background: #fcfcfd;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .feedback-banner {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .feedback-success {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .feedback-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    .choice-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    .choice-btn {
+      background: white;
+      border: 2px solid var(--border);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .choice-btn:hover {
+      border-color: var(--primary-light);
+      background: #f8fafc;
+    }
+
+    .lcwc-container {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      max-width: 500px;
+      margin: 1.5rem auto;
+      text-align: center;
+    }
+
+    .lcwc-word-display {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--primary);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      background: #f1f5f9;
+      border-radius: 8px;
+    }
+
+    .lcwc-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.25rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .dict-search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+
+    .dict-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .dict-list {
+      max-height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dict-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      transition: background 0.15s;
+    }
+
+    .dict-item:hover {
+      background: #f8fafc;
+    }
+
+    .dict-word-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .dict-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    .story-text {
+      background: #fffbeb;
+      border: 2px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      font-size: 1.15rem;
+      line-height: 1.8;
+      margin: 1.25rem 0;
+    }
+
+    .clickable-word {
+      background: #fef08a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      border-bottom: 2px dashed #ca8a04;
+    }
+
+    .clickable-word:hover {
+      background: #fde047;
+    }
+
+    .quiz-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-q-num {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-q-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .journal-input-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    .journal-input-row input {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .badge-item {
+      background: white;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      opacity: 0.5;
+      transition: all 0.3s;
+    }
+
+    .badge-item.unlocked {
+      border: 2px solid var(--accent);
+      background: #fffbeb;
+      opacity: 1;
+      transform: scale(1.02);
+    }
+
+    .badge-icon {
+      font-size: 2.2rem;
+      margin-bottom: 6px;
+    }
+
+    .badge-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .w-full { width: 100%; }
+    .mt-2 { margin-top: 1rem; }
+
+    @media (max-width: 768px) {
+      .header-content { flex-direction: column; text-align: center; }
+      .brand-title { font-size: 1.4rem; }
+      .card { padding: 1.25rem; }
+      .char-dialogue { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-content">
+      <div class="brand-title">
+        <span>🧙‍♂️</span> Spelling Quest: The Great Word Wizard Challenge!
+      </div>
+      <div class="top-stats">
+        <span id="stat-score">⭐ Score: 0 pts</span>
+        <span id="stat-level">🛡️ Detective Rank: Novice</span>
+        <span id="stat-words">📚 Saved Words: 0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION BAR (BUILT WITH ROBUST DATA-TAB ATTRIBUTES) -->
+  <nav aria-label="Main Module Navigation">
+    <div class="nav-container">
+      <button type="button" class="nav-btn active" data-tab="tab-home">🏰 Quest Castle</button>
+      <button type="button" class="nav-btn" data-tab="tab-roots">🌱 Module A: Roots & Affixes</button>
+      <button type="button" class="nav-btn" data-tab="tab-shun">⚡ Module B: Four 'Shun' Sounds</button>
+      <button type="button" class="nav-btn" data-tab="tab-ance-ence">⚖️ Module C: -ance vs -ence</button>
+      <button type="button" class="nav-btn" data-tab="tab-strategies">💡 Module D: Master Strategies</button>
+      <button type="button" class="nav-btn" data-tab="tab-games">🎮 Game Zone (8 Games)</button>
+      <button type="button" class="nav-btn" data-tab="tab-stories">📖 Module F: Funny Stories</button>
+      <button type="button" class="nav-btn" data-tab="tab-reflection">💭 Module G: Learner Profile</button>
+      <button type="button" class="nav-btn" data-tab="tab-assessment">🏆 50-Question Master Quiz</button>
+      <button type="button" class="nav-btn" data-tab="tab-dictionary">📖 Golden Word Bank</button>
+    </div>
+  </nav>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main>
+
+    <!-- ==========================================================================
+         TAB: QUEST CASTLE / HOME DASHBOARD
+         ========================================================================== -->
+    <section id="tab-home" class="module-section active">
+      <div class="card">
+        <h2>🏰 Welcome, Word Detective!</h2>
+        
+        <div class="char-dialogue">
+          <div class="char-avatar">🦹‍♀️</div>
+          <div class="char-speech">
+            <div class="char-name">Professor Misspella</div>
+            <p>"Mwahaha! I have stolen the letters from the Kingdom of English! From now on, nobody will know whether to write <em>tolerance</em> or <em>tolerence</em>, <em>magician</em> or <em>magition</em>! Confusion shall rule the world!"</p>
+          </div>
+        </div>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">🧙‍♂️</div>
+          <div class="char-speech">
+            <div class="char-name">The Grand Word Wizard</div>
+            <p>"Do not fear, young Scholar! You have been chosen to embark on the <strong>Great Spelling Quest</strong>. Together with our spelling heroes—Captain Suffix, Detective Root, the Syllable Monster, and the Dictionary Dragon—you will learn the secrets of word patterns, unlock magical badges, and defeat Professor Misspella's spelling chaos once and for all!"</p>
+          </div>
+        </div>
+
+        <h3>🛡️ Your Word Detective Badges</h3>
+        <p>Complete challenges, play games, and finish the master assessment to unlock all 6 badges!</p>
+        <div class="badge-grid" id="badgeGrid">
+          <div class="badge-item" id="badge-roots">
+            <div class="badge-icon">🌱</div>
+            <div class="badge-title">Root Guardian</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Mastered Roots & Affixes</div>
+          </div>
+          <div class="badge-item" id="badge-shun">
+            <div class="badge-icon">⚡</div>
+            <div class="badge-title">Shun Striker</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Defeated -tion, -sion, -cian</div>
+          </div>
+          <div class="badge-item" id="badge-ance">
+            <div class="badge-icon">⚖️</div>
+            <div class="badge-title">Balance Master</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Sorted -ance and -ence</div>
+          </div>
+          <div class="badge-item" id="badge-dragon">
+            <div class="badge-icon">🐉</div>
+            <div class="badge-title">Dragon Scholar</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Mastered Dictionary Tools</div>
+          </div>
+          <div class="badge-item" id="badge-games">
+            <div class="badge-icon">🎮</div>
+            <div class="badge-title">Arcade Champion</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Conquered All 8 Games</div>
+          </div>
+          <div class="badge-item" id="badge-wizard">
+            <div class="badge-icon">👑</div>
+            <div class="badge-title">Grand Wizard</div>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Scored 90%+ on Master Quiz</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2rem; flex-wrap:wrap; gap:10px;">
+          <button type="button" class="btn btn-accent tab-link" data-go="tab-roots">🚀 Start Quest: Module A</button>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-reset">⚠️ Reset All Progress</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE A: ROOT WORDS, PREFIXES & SUFFIXES
+         ========================================================================== -->
+    <section id="tab-roots" class="module-section">
+      <div class="card">
+        <h2>🌱 Learning Module A: Roots, Prefixes & Suffixes</h2>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">🔍</div>
+          <div class="char-speech">
+            <div class="char-name">Detective Root</div>
+            <p>"Every giant word has a secret heart! A <strong>root word</strong> (or base word) holds the word's primary meaning. When mischievous characters add pieces to the front or end, the word takes on a brand-new job!"</p>
+          </div>
+        </div>
+
+        <div class="rule-box">
+          <p><strong>Prefix:</strong> Added to the <em>front</em> of a root word (e.g., <code>un-</code> + <code>happy</code> = <strong>unhappy</strong> - meaning not happy)[cite: 3, 8].</p>
+          <p><strong>Suffix:</strong> Added to the <em>end</em> of a root word (e.g., <code>help</code> + <code>-ful</code> = <strong>helpful</strong> - meaning full of help)[cite: 3, 38].</p>
+          <p><strong>Spelling Changes:</strong> Sometimes root words change before taking a suffix! Watch how <code>happy</code> drops the <em>y</em> and turns into an <em>i</em> to become <strong>happiness</strong>[cite: 3, 8]!</p>
+        </div>
+
+        <h3>Interactive Demonstration: The Root-to-Word Transformer</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Root Word</th>
+              <th>Type / Affix Added</th>
+              <th>Resulting Word</th>
+              <th>What Changed?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight-root">help</span></td>
+              <td>Suffix: <span class="highlight-suffix">-ful</span></td>
+              <td><strong>helpful</strong></td>
+              <td>No change to the root. Direct join![cite: 3, 38]</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-root">happy</span></td>
+              <td>Suffix: <span class="highlight-suffix">-ness</span></td>
+              <td><strong>happiness</strong></td>
+              <td>The letter <strong>y</strong> changed to <strong>i</strong>[cite: 3, 8].</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-root">create</span></td>
+              <td>Suffix: <span class="highlight-suffix">-tion</span></td>
+              <td><strong>creation</strong></td>
+              <td>The ending <strong>-te</strong> was dropped before adding <strong>-tion</strong>[cite: 28, 29].</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-root">confident</span></td>
+              <td>Suffix: <span class="highlight-suffix">-ence</span></td>
+              <td><strong>confidence</strong></td>
+              <td>The adjective ending <strong>-ent</strong> was replaced by <strong>-ence</strong>[cite: 21].</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-root">perform</span></td>
+              <td>Suffix: <span class="highlight-suffix">-ance</span></td>
+              <td><strong>performance</strong></td>
+              <td>Direct addition of <strong>-ance</strong> to create a noun[cite: 12, 23].</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mini-Game: Build-a-Word Workshop -->
+        <div class="practice-box">
+          <h3>🔨 Detective Root's Workshop: Test Your Skills!</h3>
+          <p id="modA-prompt">Transform the root word: <strong>beauty</strong> + <strong>-ful</strong>[cite: 8]</p>
+          <div class="choice-group" id="modA-choices">
+            <button type="button" class="choice-btn" onclick="checkModA('beautyful', false, 'Remember! When a word ends with a consonant + y, change the y to an i before adding the suffix!')">beautyful</button>
+            <button type="button" class="choice-btn" onclick="checkModA('beautiful', true, 'Splendid work! The letter y changed into an i to make beautiful!')">beautiful</button>
+            <button type="button" class="choice-btn" onclick="checkModA('beautifull', false, 'Watch out! The suffix -ful only has one single letter l!')">beautifull</button>
+          </div>
+          <div id="modA-feedback" class="feedback-banner"></div>
+        </div>
+
+        <button type="button" class="btn btn-accent tab-link" data-go="tab-shun">Next Topic: The Four 'Shun' Sounds ➡️</button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE B: THE FOUR 'SHUN' SOUNDS
+         ========================================================================== -->
+    <section id="tab-shun" class="module-section">
+      <div class="card">
+        <h2>⚡ Learning Module B: The Four 'Shun' Sounds</h2>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">🦸‍♂️</div>
+          <div class="char-speech">
+            <div class="char-name">Captain Suffix</div>
+            <p>"Greetings Detective! Words that end with the sound <em>/ʃən/</em> ('shun') sound identical when spoken aloud, but their spellings depend strictly on the root word's family: <strong>-tion</strong>, <strong>-sion</strong>, <strong>-ssion</strong>, or <strong>-cian</strong>! Never guess—track the clues!"[cite: 26, 27]</p>
+          </div>
+        </div>
+
+        <h3>B1. Words Ending in -tion</h3>
+        <p>The most common 'shun' ending! Used heavily with verbs ending in <strong>-t</strong> or <strong>-te</strong>[cite: 28, 29].</p>
+        <div class="example-grid">
+          <div class="example-card">
+            <strong>Ends in -t:</strong><br>
+            invent → <span class="highlight-suffix">invention</span><br>
+            prevent → <span class="highlight-suffix">prevention</span><br>
+            protect → <span class="highlight-suffix">protection</span><br>
+            correct → <span class="highlight-suffix">correction</span><br>
+            inspect → <span class="highlight-suffix">inspection</span>[cite: 29]
+          </div>
+          <div class="example-card">
+            <strong>Ends in -te (drop the e):</strong><br>
+            create → <span class="highlight-suffix">creation</span><br>
+            educate → <span class="highlight-suffix">education</span><br>
+            operate → <span class="highlight-suffix">operation</span><br>
+            communicate → <span class="highlight-suffix">communication</span><br>
+            celebrate → <span class="highlight-suffix">celebration</span>[cite: 28, 29]
+          </div>
+        </div>
+
+        <h3>B2. Words Ending in -ssion</h3>
+        <p>Used when root words end in double-s (<strong>-ss</strong>) or <strong>-mit</strong>![cite: 28, 30]</p>
+        <div class="example-grid">
+          <div class="example-card">
+            <strong>Ends in -mit (changes to -ssion):</strong><br>
+            admit → <span class="highlight-suffix">admission</span><br>
+            permit → <span class="highlight-suffix">permission</span><br>
+            commit → <span class="highlight-suffix">commission</span><br>
+            transmit → <span class="highlight-suffix">transmission</span><br>
+            submit → <span class="highlight-suffix">submission</span>[cite: 30]
+          </div>
+          <div class="example-card">
+            <strong>Ends in -ss (keep both s's):</strong><br>
+            discuss → <span class="highlight-suffix">discussion</span><br>
+            possess → <span class="highlight-suffix">possession</span><br>
+            confess → <span class="highlight-suffix">confession</span><br>
+            express → <span class="highlight-suffix">expression</span><br>
+            impress → <span class="highlight-suffix">impression</span>[cite: 30]
+          </div>
+        </div>
+
+        <h3>B3. Words Ending in -sion</h3>
+        <p>Often used when the root word ends in <strong>-d</strong>, <strong>-de</strong>, or <strong>-se</strong>[cite: 28, 31].</p>
+        <div class="example-grid">
+          <div class="example-card">
+            <strong>Ends in -de / -d:</strong><br>
+            conclude → <span class="highlight-suffix">conclusion</span><br>
+            include → <span class="highlight-suffix">inclusion</span><br>
+            expand → <span class="highlight-suffix">expansion</span><br>
+            extend → <span class="highlight-suffix">extension</span><br>
+            persuade → <span class="highlight-suffix">persuasion</span>[cite: 31]
+          </div>
+          <div class="example-card">
+            <strong>Ends in -se:</strong><br>
+            revise → <span class="highlight-suffix">revision</span><br>
+            supervise → <span class="highlight-suffix">supervision</span><br>
+            confuse → <span class="highlight-suffix">confusion</span><br>
+            diffuse → <span class="highlight-suffix">diffusion</span>[cite: 31]
+          </div>
+        </div>
+
+        <h3>B4. Words Ending in -cian</h3>
+        <p>Almost always describes a <strong>person</strong> with a specific trade, talent, or skill! Frequently relates to roots ending in <strong>-c</strong> or <strong>-cs</strong>[cite: 32].</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Base Subject / Root</th>
+              <th>Person (-cian)</th>
+              <th>Meaning / What this person does</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>music</td>
+              <td><strong>musician</strong></td>
+              <td>A person who plays, composes, or performs music[cite: 32].</td>
+            </tr>
+            <tr>
+              <td>magic</td>
+              <td><strong>magician</strong></td>
+              <td>A skilled entertainer who performs illusions and tricks[cite: 32].</td>
+            </tr>
+            <tr>
+              <td>clinic</td>
+              <td><strong>clinician</strong></td>
+              <td>A health professional who works directly with patients in a clinic[cite: 32].</td>
+            </tr>
+            <tr>
+              <td>electric</td>
+              <td><strong>electrician</strong></td>
+              <td>A skilled tradesperson who installs and repairs electrical wiring[cite: 32].</td>
+            </tr>
+            <tr>
+              <td>politics</td>
+              <td><strong>politician</strong></td>
+              <td>A person involved in government and public policy[cite: 32].</td>
+            </tr>
+            <tr>
+              <td>mathematics</td>
+              <td><strong>mathematician</strong></td>
+              <td>An expert who studies numbers, patterns, and mathematical proofs[cite: 32].</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Mini-Challenge B -->
+        <div class="practice-box">
+          <h3>⚡ Career Match Challenge: Who Am I?</h3>
+          <p>I fix the broken circuit breakers and light switches in your house. Which word describes my profession?[cite: 23]</p>
+          <div class="choice-group">
+            <button type="button" class="choice-btn" onclick="checkCareer('electrition', false, 'Remember! The ending for a person or profession is spelled -cian, not -tion!')">electrition</button>
+            <button type="button" class="choice-btn" onclick="checkCareer('electrician', true, 'Brilliant! Electric + -ian = electrician (a person skilled with electricity)!')">electrician</button>
+            <button type="button" class="choice-btn" onclick="checkCareer('electrision', false, 'Watch out! The ending is -cian from electric.')">electrision</button>
+          </div>
+          <div id="career-feedback" class="feedback-banner"></div>
+        </div>
+
+        <button type="button" class="btn btn-accent tab-link" data-go="tab-ance-ence">Next Topic: -ance vs -ence ➡️</button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE C: -ANCE AND -ENCE
+         ========================================================================== -->
+    <section id="tab-ance-ence" class="module-section">
+      <div class="card">
+        <h2>⚖️ Learning Module C: The -ance vs -ence Balance Lab</h2>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">👽</div>
+          <div class="char-speech">
+            <div class="char-name">The Exception Alien</div>
+            <p>"Greetings Earthling! Many students find <em>-ance</em> and <em>-ence</em> confusing because both endings sound identical! But if you look at their base families and the sound of letters 'c' and 'g', the clues will reveal themselves!"[cite: 12, 17, 22, 27]</p>
+          </div>
+        </div>
+
+        <h3>1. The Golden Clues for -ance</h3>
+        <ul>
+          <li><strong>Base adjectives ending in -ant:</strong> Replace <code>-ant</code> with <code>-ance</code> (<em>significant → significance, abundant → abundance, brilliant → brilliance, arrogant → arrogance, elegant → elegance</em>)[cite: 14].</li>
+          <li><strong>Verbs ending in -ure or -ear:</strong> (<em>endure → endurance, appear → appearance, assure → assurance, clear → clearance</em>)[cite: 15].</li>
+          <li><strong>Verbs ending in -y:</strong> Change <em>y</em> to <em>i</em> and add <code>-ance</code> (<em>defy → defiance, ally → alliance, rely → reliance</em>)[cite: 16].</li>
+          <li><strong>Hard 'c' or 'g' sounds:</strong> If the base letter has a hard sound like <em>c</em> in cat or <em>g</em> in game (e.g. <em>elegance, significance</em>), it takes <strong>-ance</strong>![cite: 17]</li>
+        </ul>
+
+        <h3>2. The Golden Clues for -ence</h3>
+        <ul>
+          <li><strong>Base adjectives ending in -ent:</strong> Replace <code>-ent</code> with <code>-ence</code> (<em>confident → confidence, innocent → innocence, patient → patience, absent → absence, obedient → obedience</em>)[cite: 21, 23].</li>
+          <li><strong>Verbs ending in -ere:</strong> Drop the final <em>e</em> and add <code>-ence</code> (<em>revere → reverence, adhere → adherence, interfere → interference</em>)[cite: 20].</li>
+          <li><strong>Soft 'c' or 'g' sounds:</strong> If the sound is soft like <em>c</em> in cell or <em>g</em> in gin (e.g. <em>adolescence, emergence</em>), it takes <strong>-ence</strong>![cite: 22]</li>
+        </ul>
+
+        <div class="rule-box" style="background:#fff1f2; border-color:#fecdd3;">
+          <strong style="color:#be123c;">👽 Alien Alert: Watch the Famous Exceptions!</strong>
+          <p>• <strong>perseverance:</strong> Even though it comes from <em>persevere</em>, it is spelled with <strong>-ance</strong>![cite: 20]</p>
+          <p>• <strong>vengeance:</strong> Even though it has a soft 'g' sound, it keeps the letters <strong>-eance</strong>![cite: 22]</p>
+          <p>• <strong>tolerate vs educate:</strong> <em>tolerate</em> becomes <strong>tolerance</strong> (-ance), but <em>educate</em> becomes <strong>education</strong> (-tion)[cite: 18]. Always observe the word family!</p>
+        </div>
+
+        <button type="button" class="btn btn-accent tab-link" data-go="tab-strategies">Next Topic: Master Spelling Strategies ➡️</button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE D: MASTER SPELLING STRATEGIES
+         ========================================================================== -->
+    <section id="tab-strategies" class="module-section">
+      <div class="card">
+        <h2>💡 Learning Module D: 6 Master Spelling Strategies</h2>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">👾</div>
+          <div class="char-speech">
+            <div class="char-name">The Syllable Monster</div>
+            <p>"Chomp! Chomp! Big words look terrifying when you look at them all at once. But when I bite them into little spoken beats called <strong>syllables</strong>, they are deliciously simple to spell!"[cite: 38]</p>
+          </div>
+        </div>
+
+        <h3>Strategy 1: Syllable Chomp</h3>
+        <p>Break words down into rhythmic beats[cite: 38]:</p>
+        <div style="display:flex; gap:10px; margin:1rem 0; flex-wrap:wrap;">
+          <span style="background:#dbeafe; padding:8px 14px; border-radius:8px; font-weight:700;">com</span> -
+          <span style="background:#dbeafe; padding:8px 14px; border-radius:8px; font-weight:700;">mu</span> -
+          <span style="background:#dbeafe; padding:8px 14px; border-radius:8px; font-weight:700;">ni</span> -
+          <span style="background:#dbeafe; padding:8px 14px; border-radius:8px; font-weight:700;">ca</span> -
+          <span style="background:#dbeafe; padding:8px 14px; border-radius:8px; font-weight:700;">tion</span>
+          <span style="margin-left:10px; align-self:center;">= <strong>communication</strong> (5 syllables!)</span>
+        </div>
+
+        <h3>Strategy 2: Spot the Tricky Part</h3>
+        <div class="example-grid">
+          <div class="example-card">
+            <strong>sep<span style="color:var(--error); font-weight:900;">a</span>rate</strong><br>
+            Tricky part: Remember there is <em>"a rat"</em> in sep-<strong>a-rat</strong>-e![cite: 37, 38]
+          </div>
+          <div class="example-card">
+            <strong>ne<span style="color:var(--error); font-weight:900;">c</span>e<span style="color:var(--error); font-weight:900;">ss</span>ary</strong><br>
+            Tricky part: <strong>1</strong> collar (c) and <strong>2</strong> sleeves (ss)![cite: 37, 38]
+          </div>
+          <div class="example-card">
+            <strong>a<span style="color:var(--error); font-weight:900;">cc</span>o<span style="color:var(--error); font-weight:900;">mm</span>odation</strong><br>
+            Tricky part: Double <strong>c</strong> and double <strong>m</strong>!
+          </div>
+        </div>
+
+        <h3>Strategy 3: Look – Cover – Write – Check</h3>
+        <div class="lcwc-container">
+          <div style="font-weight:700; margin-bottom:10px;" id="lcwc-status">Step 1: LOOK carefully at the word![cite: 38]</div>
+          <div class="lcwc-word-display" id="lcwc-display">necessary</div>
+          <input type="text" id="lcwc-input" class="lcwc-input" placeholder="Type word from memory here..." style="display:none;" autocomplete="off">
+          <div style="display:flex; justify-content:center; gap:10px;">
+            <button type="button" class="btn" id="lcwc-action-btn" onclick="handleLCWC()">Cover Word 🙈</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="resetLCWC()">New Word 🔄</button>
+          </div>
+          <div id="lcwc-feedback" class="feedback-banner"></div>
+        </div>
+
+        <h3>Strategy 4: Keep a Personal Spelling Log</h3>
+        <p>Real detectives track tricky words until they master them[cite: 36, 40]. Add any word you want to practice below:</p>
+        
+        <div class="practice-box">
+          <div class="journal-input-row">
+            <input type="text" id="j-word" placeholder="Word (e.g. appearance)">
+            <input type="text" id="j-tricky" placeholder="Tricky part (e.g. -ance ending)">
+            <input type="text" id="j-sentence" placeholder="My sentence">
+            <button type="button" class="btn btn-sm btn-accent" onclick="addSpellingLogEntry()">Save to Log 📝</button>
+          </div>
+          <table class="data-table" id="journal-table">
+            <thead>
+              <tr>
+                <th>Word</th>
+                <th>Tricky Part</th>
+                <th>My Own Sentence</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="journal-body">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <button type="button" class="btn btn-accent tab-link" data-go="tab-games">Proceed to Game Zone ➡️</button>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE E / GAMES: 8 GENUINE PLAYABLE GAMES
+         ========================================================================== -->
+    <section id="tab-games" class="module-section">
+      <div class="card">
+        <h2>🎮 The Arcade: 8 Interactive Spelling Games</h2>
+        <p>Test your wizarding skills across 8 unique mini-games! Earn points to unlock detective ranks.</p>
+
+        <!-- SUB-NAV FOR GAMES -->
+        <div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; margin:1rem 0;">
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="1">1. Suffix Battle</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="2">2. Root Robot</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="3">3. Word Sorter</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="4">4. Detective Clues</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="5">5. Tile Builder</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="6">6. Dragon Check</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="7">7. Memory Spell</button>
+          <button type="button" class="btn btn-sm game-nav-btn" data-game="8">8. Escape Room</button>
+        </div>
+
+        <!-- GAME 1: SUFFIX MONSTER BATTLE -->
+        <div id="game-1" class="practice-box game-panel">
+          <h3>👾 Game 1: Suffix Monster Battle</h3>
+          <p>The Silly Suffix Monster wants to eat the root word! Choose the correct ending to defeat it.</p>
+          <div style="text-align:center; padding:1.5rem; background:#f8fafc; border-radius:12px; margin:1rem 0;">
+            <div style="font-size:3rem;">👾</div>
+            <h2 id="g1-prompt" style="color:var(--primary); margin:10px 0;">Root: "discuss"</h2>
+            <p>Turn "discuss" into a noun meaning a conversation[cite: 27, 28, 30].</p>
+            <div class="choice-group" style="justify-content:center;" id="g1-buttons">
+              <button type="button" class="choice-btn" onclick="playGame1('-tion')">discuss + tion</button>
+              <button type="button" class="choice-btn" onclick="playGame1('-ssion')">discuss + ion (-ssion)</button>
+              <button type="button" class="choice-btn" onclick="playGame1('-cian')">discuss + cian</button>
+            </div>
+          </div>
+          <div id="g1-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 2: ROOT WORD ROBOT -->
+        <div id="game-2" class="practice-box game-panel" style="display:none;">
+          <h3>🤖 Game 2: Root Word Robot</h3>
+          <p>The Robot needs to transform root words into nouns. Type the new word correctly!</p>
+          <div style="text-align:center; padding:1.5rem;">
+            <div style="font-size:3rem;">🤖</div>
+            <h3 id="g2-prompt">Transform: "permit" (noun form)</h3>
+            <div style="max-width:320px; margin:1rem auto; display:flex; gap:8px;">
+              <input type="text" id="g2-input" class="w-full" style="padding:10px; border-radius:8px; border:2px solid var(--border);" placeholder="Type new word...">
+              <button type="button" class="btn btn-accent" onclick="playGame2()">Enter</button>
+            </div>
+          </div>
+          <div id="g2-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 3: WORD SORTING RACE -->
+        <div id="game-3" class="practice-box game-panel" style="display:none;">
+          <h3>🏎️ Game 3: Fast Suffix Sorting Race</h3>
+          <p>Categorise the word into the correct bucket!</p>
+          <div style="text-align:center; padding:1.5rem;">
+            <h2 id="g3-word" style="color:var(--primary); font-size:2.2rem; margin-bottom:1rem;">musician</h2>
+            <div class="choice-group" style="justify-content:center;">
+              <button type="button" class="choice-btn" onclick="playGame3('-tion')">-tion</button>
+              <button type="button" class="choice-btn" onclick="playGame3('-sion')">-sion</button>
+              <button type="button" class="choice-btn" onclick="playGame3('-ssion')">-ssion</button>
+              <button type="button" class="choice-btn" onclick="playGame3('-cian')">-cian</button>
+              <button type="button" class="choice-btn" onclick="playGame3('-ance')">-ance</button>
+              <button type="button" class="choice-btn" onclick="playGame3('-ence')">-ence</button>
+            </div>
+          </div>
+          <div id="g3-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 4: SPELLING DETECTIVE -->
+        <div id="game-4" class="practice-box game-panel" style="display:none;">
+          <h3>🕵️‍♂️ Game 4: Spelling Detective - Spot the Error!</h3>
+          <p>Professor Misspella slipped a mistake into this sentence. Click the misspelled word!</p>
+          <div style="padding:1.5rem; background:#fff; border-radius:12px; font-size:1.2rem; text-align:center;" id="g4-sentence">
+            "The <span class="clickable-word" onclick="playGame4(false)">famous</span> <span class="clickable-word" onclick="playGame4(true)">magition</span> gave a great <span class="clickable-word" onclick="playGame4(false)">performance</span>."
+          </div>
+          <div id="g4-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 5: TILE BUILDER -->
+        <div id="game-5" class="practice-box game-panel" style="display:none;">
+          <h3>🧱 Game 5: Click-to-Build Word Tiles</h3>
+          <p>Click the syllable chunks in the correct order to spell: <strong>in-ves-ti-ga-tion</strong>[cite: 29]</p>
+          <div style="display:flex; justify-content:center; gap:8px; margin:1rem 0;" id="g5-built"></div>
+          <div class="choice-group" style="justify-content:center;" id="g5-pool">
+            <button type="button" class="btn btn-secondary" onclick="addTile('ti')">ti</button>
+            <button type="button" class="btn btn-secondary" onclick="addTile('in')">in</button>
+            <button type="button" class="btn btn-secondary" onclick="addTile('ga')">ga</button>
+            <button type="button" class="btn btn-secondary" onclick="addTile('tion')">tion</button>
+            <button type="button" class="btn btn-secondary" onclick="addTile('ves')">ves</button>
+          </div>
+          <div style="text-align:center; margin-top:1rem;">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="resetTiles()">Clear Tiles 🔄</button>
+            <button type="button" class="btn btn-sm btn-accent" onclick="checkTiles()">Verify Word ✨</button>
+          </div>
+          <div id="g5-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 6: DICTIONARY DRAGON -->
+        <div id="game-6" class="practice-box game-panel" style="display:none;">
+          <h3>🐉 Game 6: Dictionary Dragon's Guide</h3>
+          <p>You aren't sure how to spell the word meaning 'giving permission'[cite: 4, 5]. What should you check first in your dictionary word bank?[cite: 36, 40]</p>
+          <div class="choice-group">
+            <button type="button" class="choice-btn" onclick="playGame6(false)">Guess randomly and hope the spell checker fixes it</button>
+            <button type="button" class="choice-btn" onclick="playGame6(true)">Look under root word 'permit' to find the noun 'permission'</button>
+            <button type="button" class="choice-btn" onclick="playGame6(false)">Search for -shun under the letter S</button>
+          </div>
+          <div id="g6-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 7: LOOK COVER WRITE CHECK -->
+        <div id="game-7" class="practice-box game-panel" style="display:none;">
+          <h3>🧠 Game 7: Rapid Memory Spell</h3>
+          <p>Memorise the tricky word: <strong>appearance</strong>[cite: 15]. When ready, click hide and type it!</p>
+          <div style="text-align:center;">
+            <div id="g7-display" style="font-size:2rem; font-weight:800; color:var(--primary); margin:1rem 0;">appearance</div>
+            <input type="text" id="g7-input" style="display:none; padding:10px; font-size:1.2rem; border-radius:8px; border:2px solid var(--border); margin:0 auto;" placeholder="Type from memory...">
+            <div style="margin-top:1rem;">
+              <button type="button" class="btn" id="g7-btn" onclick="playGame7()">Hide Word & Spell 🙈</button>
+            </div>
+          </div>
+          <div id="g7-feedback" class="feedback-banner"></div>
+        </div>
+
+        <!-- GAME 8: ESCAPE ROOM -->
+        <div id="game-8" class="practice-box game-panel" style="display:none;">
+          <h3>🗝️ Game 8: The Grand Spelling Escape Room</h3>
+          <p id="g8-task">Door Riddle 1: Combine <strong>confuse</strong> + <strong>-sion</strong> to unlock lock #1![cite: 31]</p>
+          <div style="max-width:320px; margin:1rem auto; display:flex; gap:8px;">
+            <input type="text" id="g8-input" class="w-full" style="padding:10px; border-radius:8px; border:2px solid var(--border);" placeholder="Type key code...">
+            <button type="button" class="btn btn-accent" onclick="playGame8()">Unlock Door</button>
+          </div>
+          <div id="g8-feedback" class="feedback-banner"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE F: FUNNY STORIES & REAL APPLICATION
+         ========================================================================== -->
+    <section id="tab-stories" class="module-section">
+      <div class="card">
+        <h2>📖 Learning Module F: Spelling in Action (Funny Stories)</h2>
+        <p>Click on any yellow highlighted word to reveal its definition and spelling family!</p>
+
+        <!-- Story 1 -->
+        <h3>🎭 Story 1: The Magician's Catastrophe</h3>
+        <div class="story-text">
+          Once upon a time, a famous <span class="clickable-word" onclick="showStoryWord('magician')">magician</span> named Barnaby arrived at the theatre[cite: 23, 27, 32]. He had promised an incredible <span class="clickable-word" onclick="showStoryWord('presentation')">presentation</span> of floating bunnies[cite: 23, 29]. However, due to a severe lack of <span class="clickable-word" onclick="showStoryWord('concentration')">concentration</span>, his magic wand caused absolute <span class="clickable-word" onclick="showStoryWord('confusion')">confusion</span>![cite: 29, 31] Instead of pulling a rabbit from his hat, he pulled out a loud <span class="clickable-word" onclick="showStoryWord('musician')">musician</span> playing the tuba![cite: 23, 27, 32]
+        </div>
+
+        <!-- Story 2 -->
+        <h3>🗳️ Story 2: The Great Forest Election</h3>
+        <div class="story-text">
+          During the annual forest council, an ambitious badger became a <span class="clickable-word" onclick="showStoryWord('politician')">politician</span>[cite: 32]. He gave a speech filled with charm and <span class="clickable-word" onclick="showStoryWord('confidence')">confidence</span>, promising unlimited acorns[cite: 21, 23, 27]. A wise owl, who was a brilliant <span class="clickable-word" onclick="showStoryWord('mathematician')">mathematician</span>, calculated the budget and shouted: "Your calculations require immense <span class="clickable-word" onclick="showStoryWord('tolerance')">tolerance</span> for silly mistakes!"[cite: 18, 32]
+        </div>
+
+        <div id="story-popup" class="practice-box" style="display:none; background:#eff6ff;">
+          <h4 id="story-word-title" style="color:var(--primary);">Word Information</h4>
+          <p id="story-word-desc"></p>
+        </div>
+
+        <h3>✏️ Sentence Creator Challenge</h3>
+        <p>Choose one target word (e.g. <em>musician, confidence, decision</em>) and write your own funny Grade 5 sentence[cite: 21, 27, 32]:</p>
+        <div style="display:flex; gap:10px; margin-top:0.75rem;">
+          <input type="text" id="user-story-sent" class="w-full" style="padding:10px; border-radius:8px; border:1px solid var(--border);" placeholder="Type your sentence here...">
+          <button type="button" class="btn btn-accent" onclick="saveUserStorySentence()">Submit Sentence</button>
+        </div>
+        <div id="story-sent-feedback" class="feedback-banner"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MODULE G: REFLECTION & LEARNER PROFILE
+         ========================================================================== -->
+    <section id="tab-reflection" class="module-section">
+      <div class="card">
+        <h2>💭 Module G: Reflection & Learner Profile</h2>
+
+        <div class="char-dialogue">
+          <div class="char-avatar">🦉</div>
+          <div class="char-speech">
+            <div class="char-name">Professor Insight</div>
+            <p>"Reflecting on how you learn turns good spellers into great scholars! Connect your spelling quest to your international learner profile."[cite: 2, 26, 36]</p>
+          </div>
+        </div>
+
+        <div class="practice-box">
+          <h3>Reflection Question 1</h3>
+          <p><em>"One spelling rule I can remember is..."</em>[cite: 35]</p>
+          <textarea id="ref-q1" rows="3" class="w-full" style="padding:10px; border-radius:8px; border:1px solid var(--border); margin-top:8px;" placeholder="e.g. When a word ends in -mit, it transforms into -ssion like permit -> permission..."></textarea>
+
+          <h3 style="margin-top:1.5rem;">Reflection Question 2</h3>
+          <p><em>"Today I learnt that good spellers can use different strategies when they are unsure of a word. One strategy I will use is..."</em>[cite: 40]</p>
+          <textarea id="ref-q2" rows="3" class="w-full" style="padding:10px; border-radius:8px; border:1px solid var(--border); margin-top:8px;" placeholder="e.g. Break long words into spoken syllable beats or check the dictionary word bank!"></textarea>
+
+          <button type="button" class="btn btn-accent mt-2" onclick="saveReflection()">Save My Reflection 💾</button>
+          <div id="ref-feedback" class="feedback-banner"></div>
+        </div>
+
+        <h3>🌟 Learner Profile Connection</h3>
+        <div class="example-grid">
+          <div class="example-card">
+            <strong>🔍 Inquirer:</strong> Asks why words are spelled in specific ways and checks the dictionary[cite: 2, 26, 36].
+          </div>
+          <div class="example-card">
+            <strong>🧠 Thinker:</strong> Recognises word families and applies root-word transformations[cite: 2, 26, 36].
+          </div>
+          <div class="example-card">
+            <strong>🦁 Risk-Taker:</strong> Tackles complex long vocabulary without being afraid of making a mistake[cite: 2, 26, 36].
+          </div>
+          <div class="example-card">
+            <strong>📈 Self-Manager:</strong> Keeps a personal spelling log and reviews tricky words regularly[cite: 2, 26, 36].
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TAB: COMPREHENSIVE 50-QUESTION MASTER QUIZ
+         ========================================================================== -->
+    <section id="tab-assessment" class="module-section">
+      <div class="card">
+        <h2>🏆 The 50-Question Grand Spelling Assessment</h2>
+        <p>This master exam covers every single topic from your syllabus: Root changes, -tion, -sion, -ssion, -cian, -ance, -ence, exceptions, and memory strategies! Read every prompt carefully.</p>
+
+        <div id="quiz-container">
+          <!-- Dynamically populated 50 questions -->
+        </div>
+
+        <div style="text-align:center; margin-top:2rem;">
+          <button type="button" class="btn btn-accent" style="font-size:1.2rem; padding:12px 30px;" onclick="submitMasterQuiz()">Submit Full Assessment 🎯</button>
+        </div>
+
+        <!-- RESULTS REPORT -->
+        <div id="quiz-results" class="practice-box" style="display:none; margin-top:2rem;">
+          <h2 id="quiz-rank-title" style="color:var(--primary); text-align:center;">Your Score: 0/50</h2>
+          <p id="quiz-rank-desc" style="text-align:center; font-size:1.1rem; font-weight:700;"></p>
+          
+          <h3 class="mt-2">📊 Category Breakdown:</h3>
+          <ul id="quiz-category-scores" style="list-style-type:none; padding:0; margin:1rem 0;"></ul>
+
+          <h3>🔍 Review of Incorrect Answers:</h3>
+          <div id="quiz-mistakes-list" style="display:flex; flex-direction:column; gap:10px; margin-top:1rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         TAB: GOLDEN WORD BANK (OFFLINE DICTIONARY)
+         ========================================================================== -->
+    <section id="tab-dictionary" class="module-section">
+      <div class="card">
+        <h2>📖 Dictionary Dragon's Golden Word Bank</h2>
+        <p>Explore all the official Grade 5 vocabulary words from the syllabus! Search alphabetically or filter by topic.</p>
+
+        <div class="dict-search-box">
+          <input type="text" id="dict-search" class="dict-input" placeholder="Type a word or root (e.g. tolerate, musician, admit)..." onkeyup="filterDict()">
+        </div>
+
+        <div class="dict-list" id="dict-container">
+          <!-- Dynamically rendered -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       JAVASCRIPT CODE
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       VOCABULARY DATA
+       ========================================================================== */
+    const WORD_BANK = [
+      { word: "invention", root: "invent", suffix: "-tion", type: "noun", desc: "A brand-new device, method, or process created for the first time." },
+      { word: "prevention", root: "prevent", suffix: "-tion", type: "noun", desc: "The action of stopping something bad from happening." },
+      { word: "presentation", root: "present", suffix: "-tion", type: "noun", desc: "The act of showing, describing, or explaining something to an audience." },
+      { word: "representation", root: "represent", suffix: "-tion", type: "noun", desc: "Speaking or acting on behalf of someone else." },
+      { word: "protection", root: "protect", suffix: "-tion", type: "noun", desc: "The state of being kept safe from harm or injury." },
+      { word: "selection", root: "select", suffix: "-tion", type: "noun", desc: "A carefully chosen group of people or things." },
+      { word: "collection", root: "collect", suffix: "-tion", type: "noun", desc: "A group of things gathered together." },
+      { word: "correction", root: "correct", suffix: "-tion", type: "noun", desc: "A change made to fix a mistake." },
+      { word: "direction", root: "direct", suffix: "-tion", type: "noun", desc: "The path or line along which a person or object moves." },
+      { word: "connection", root: "connect", suffix: "-tion", type: "noun", desc: "A link or relationship between two or more things." },
+      { word: "inspection", root: "inspect", suffix: "-tion", type: "noun", desc: "A thorough and careful check to ensure standards are met." },
+      { word: "construction", root: "construct", suffix: "-tion", type: "noun", desc: "The building of something large, like a road or tower." },
+      { word: "creation", root: "create", suffix: "-tion", type: "noun", desc: "Something brought into existence through imagination or skill." },
+      { word: "location", root: "locate", suffix: "-tion", type: "noun", desc: "A specific place or position." },
+      { word: "education", root: "educate", suffix: "-tion", type: "noun", desc: "The process of learning and acquiring knowledge." },
+      { word: "celebration", root: "celebrate", suffix: "-tion", type: "noun", desc: "A joyful party or ceremony for a special occasion." },
+      { word: "decoration", root: "decorate", suffix: "-tion", type: "noun", desc: "An ornament added to make something look festive and pretty." },
+      { word: "operation", root: "operate", suffix: "-tion", type: "noun", desc: "A planned action, or medical surgery." },
+      { word: "separation", root: "separate", suffix: "-tion", type: "noun", desc: "The act of dividing or keeping things apart." },
+      { word: "migration", root: "migrate", suffix: "-tion", type: "noun", desc: "Seasonal travel of animals from one region to another." },
+      { word: "motivation", root: "motivate", suffix: "-tion", type: "noun", desc: "The enthusiasm and drive to do something." },
+      { word: "communication", root: "communicate", suffix: "-tion", type: "noun", desc: "The sharing or exchanging of information and ideas." },
+      { word: "nomination", root: "nominate", suffix: "-tion", type: "noun", desc: "The formal suggestion of someone for a position or award." },
+      { word: "demonstration", root: "demonstrate", suffix: "-tion", type: "noun", desc: "Showing clearly how something works." },
+      { word: "concentration", root: "concentrate", suffix: "-tion", type: "noun", desc: "Focusing all one's attention onto one activity." },
+      { word: "investigation", root: "investigate", suffix: "-tion", type: "noun", desc: "A systematic inquiry to discover facts." },
+      { word: "appreciation", root: "appreciate", suffix: "-tion", type: "noun", desc: "Gratitude and recognition of good qualities." },
+      
+      { word: "admission", root: "admit", suffix: "-ssion", type: "noun", desc: "Permission to enter a place; or confessing the truth." },
+      { word: "permission", root: "permit", suffix: "-ssion", type: "noun", desc: "Consent allowing someone to do something." },
+      { word: "commission", root: "commit", suffix: "-ssion", type: "noun", desc: "A special group charged with a duty; or an artistic order." },
+      { word: "transmission", root: "transmit", suffix: "-ssion", type: "noun", desc: "Broadcasting a signal or sending across distance." },
+      { word: "omission", root: "omit", suffix: "-ssion", type: "noun", desc: "Someone or something left out or excluded." },
+      { word: "submission", root: "submit", suffix: "-ssion", type: "noun", desc: "The act of handing in homework or yielding to authority." },
+      { word: "remission", root: "remit", suffix: "-ssion", type: "noun", desc: "A temporary diminution of severity." },
+      { word: "discussion", root: "discuss", suffix: "-ssion", type: "noun", desc: "A conversation talking through ideas or topics." },
+      { word: "possession", root: "possess", suffix: "-ssion", type: "noun", desc: "Something that belongs to someone." },
+      { word: "confession", root: "confess", suffix: "-ssion", type: "noun", desc: "A formal admission that one is at fault." },
+      { word: "expression", root: "express", suffix: "-ssion", type: "noun", desc: "A look on someone's face or communicating a feeling." },
+      { word: "impression", root: "impress", suffix: "-ssion", type: "noun", desc: "An idea or feeling produced in someone's mind." },
+      { word: "suppression", root: "suppress", suffix: "-ssion", type: "noun", desc: "The act of forcibly putting an end to something." },
+      { word: "obsession", root: "obsess", suffix: "-ssion", type: "noun", desc: "An idea or thought that continually preoccupies the mind." },
+      { word: "progression", root: "progress", suffix: "-ssion", type: "noun", desc: "Movement forward or step-by-step development." },
+
+      { word: "expansion", root: "expand", suffix: "-sion", type: "noun", desc: "The act of becoming larger or more extensive." },
+      { word: "extension", root: "extend", suffix: "-sion", type: "noun", desc: "An addition that lengthens or increases reach." },
+      { word: "pretension", root: "pretend", suffix: "-sion", type: "noun", desc: "An exaggerated claim of importance." },
+      { word: "suspension", root: "suspend", suffix: "-sion", type: "noun", desc: "Temporarily halting something or hanging freely." },
+      { word: "comprehension", root: "comprehend", suffix: "-sion", type: "noun", desc: "The capability of fully understanding text or ideas." },
+      { word: "conclusion", root: "conclude", suffix: "-sion", type: "noun", desc: "The final decision, verdict, or end of an event." },
+      { word: "inclusion", root: "include", suffix: "-sion", type: "noun", desc: "The action of ensuring everyone is welcomed and part of the group." },
+      { word: "exclusion", root: "exclude", suffix: "-sion", type: "noun", desc: "The act of leaving someone or something out." },
+      { word: "intrusion", root: "intrude", suffix: "-sion", type: "noun", desc: "Entering without invitation or welcome." },
+      { word: "persuasion", root: "persuade", suffix: "-sion", type: "noun", desc: "The action of convincing someone to believe or do something." },
+      { word: "invasion", root: "invade", suffix: "-sion", type: "noun", desc: "Entering a territory aggressively in large numbers." },
+      { word: "provision", root: "provide", suffix: "-sion", type: "noun", desc: "Supplying or providing something needed." },
+      { word: "revision", root: "revise", suffix: "-sion", type: "noun", desc: "Reviewing and improving your work." },
+      { word: "supervision", root: "supervise", suffix: "-sion", type: "noun", desc: "Watching over and guiding someone's activities." },
+      { word: "confusion", root: "confuse", suffix: "-sion", type: "noun", desc: "A feeling of being completely puzzled and uncertain." },
+      { word: "diffuse", root: "diffuse", suffix: "-sion", type: "noun", desc: "The spreading out of light or particles widely." },
+
+      { word: "musician", root: "music", suffix: "-cian", type: "noun (person)", desc: "A person who plays, writes, or sings music." },
+      { word: "magician", root: "magic", suffix: "-cian", type: "noun (person)", desc: "A skilled conjuror who performs magical illusions." },
+      { word: "clinician", root: "clinic", suffix: "-cian", type: "noun (person)", desc: "A doctor or psychologist working directly with clinic patients." },
+      { word: "electrician", root: "electric", suffix: "-cian", type: "noun (person)", desc: "A qualified technician who repairs electrical equipment." },
+      { word: "technician", root: "technic", suffix: "-cian", type: "noun (person)", desc: "An expert in specific technical or laboratory machinery." },
+      { word: "politician", root: "politics", suffix: "-cian", type: "noun (person)", desc: "An elected member of parliament or government official." },
+      { word: "mathematician", root: "mathematics", suffix: "-cian", type: "noun (person)", desc: "A scholar who investigates mathematical concepts." },
+      { word: "statistician", root: "statistics", suffix: "-cian", type: "noun (person)", desc: "A specialist who analyzes numbers and statistical charts." },
+
+      { word: "significance", root: "significant", suffix: "-ance", type: "noun", desc: "Importance or major meaning." },
+      { word: "assistance", root: "assist", suffix: "-ance", type: "noun", desc: "Help or support given to someone." },
+      { word: "abundance", root: "abundant", suffix: "-ance", type: "noun", desc: "A very large plentiful quantity." },
+      { word: "brilliance", root: "brilliant", suffix: "-ance", type: "noun", desc: "Vivid brightness or exceptional cleverness." },
+      { word: "acceptance", root: "accept", suffix: "-ance", type: "noun", desc: "Agreement to receive something or welcome someone." },
+      { word: "elegance", root: "elegant", suffix: "-ance", type: "noun", desc: "Graceful and stylish appearance." },
+      { word: "arrogance", root: "arrogant", suffix: "-ance", type: "noun", desc: "Proud, overbearing attitude." },
+      { word: "fragrance", root: "fragrant", suffix: "-ance", type: "noun", desc: "A sweet, pleasant smell." },
+      { word: "endurance", root: "endure", suffix: "-ance", type: "noun", desc: "The stamina to withstand hardship." },
+      { word: "appearance", root: "appear", suffix: "-ance", type: "noun", desc: "The way someone or something looks." },
+      { word: "assurance", root: "assure", suffix: "-ance", type: "noun", desc: "A positive declaration guaranteeing certainty." },
+      { word: "clearance", root: "clear", suffix: "-ance", type: "noun", desc: "Official authorisation; or empty space between objects." },
+      { word: "defiance", root: "defy", suffix: "-ance", type: "noun", desc: "Open resistance or bold disobedience." },
+      { word: "alliance", root: "ally", suffix: "-ance", type: "noun", desc: "A union formed for mutual benefit." },
+      { word: "tolerance", root: "tolerate", suffix: "-ance", type: "noun", desc: "Patience and respect for differences." },
+
+      { word: "confidence", root: "confident", suffix: "-ence", type: "noun", desc: "Feeling certain of your abilities." },
+      { word: "innocence", root: "innocent", suffix: "-ence", type: "noun", desc: "Freedom from guilt or wrongdoing." },
+      { word: "patience", root: "patient", suffix: "-ence", type: "noun", desc: "The ability to wait calmly without annoyance." },
+      { word: "absence", root: "absent", suffix: "-ence", type: "noun", desc: "The state of being away." },
+      { word: "convenience", root: "convenient", suffix: "-ence", type: "noun", desc: "Ease of use and saving effort." },
+      { word: "evidence", root: "evident", suffix: "-ence", type: "noun", desc: "Facts or signs indicating whether a belief is true." },
+      { word: "persistence", root: "persistent", suffix: "-ence", type: "noun", desc: "Continuing firmly despite difficulty." },
+      { word: "obedience", root: "obedient", suffix: "-ence", type: "noun", desc: "Complying with rules or instructions." },
+      { word: "reverence", root: "revere", suffix: "-ence", type: "noun", desc: "Deep respect and honour." },
+      { word: "perseverance", root: "persevere", suffix: "-ance", type: "noun (exception)", desc: "Continued effort despite difficulties (Exception to -ere!)." },
+      { word: "vengeance", root: "avenge", suffix: "-ance", type: "noun (exception)", desc: "Punishment inflicted in return for an injury (Soft 'g' exception!)." }
+    ];
+
+    /* ==========================================================================
+       QUIZ QUESTIONS (50 DISTINCT QUESTIONS)
+       ========================================================================== */
+    const MASTER_QUESTIONS = [
+      { id: 1, cat: "Roots & Affixes", q: "What is a root word?", choices: ["A letter you remove from every word", "The core base part that carries the main meaning", "A decoration at the end of a sentence", "A synonym for a dictionary"], ans: 1, exp: "A root or base word contains the main foundation and meaning before prefixes or suffixes are attached." },
+      { id: 2, cat: "Roots & Affixes", q: "Which word has the prefix 'un-' attached correctly?", choices: ["unhappy", "happyun", "unance", "happier"], ans: 0, exp: "The prefix un- is placed at the front of happy to form unhappy." },
+      { id: 3, cat: "Roots & Affixes", q: "When adding '-ness' to the word 'happy', what spelling change occurs?", choices: ["The 'h' becomes silent", "The 'y' changes to an 'i'", "The double 'p' becomes single 'p'", "No change occurs"], ans: 1, exp: "Happy ends with a consonant + y, so y transforms into i: happiness." },
+      { id: 4, cat: "Roots & Affixes", q: "What is the suffix in the word 'helpful'?", choices: ["help", "-ful", "-fulp", "he-"], ans: 1, exp: "The base word is help, and the suffix added at the end is -ful." },
+      { id: 5, cat: "Roots & Affixes", q: "Transform 'create' by adding the noun suffix -tion:", choices: ["createtion", "creation", "creashun", "createion"], ans: 1, exp: "Words ending in -te drop the 'e' before adding -tion: creation." },
+
+      { id: 6, cat: "-tion Words", q: "Select the correct spelling formed from 'invent':", choices: ["invension", "inventshun", "invention", "inventian"], ans: 2, exp: "Verbs ending in -t take -tion: invention." },
+      { id: 7, cat: "-tion Words", q: "Select the correct spelling formed from 'protect':", choices: ["protecsion", "protection", "protectian", "protectsion"], ans: 1, exp: "Protect ends in -t, forming protection." },
+      { id: 8, cat: "-tion Words", q: "Select the correct spelling formed from 'educate':", choices: ["education", "educatshun", "educasion", "educatence"], ans: 0, exp: "Educate drops the final -e to add -tion: education." },
+      { id: 9, cat: "-tion Words", q: "Select the correct spelling formed from 'celebrate':", choices: ["celebrasion", "celebration", "celebratence", "celebreshun"], ans: 1, exp: "Celebrate drops the e to become celebration." },
+      { id: 10, cat: "-tion Words", q: "Select the correct spelling formed from 'communicate':", choices: ["communicasion", "communication", "communitian", "communicatence"], ans: 1, exp: "Communicate becomes communication." },
+      { id: 11, cat: "-tion Words", q: "Select the correct spelling formed from 'operate':", choices: ["operation", "operasion", "operatence", "operatshun"], ans: 0, exp: "Operate forms operation." },
+      { id: 12, cat: "-tion Words", q: "Select the correct spelling formed from 'separate':", choices: ["seperation", "separation", "separasion", "seperashun"], ans: 1, exp: "Separate forms separation (remember: s-e-p-a-r-a-t-i-o-n)." },
+      { id: 13, cat: "-tion Words", q: "Select the correct spelling formed from 'inspect':", choices: ["inspection", "inspeccion", "inspeksion", "inspectian"], ans: 0, exp: "Inspect forms inspection." },
+      { id: 14, cat: "-tion Words", q: "Select the correct spelling formed from 'demonstrate':", choices: ["demonstrasion", "demonstration", "demonstratshun", "demonstrance"], ans: 1, exp: "Demonstrate drops the e to form demonstration." },
+      { id: 15, cat: "-tion Words", q: "Select the correct spelling formed from 'investigate':", choices: ["investigation", "investigasion", "investigance", "investigatshun"], ans: 0, exp: "Investigate becomes investigation." },
+
+      { id: 16, cat: "-ssion Words", q: "Root words ending in '-mit' usually change to which ending?", choices: ["-tion", "-ssion", "-cian", "-ence"], ans: 1, exp: "Verbs ending in -mit (admit, permit, commit) change to -ssion!" },
+      { id: 17, cat: "-ssion Words", q: "Transform the root word 'permit' into a noun:", choices: ["permition", "permission", "permision", "permitance"], ans: 1, exp: "Permit transforms into permission with a double s!" },
+      { id: 18, cat: "-ssion Words", q: "Transform the root word 'admit' into a noun:", choices: ["admittion", "admission", "admision", "admittance"], ans: 1, exp: "Admit becomes admission." },
+      { id: 19, cat: "-ssion Words", q: "Transform the root word 'submit' into a noun:", choices: ["submition", "submission", "submision", "submittance"], ans: 1, exp: "Submit changes to submission." },
+      { id: 20, cat: "-ssion Words", q: "Select the correct spelling formed from 'discuss':", choices: ["discusion", "discussion", "discuttion", "discusshun"], ans: 1, exp: "Discuss retains both s's when adding -ion: discussion." },
+      { id: 21, cat: "-ssion Words", q: "Select the correct spelling formed from 'possess':", choices: ["posesion", "possession", "possestion", "posesshun"], ans: 1, exp: "Possess already ends in -ss, so it becomes possession." },
+      { id: 22, cat: "-ssion Words", q: "Select the correct spelling formed from 'express':", choices: ["expresion", "expression", "expresshun", "expresstion"], ans: 1, exp: "Express becomes expression." },
+
+      { id: 23, cat: "-sion Words", q: "Select the correct noun formed from 'conclude':", choices: ["concludetion", "conclusion", "conclussion", "concludance"], ans: 1, exp: "Verbs ending in -de typically change to -sion: conclusion." },
+      { id: 24, cat: "-sion Words", q: "Select the correct noun formed from 'persuade':", choices: ["persuation", "persuasion", "persuassion", "persuadance"], ans: 1, exp: "Persuade ends in -de and becomes persuasion." },
+      { id: 25, cat: "-sion Words", q: "Select the correct noun formed from 'expand':", choices: ["expantion", "expanssion", "expansion", "expandtion"], ans: 2, exp: "Expand ends in -d and becomes expansion." },
+      { id: 26, cat: "-sion Words", q: "Select the correct noun formed from 'revise':", choices: ["revisition", "revision", "revission", "revisance"], ans: 1, exp: "Revise ends in -se and transforms into revision." },
+      { id: 27, cat: "-sion Words", q: "Select the correct noun formed from 'supervise':", choices: ["supervision", "supervition", "supervission", "supervisance"], ans: 0, exp: "Supervise ends in -se and becomes supervision." },
+      { id: 28, cat: "-sion Words", q: "Select the correct noun formed from 'confuse':", choices: ["confustion", "confussion", "confusion", "confusance"], ans: 2, exp: "Confuse becomes confusion." },
+
+      { id: 29, cat: "-cian Words", q: "The ending '-cian' is most frequently used to name:", choices: ["A type of building", "A person associated with a skill or trade", "A past-tense action", "An animal's home"], ans: 1, exp: "-cian denotes a person or occupation, such as musician, magician, or politician." },
+      { id: 30, cat: "-cian Words", q: "A person who plays musical instruments is a:", choices: ["musition", "musision", "musician", "musicor"], ans: 2, exp: "Music + -ian = musician." },
+      { id: 31, cat: "-cian Words", q: "A person who performs magic tricks is a:", choices: ["magishun", "magition", "magision", "magician"], ans: 3, exp: "Magic + -ian = magician." },
+      { id: 32, cat: "-cian Words", q: "A qualified person who works with electrical wiring is an:", choices: ["electrition", "electrician", "electrision", "electrickian"], ans: 1, exp: "Electric + -ian = electrician." },
+      { id: 33, cat: "-cian Words", q: "An expert who studies mathematics is a:", choices: ["mathematician", "mathematition", "mathematision", "mathematian"], ans: 0, exp: "Mathematics transforms into mathematician." },
+      { id: 34, cat: "-cian Words", q: "A person active in party politics is a:", choices: ["politition", "politician", "politision", "politite"], ans: 1, exp: "Politics becomes politician." },
+
+      { id: 35, cat: "-ance vs -ence", q: "If a base adjective ends in '-ant' (like brilliant), its noun normally ends in:", choices: ["-ence", "-ance", "-tion", "-cian"], ans: 1, exp: "Adjectives ending in -ant correspond to nouns ending in -ance (brilliant → brilliance)." },
+      { id: 36, cat: "-ance vs -ence", q: "Transform the adjective 'tolerant' into its noun form:", choices: ["tolerence", "tolerance", "toleranshon", "toleranty"], ans: 1, exp: "Tolerant transforms into tolerance (-ance)." },
+      { id: 37, cat: "-ance vs -ence", q: "Transform the verb 'appear' into a noun:", choices: ["appearence", "appearance", "appearision", "appeartion"], ans: 1, exp: "Verbs ending in -ear take -ance: appearance." },
+      { id: 38, cat: "-ance vs -ence", q: "Transform the verb 'endure' into a noun:", choices: ["endurence", "endurance", "endurision", "endurment"], ans: 1, exp: "Verbs in -ure drop the e and add -ance: endurance." },
+      { id: 39, cat: "-ance vs -ence", q: "Transform the verb 'defy' into a noun:", choices: ["defyance", "defience", "defiance", "defyence"], ans: 2, exp: "Defy changes y to i and takes -ance: defiance." },
+      { id: 40, cat: "-ance vs -ence", q: "Why does 'elegance' take -ance?", choices: ["Because it has a hard 'g' sound", "Because it is an ancient verb", "Because it always takes -tion", "Because all words ending in 'e' take -ance"], ans: 0, exp: "A hard 'g' or 'c' sound before the ending is a major clue for -ance: elegance." },
+      { id: 41, cat: "-ance vs -ence", q: "If an adjective ends in '-ent' (like confident), its noun normally ends in:", choices: ["-ance", "-ence", "-ssion", "-cian"], ans: 1, exp: "Adjectives ending in -ent correspond to nouns ending in -ence: confident → confidence." },
+      { id: 42, cat: "-ance vs -ence", q: "Select the correct noun formed from 'patient':", choices: ["patiance", "patience", "pations", "patiente"], ans: 1, exp: "Patient → patience (-ence)." },
+      { id: 43, cat: "-ance vs -ence", q: "Select the correct noun formed from 'innocent':", choices: ["innocence", "innocance", "innocenshun", "innocentness"], ans: 0, exp: "Innocent → innocence (-ence)." },
+      { id: 44, cat: "-ance vs -ence", q: "Select the correct noun formed from 'absent':", choices: ["absance", "absence", "absenshun", "absentia"], ans: 1, exp: "Absent → absence (-ence)." },
+      { id: 45, cat: "Exceptions", q: "Which word is a famous exception to the '-ere' rule (revere → reverence)?", choices: ["perseverance", "interference", "adherence", "coherence"], ans: 0, exp: "Perseverance comes from persevere, but it is an exception spelled with -ance!" },
+      { id: 46, cat: "Exceptions", q: "Which word is an exception with a soft 'g' sound taking -ance?", choices: ["emergence", "vengeance", "intelligence", "negligence"], ans: 1, exp: "Vengeance has a soft g sound, but retains -eance!" },
+
+      { id: 47, cat: "Spelling Strategies", q: "What is a syllable?", choices: ["A type of vowel", "A spoken beat or rhythmic chunk in a word", "A dictionary entry", "A punctuation mark"], ans: 1, exp: "A syllable is an uninterrupted segment of spoken sound forming a whole word or beat." },
+      { id: 48, cat: "Spelling Strategies", q: "What is the memory trick for 'separate'?", choices: ["Look for two double p's", "There is 'a rat' in sep-a-rat-e", "It ends in double t", "It comes from pear"], ans: 1, exp: "Remembering 'a rat' inside sep-a-rat-e prevents misspelling it as seperate!" },
+      { id: 49, cat: "Spelling Strategies", q: "In Look-Cover-Write-Check, what should you do right after covering the word?", choices: ["Check the dictionary immediately", "Write it down from your memory", "Say the letters backwards", "Ask a friend to spell it"], ans: 1, exp: "After covering, you write the word from memory before checking every letter." },
+      { id: 50, cat: "Spelling Strategies", q: "What should an Inquirer do when uncertain about a spelling?", choices: ["Guess quickly to finish early", "Verify the spelling in an offline or digital dictionary", "Omit the word from the sentence", "Spell it phonetically and never check"], ans: 1, exp: "A true Word Detective checks and confirms words using reliable dictionary tools!" }
+    ];
+
+    /* ==========================================================================
+       PERSISTENT STATE
+       ========================================================================== */
+    const STORAGE_KEY = "SpellingQuest_Grade5_SaveData";
+
+    let gameState = {
+      score: 0,
+      badges: { roots: false, shun: false, ance: false, dragon: false, games: false, wizard: false },
+      spellingLog: [
+        { word: "separate", tricky: "contains 'a rat'", sentence: "Keep the cats separate." },
+        { word: "necessary", tricky: "1 collar (c), 2 sleeves (ss)", sentence: "Water is necessary for life." }
+      ],
+      userReflections: { q1: "", q2: "" }
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          gameState = Object.assign(gameState, parsed);
+        }
+      } catch (e) {
+        console.warn("Storage not available");
+      }
+      updateUI();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState));
+      } catch (e) {
+        console.warn("Could not save to localStorage");
+      }
+      updateUI();
+    }
+
+    function addScore(points) {
+      gameState.score += points;
+      saveState();
+    }
+
+    function unlockBadge(badgeId) {
+      if (!gameState.badges[badgeId]) {
+        gameState.badges[badgeId] = true;
+        saveState();
+      }
+    }
+
+    function updateUI() {
+      document.getElementById("stat-score").innerText = `⭐ Score: ${gameState.score} pts`;
+      document.getElementById("stat-words").innerText = `📚 Saved Words: ${gameState.spellingLog.length}`;
+      
+      const elRank = document.getElementById("stat-level");
+      if (gameState.score >= 500) elRank.innerText = "🛡️ Detective Rank: Grand Wizard 👑";
+      else if (gameState.score >= 250) elRank.innerText = "🛡️ Detective Rank: Word Detective 🔍";
+      else if (gameState.score >= 100) elRank.innerText = "🛡️ Detective Rank: Spelling Champion ⭐";
+      else elRank.innerText = "🛡️ Detective Rank: Word Apprentice 📜";
+
+      Object.keys(gameState.badges).forEach(b => {
+        const el = document.getElementById(`badge-${b}`);
+        if (el) {
+          if (gameState.badges[b]) el.classList.add("unlocked");
+          else el.classList.remove("unlocked");
+        }
+      });
+
+      renderSpellingLog();
+    }
+
+    /* ==========================================================================
+       DETERMINISTIC TAB CONTROLLER
+       ========================================================================== */
+    function switchTab(targetTabId) {
+      const allSections = document.querySelectorAll(".module-section");
+      allSections.forEach(sec => {
+        sec.classList.remove("active");
+        sec.style.display = "none";
+      });
+
+      const allButtons = document.querySelectorAll(".nav-btn");
+      allButtons.forEach(btn => btn.classList.remove("active"));
+
+      const targetSec = document.getElementById(targetTabId);
+      if (targetSec) {
+        targetSec.classList.add("active");
+        targetSec.style.display = "block";
+      }
+
+      const activeBtn = document.querySelector(`.nav-btn[data-tab="${targetTabId}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add("active");
+      }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function initNavigation() {
+      // Primary nav buttons
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const tabId = this.getAttribute("data-tab");
+          if (tabId) switchTab(tabId);
+        });
+      });
+
+      // Internal cross-links
+      document.querySelectorAll(".tab-link").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const target = this.getAttribute("data-go");
+          if (target) switchTab(target);
+        });
+      });
+
+      // Game selector sub-buttons
+      document.querySelectorAll(".game-nav-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+          const num = parseInt(this.getAttribute("data-game"), 10);
+          showGame(num);
+        });
+      });
+
+      // Reset button
+      const resetBtn = document.getElementById("btn-reset");
+      if (resetBtn) {
+        resetBtn.addEventListener("click", () => {
+          if (confirm("Reset all scores, badges, and saved words?")) {
+            try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+            gameState = {
+              score: 0,
+              badges: { roots: false, shun: false, ance: false, dragon: false, games: false, wizard: false },
+              spellingLog: [],
+              userReflections: { q1: "", q2: "" }
+            };
+            updateUI();
+            alert("Progress cleared successfully!");
+          }
+        });
+      }
+    }
+
+    /* ==========================================================================
+       MODULE A & B CHECKS
+       ========================================================================== */
+    let modAPracticed = false;
+    function checkModA(choice, isCorrect, explanation) {
+      const fb = document.getElementById("modA-feedback");
+      fb.style.display = "block";
+      if (isCorrect) {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = `✅ <strong>Brilliant!</strong> ${explanation}`;
+        if (!modAPracticed) {
+          addScore(20);
+          unlockBadge("roots");
+          modAPracticed = true;
+        }
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ <strong>Not quite:</strong> ${explanation}`;
+      }
+    }
+
+    let modBPracticed = false;
+    function checkCareer(choice, isCorrect, explanation) {
+      const fb = document.getElementById("career-feedback");
+      fb.style.display = "block";
+      if (isCorrect) {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = `✅ <strong>Spot on!</strong> ${explanation}`;
+        if (!modBPracticed) {
+          addScore(20);
+          unlockBadge("shun");
+          modBPracticed = true;
+        }
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ <strong>Clue:</strong> ${explanation}`;
+      }
+    }
+
+    /* ==========================================================================
+       MODULE D INTERACTIVE COMPONENTS
+       ========================================================================== */
+    const lcwcWords = ["necessary", "separate", "accommodation", "pronunciation", "perseverance"];
+    let lcwcIndex = 0;
+    let lcwcState = "LOOK";
+
+    function handleLCWC() {
+      const display = document.getElementById("lcwc-display");
+      const input = document.getElementById("lcwc-input");
+      const btn = document.getElementById("lcwc-action-btn");
+      const status = document.getElementById("lcwc-status");
+      const fb = document.getElementById("lcwc-feedback");
+
+      if (lcwcState === "LOOK") {
+        lcwcState = "COVER";
+        display.style.display = "none";
+        input.style.display = "block";
+        input.value = "";
+        input.focus();
+        btn.innerText = "Check My Spelling 🔍";
+        status.innerText = "Step 2: Type the word from memory!";
+        fb.style.display = "none";
+      } else if (lcwcState === "COVER") {
+        const target = lcwcWords[lcwcIndex];
+        const val = input.value.trim().toLowerCase();
+        display.style.display = "flex";
+        fb.style.display = "block";
+
+        if (val === target.toLowerCase()) {
+          fb.className = "feedback-banner feedback-success";
+          fb.innerHTML = `🎉 <strong>Perfect!</strong> You remembered <em>${target}</em> accurately!`;
+          addScore(15);
+        } else {
+          fb.className = "feedback-banner feedback-error";
+          fb.innerHTML = `🔍 <strong>Compare:</strong> You typed "<strong>${val}</strong>". The correct spelling is "<strong>${target}</strong>". Notice the tricky part and try again!`;
+        }
+        btn.innerText = "Next Word ➡️";
+        lcwcState = "NEXT";
+      } else {
+        resetLCWC();
+      }
+    }
+
+    function resetLCWC() {
+      lcwcIndex = (lcwcIndex + 1) % lcwcWords.length;
+      lcwcState = "LOOK";
+      document.getElementById("lcwc-display").innerText = lcwcWords[lcwcIndex];
+      document.getElementById("lcwc-display").style.display = "flex";
+      document.getElementById("lcwc-input").style.display = "none";
+      document.getElementById("lcwc-status").innerText = "Step 1: LOOK carefully at the word!";
+      document.getElementById("lcwc-action-btn").innerText = "Cover Word 🙈";
+      document.getElementById("lcwc-feedback").style.display = "none";
+    }
+
+    function addSpellingLogEntry() {
+      const w = document.getElementById("j-word").value.trim();
+      const t = document.getElementById("j-tricky").value.trim();
+      const s = document.getElementById("j-sentence").value.trim();
+
+      if (!w) {
+        alert("Please enter a target word.");
+        return;
+      }
+
+      gameState.spellingLog.push({ word: w, tricky: t || "Pattern practice", sentence: s || "Practised in quest." });
+      document.getElementById("j-word").value = "";
+      document.getElementById("j-tricky").value = "";
+      document.getElementById("j-sentence").value = "";
+
+      addScore(10);
+      saveState();
+    }
+
+    function deleteSpellingLogEntry(idx) {
+      gameState.spellingLog.splice(idx, 1);
+      saveState();
+    }
+
+    function renderSpellingLog() {
+      const tbody = document.getElementById("journal-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      gameState.spellingLog.forEach((entry, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${entry.word}</strong></td>
+          <td>${entry.tricky}</td>
+          <td><em>${entry.sentence}</em></td>
+          <td><button type="button" class="btn btn-sm btn-secondary" onclick="deleteSpellingLogEntry(${i})">Remove</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ==========================================================================
+       GAMES 1-8 HANDLERS
+       ========================================================================== */
+    function showGame(num) {
+      for (let i = 1; i <= 8; i++) {
+        const g = document.getElementById(`game-${i}`);
+        if (g) g.style.display = (i === num) ? "block" : "none";
+      }
+    }
+
+    function playGame1(choice) {
+      const fb = document.getElementById("g1-feedback");
+      fb.style.display = "block";
+      if (choice === "-ssion") {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🎉 <strong>Monster Defeated!</strong> <em>discuss</em> already ends with -ss, so it takes -ion to form <strong>discussion</strong>![cite: 27, 28, 30]";
+        addScore(15);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ <strong>Try again!</strong> You chose ${choice}. Words ending in -ss take -ion (forming -ssion)[cite: 28, 30].`;
+      }
+    }
+
+    function playGame2() {
+      const val = document.getElementById("g2-input").value.trim().toLowerCase();
+      const fb = document.getElementById("g2-feedback");
+      fb.style.display = "block";
+      if (val === "permission") {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🤖 <strong>BEEP BOOP! Correct!</strong> The root <em>permit</em> changes its -mit into <strong>-ssion</strong> (permission)![cite: 27, 28, 30]";
+        addScore(15);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ Robot says: "Error! You wrote '${val}'. Root word 'permit' becomes 'permission' with double-s!"[cite: 28, 30]`;
+      }
+    }
+
+    function playGame3(choice) {
+      const fb = document.getElementById("g3-feedback");
+      fb.style.display = "block";
+      if (choice === "-cian") {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🏎️ <strong>Zoom! Correct!</strong> 'musician' describes a person and ends in <strong>-cian</strong>![cite: 27, 32]";
+        addScore(15);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ <strong>Crash!</strong> 'musician' is an occupation ending in -cian, not ${choice}![cite: 27, 32]`;
+      }
+    }
+
+    function playGame4(isMisspelled) {
+      const fb = document.getElementById("g4-feedback");
+      fb.style.display = "block";
+      if (isMisspelled) {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🕵️‍♂️ <strong>Mystery Solved!</strong> 'magition' is wrong! A person performing magic is spelled with <strong>-cian</strong>: <em>magician</em>![cite: 23, 32]";
+        addScore(15);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = "❌ That word is spelled correctly! Keep hunting for Professor Misspella's blunder.";
+      }
+    }
+
+    let currentTiles = [];
+    function addTile(part) {
+      currentTiles.push(part);
+      renderBuiltTiles();
+    }
+    function resetTiles() {
+      currentTiles = [];
+      renderBuiltTiles();
+      document.getElementById("g5-feedback").style.display = "none";
+    }
+    function renderBuiltTiles() {
+      const container = document.getElementById("g5-built");
+      container.innerHTML = currentTiles.map(t => `<span style="background:#e0e7ff; padding:8px 12px; border-radius:6px; font-weight:800; border:1px solid #c7d2fe;">${t}</span>`).join(" ");
+    }
+    function checkTiles() {
+      const assembled = currentTiles.join("");
+      const fb = document.getElementById("g5-feedback");
+      fb.style.display = "block";
+      if (assembled === "investigation") {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🧱 <strong>Structure Solid!</strong> in + ves + ti + ga + tion = <strong>investigation</strong>![cite: 29]";
+        addScore(20);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ Assembled: "<strong>${assembled || 'none'}</strong>". Order needed: in-ves-ti-ga-tion.`;
+      }
+    }
+
+    function playGame6(isCorrect) {
+      const fb = document.getElementById("g6-feedback");
+      fb.style.display = "block";
+      if (isCorrect) {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🐉 <strong>Dragon Roars With Joy!</strong> Looking under the root verb 'permit' quickly leads you to the noun 'permission'!";
+        addScore(15);
+        unlockBadge("dragon");
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = "❌ The dragon shakes its head! Searching for 'shun' phonetically won't help because -tion and -ssion are not spelled with 'sh'!";
+      }
+    }
+
+    let g7Hidden = false;
+    function playGame7() {
+      const disp = document.getElementById("g7-display");
+      const inp = document.getElementById("g7-input");
+      const btn = document.getElementById("g7-btn");
+      const fb = document.getElementById("g7-feedback");
+
+      if (!g7Hidden) {
+        disp.style.display = "none";
+        inp.style.display = "block";
+        inp.value = "";
+        inp.focus();
+        btn.innerText = "Check Memory ✨";
+        g7Hidden = true;
+        fb.style.display = "none";
+      } else {
+        fb.style.display = "block";
+        if (inp.value.trim().toLowerCase() === "appearance") {
+          fb.className = "feedback-banner feedback-success";
+          fb.innerHTML = "🧠 <strong>Sharp Memory!</strong> <em>appearance</em> (appear + -ance) is correct![cite: 15]";
+          addScore(15);
+          unlockBadge("games");
+        } else {
+          fb.className = "feedback-banner feedback-error";
+          fb.innerHTML = `❌ You typed "${inp.value}". The correct spelling is <strong>appearance</strong> (verbs in -ear take -ance)[cite: 15].`;
+        }
+        disp.style.display = "block";
+        inp.style.display = "none";
+        btn.innerText = "Hide Word & Spell 🙈";
+        g7Hidden = false;
+      }
+    }
+
+    function playGame8() {
+      const val = document.getElementById("g8-input").value.trim().toLowerCase();
+      const fb = document.getElementById("g8-feedback");
+      fb.style.display = "block";
+      if (val === "confusion") {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "🗝️ <strong>CLICK! The door swings open!</strong> <em>confuse</em> becomes <strong>confusion</strong> (-se drops 'e' for -sion)! You have escaped![cite: 31]";
+        addScore(25);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `❌ The lock remains jammed! You entered "${val}". Clue: confuse drops -e and takes -sion![cite: 31]`;
+      }
+    }
+
+    /* ==========================================================================
+       MODULE F & G
+       ========================================================================== */
+    function showStoryWord(wordName) {
+      const popup = document.getElementById("story-popup");
+      const title = document.getElementById("story-word-title");
+      const desc = document.getElementById("story-word-desc");
+
+      const entry = WORD_BANK.find(w => w.word.toLowerCase() === wordName.toLowerCase());
+      if (entry) {
+        title.innerHTML = `📖 ${entry.word.toUpperCase()} <span style="font-size:0.85rem; color:var(--text-muted);">(${entry.type})</span>`;
+        desc.innerHTML = `<strong>Definition:</strong> ${entry.desc}<br><strong>Root Word:</strong> ${entry.root} | <strong>Suffix Pattern:</strong> ${entry.suffix}`;
+        popup.style.display = "block";
+      }
+    }
+
+    function saveUserStorySentence() {
+      const val = document.getElementById("user-story-sent").value.trim();
+      const fb = document.getElementById("story-sent-feedback");
+      fb.style.display = "block";
+      if (val.length > 8) {
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = `🎉 <strong>Wonderful sentence!</strong> Detective Root stamped your work with an A+!`;
+        addScore(10);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = `Please write a complete descriptive sentence with at least one spelling word.`;
+      }
+    }
+
+    function saveReflection() {
+      const q1 = document.getElementById("ref-q1").value.trim();
+      const q2 = document.getElementById("ref-q2").value.trim();
+      const fb = document.getElementById("ref-feedback");
+      fb.style.display = "block";
+
+      if (q1 || q2) {
+        gameState.userReflections.q1 = q1;
+        gameState.userReflections.q2 = q2;
+        saveState();
+        fb.className = "feedback-banner feedback-success";
+        fb.innerHTML = "💾 <strong>Reflections Saved!</strong> You are demonstrating fantastic Self-Management and Inquirer skills![cite: 2, 26, 36]";
+        addScore(15);
+      } else {
+        fb.className = "feedback-banner feedback-error";
+        fb.innerHTML = "Please type a thought or memory clue in at least one reflection box.";
+      }
+    }
+
+    /* ==========================================================================
+       WORD BANK / DICTIONARY RENDER
+       ========================================================================== */
+    function renderWordBank(items) {
+      const container = document.getElementById("dict-container");
+      if (!container) return;
+      container.innerHTML = "";
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "dict-item";
+        div.innerHTML = `
+          <div class="dict-word-title">
+            <span>${item.word}</span>
+            <span class="highlight-suffix">${item.suffix}</span>
+          </div>
+          <div class="dict-meta">Part of speech: ${item.type} | Root word: <strong>${item.root}</strong></div>
+          <p style="font-size:0.95rem;">${item.desc}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filterDict() {
+      const q = document.getElementById("dict-search").value.trim().toLowerCase();
+      const filtered = WORD_BANK.filter(w => w.word.toLowerCase().includes(q) || w.root.toLowerCase().includes(q) || w.suffix.toLowerCase().includes(q));
+      renderWordBank(filtered);
+    }
+
+    /* ==========================================================================
+       50-QUESTION ASSESSMENT RENDER & EVALUATION
+       ========================================================================== */
+    const userAnswers = {};
+
+    function renderAssessment() {
+      const container = document.getElementById("quiz-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      MASTER_QUESTIONS.forEach((q, idx) => {
+        const qCard = document.createElement("div");
+        qCard.className = "quiz-card";
+        qCard.id = `q-card-${q.id}`;
+
+        const choicesHtml = q.choices.map((c, cIdx) => `
+          <label style="display:flex; align-items:center; gap:8px; margin:8px 0; cursor:pointer; font-size:1rem;">
+            <input type="radio" name="master_q_${q.id}" value="${cIdx}" onchange="recordQuizAnswer(${q.id}, ${cIdx})">
+            <span>${c}</span>
+          </label>
+        `).join("");
+
+        qCard.innerHTML = `
+          <div class="quiz-q-num">Question ${idx + 1} of 50 • Topic: ${q.cat}</div>
+          <div class="quiz-q-title">${q.q}</div>
+          <div class="choice-list">${choicesHtml}</div>
+        `;
+        container.appendChild(qCard);
+      });
+    }
+
+    function recordQuizAnswer(qId, choiceIdx) {
+      userAnswers[qId] = choiceIdx;
+    }
+
+    function submitMasterQuiz() {
+      const total = MASTER_QUESTIONS.length;
+      let score = 0;
+      const catTotals = {};
+      const catCorrect = {};
+      const mistakes = [];
+
+      MASTER_QUESTIONS.forEach(q => {
+        if (!catTotals[q.cat]) {
+          catTotals[q.cat] = 0;
+          catCorrect[q.cat] = 0;
+        }
+        catTotals[q.cat]++;
+
+        const userAns = userAnswers[q.id];
+        if (userAns !== undefined && userAns === q.ans) {
+          score++;
+          catCorrect[q.cat]++;
+        } else {
+          mistakes.push({
+            q: q.q,
+            cat: q.cat,
+            user: (userAns !== undefined) ? q.choices[userAns] : "No answer selected",
+            correct: q.choices[q.ans],
+            exp: q.exp
+          });
+        }
+      });
+
+      const pct = Math.round((score / total) * 100);
+      const resContainer = document.getElementById("quiz-results");
+      resContainer.style.display = "block";
+
+      const titleEl = document.getElementById("quiz-rank-title");
+      const descEl = document.getElementById("quiz-rank-desc");
+      titleEl.innerText = `Final Score: ${score} / ${total} (${pct}%)`;
+
+      if (pct >= 90) {
+        descEl.innerHTML = "👑 <strong>Rank Awarded: Word Wizard!</strong> Spectacular mastery of all Grade 5 spelling patterns!";
+        unlockBadge("wizard");
+      } else if (pct >= 75) {
+        descEl.innerHTML = "⭐ <strong>Rank Awarded: Spelling Champion!</strong> You know your patterns with outstanding skill!";
+      } else if (pct >= 50) {
+        descEl.innerHTML = "🧭 <strong>Rank Awarded: Word Explorer!</strong> Good effort! Review your mistakes below to become invincible!";
+      } else {
+        descEl.innerHTML = "📜 <strong>Rank Awarded: Practice Apprentice!</strong> Don't give up! Use your spelling log and retry!";
+      }
+
+      const catList = document.getElementById("quiz-category-scores");
+      catList.innerHTML = Object.keys(catTotals).map(c => `
+        <li style="margin-bottom:6px;">
+          <strong>${c}:</strong> ${catCorrect[c]} / ${catTotals[c]} (${Math.round((catCorrect[c] / catTotals[c]) * 100)}%)
+        </li>
+      `).join("");
+
+      const mistList = document.getElementById("quiz-mistakes-list");
+      mistList.innerHTML = "";
+      if (mistakes.length === 0) {
+        mistList.innerHTML = "<p style='color:var(--success); font-weight:700;'>Flawless victory! You didn't make a single error!</p>";
+      } else {
+        mistakes.forEach(m => {
+          const div = document.createElement("div");
+          div.style.background = "#fff";
+          div.style.border = "1px solid var(--border)";
+          div.style.padding = "12px";
+          div.style.borderRadius = "8px";
+          div.innerHTML = `
+            <div style="font-weight:700; color:var(--text);">${m.q}</div>
+            <div style="font-size:0.9rem; color:var(--error);">You chose: ${m.user}</div>
+            <div style="font-size:0.9rem; color:var(--success); font-weight:700;">Correct answer: ${m.correct}</div>
+            <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">💡 <em>Rule clue: ${m.exp}</em></div>
+          `;
+          mistList.appendChild(div);
+        });
+      }
+
+      addScore(score * 5);
+      resContainer.scrollIntoView({ behavior: "smooth" });
+    }
+
+    /* ==========================================================================
+       INITIALISATION ON LOAD
+       ========================================================================== */
+    window.addEventListener("DOMContentLoaded", () => {
+      initNavigation();
+      switchTab("tab-home");
+      loadState();
+      renderWordBank(WORD_BANK);
+      renderAssessment();
+    });
+  </script>
+</body>
+</html>
